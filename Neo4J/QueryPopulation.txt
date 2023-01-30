@@ -1,0 +1,40 @@
+# Per cancellare tutto
+
+MATCH(n)
+DETACH DELETE n
+
+
+# Per inserire gli utenti
+
+LOAD CSV WITH HEADERS FROM 'file:///profiles_def.csv' AS users FIELDTERMINATOR ';'
+MERGE (u:User {username:users['username']})
+
+
+# Per inserire i personaggi
+
+LOAD CSV WITH HEADERS FROM 'file:///characters_def.csv' AS characters FIELDTERMINATOR ';'
+MERGE (c:Character {name:characters['Name'], anime:characters['anime']})
+
+
+# Per inserire FOLLOW
+
+LOAD CSV WITH HEADERS FROM 'file:///follows.csv' AS row
+MATCH (u1:User {username: row['username']})
+MATCH (u2:User {username: row['follows']})
+MERGE (u1)-[rel:FOLLOWS{}]->(u2)
+
+
+# Per inserire HAS
+
+LOAD CSV WITH HEADERS FROM 'file:///Has.csv' AS row
+MATCH (u:User {username: row['username']})
+MATCH (c:Character {name: row['Name']})
+MERGE (u)-[rel:HAS{}]->(c)
+
+
+# Per inserire ADDTOTOP10
+
+LOAD CSV WITH HEADERS FROM 'file:///Has.csv' AS row
+MATCH (u:User {username: row['username']})
+MATCH (c:Character {name: row['Name']})
+MERGE (u)-[rel:HAS{}]->(c)
