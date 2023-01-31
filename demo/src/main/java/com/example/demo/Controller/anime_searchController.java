@@ -3,9 +3,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class SignupController {
-		@GetMapping("/signup")
+public class anime_searchController {
+		@GetMapping("/anime_search")
 		public String signup(){
-						return "signup";
+						return "anime_search";
 		}
 }
