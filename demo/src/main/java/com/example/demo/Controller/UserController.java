@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 		@RequestMapping("/")
 		public String userPage(Model model) {
-			//model.addAttribute("something", "value of attribute something");
+			model.addAttribute("something", "value of attribute something");
 			return "index";
 		}
 }

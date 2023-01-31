@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script language = "javascript" type="text/javascript" src = "../static/js/signup.js" ></script>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -16,8 +18,12 @@
   <link href="vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
+<<<<<<< HEAD
   <link href="css/style.css" rel="stylesheet">
 
+=======
+  <link href="assets/css/style.css" rel="stylesheet">
+>>>>>>> aea6a70 (first try of ajax request)
   <!-- =======================================================
   * Template Name: Techie - v4.10.0
   * Template URL: https://bootstrapmade.com/techie-free-skin-bootstrap-3/
@@ -55,14 +61,14 @@
                 <div style="text-align: center;">
                   <h2>Choose an username</h2>
                 </div>
-                <input class="form-control" placeholder="marckgt7" style="text-align: center;">
+                <input id = "username" class="form-control" placeholder="marckgt7" style="text-align: center;">
                 <div style="text-align: center;">
                   <h2>Indicate your birthday</h2>
                 </div>
-                <input class="form-control" type="date" style="text-align: center;color: grey;">
+                <input id = "date" class="form-control" type="date" style="text-align: center;color: grey;">
                 <div style="text-align: center;">
                   <h2>Indicate your gender</h2><br>
-                  <select class="form-control" name="option" style="text-align: center; color: grey;">
+                  <select id = "gender" class="form-control" name="option" style="text-align: center; color: grey;">
                     <option style="text-align: center; color: grey;" value="Male">Male</option>
                     <option style="text-align: center;color: grey;" value="Female">Female</option>
                   </select>
@@ -70,8 +76,8 @@
                 <div style="text-align: center;">
                   <h2>Choose a password</h2>
                 </div>
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" style="text-align: center;">
-                <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Signup</a>
+                <input id = "password" type="password" class="form-control" id="floatingPassword" placeholder="Password" style="text-align: center;">
+                <a id = "signup_button" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Signup</a>
               </div>
             </form>
           </div>
