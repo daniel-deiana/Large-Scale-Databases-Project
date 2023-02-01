@@ -3,11 +3,11 @@ $(document).ready(function () {
         username_ = document.getElementById("username").value
         gender_ = document.getElementById("gender").value
         date_ = document.getElementById("date").value
-        console.log("start")
+        password_ = document.getElementById("floatingPassword").value
         $.ajax({
                     url : "/api/signup",
                     dataType : 'json',
-                    data : {username: username_, gender: gender_, date: date_},
+                    data : {username: username_, gender: gender_, date: date_, password : password_ },
                     method : "post",
                     success: function(data) {
                         jsonObject = JSON.parse(data)

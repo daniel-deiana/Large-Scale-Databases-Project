@@ -16,11 +16,12 @@ public class SignUpController {
 	@Autowired
 	UserService userService;
 	@PostMapping("/api/signup")
-		public String signup(Model model,@RequestParam(value = "username") String username, @RequestParam(value = "gender") String gender,@RequestParam(value = "date") String date){
+		public String signup(Model model,@RequestParam(value = "username") String username, @RequestParam(value = "gender") String gender,@RequestParam(value = "date") String date, @RequestParam(value = "password") String password){
 			Gson gson = new Gson();
-			User user = new User(username,gender,date);
+			hashed =
+			User user = new User(username,gender,date, hashed);
 			userService.addUser(user);
-			return gson.toJson("{\"type\": \" " + gender + " \" , \"message\" :  \" " + date + " \" }");
+
 	}
 
 }
