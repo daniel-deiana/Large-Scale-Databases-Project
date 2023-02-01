@@ -16,11 +16,17 @@ public class User {
 		private String gender;
 		@Field("birthday")
 		private String birthday;
+		@Field("hashed_password")
+		private String hashed_password;
 
-		public User(String username,String gender,String date){
+		@Field("country")
+		private String country;
+
+		public User(String username,String gender,String date,String country,String hashed_password){
 				this.username = username;
 				this.birthday = date;
 				this.gender = gender;
+				this.hashed_password = hashed_password;
 		}
 
 }
