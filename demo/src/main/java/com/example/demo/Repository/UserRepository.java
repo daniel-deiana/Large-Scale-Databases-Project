@@ -12,10 +12,10 @@ public class UserRepository {
 	@Autowired
 		private MongoOperations mongoOperations;
 
-	public boolean addUser(String user){
+	public boolean addUser(User user){
 			boolean result = true;
 			try{
-					//userMongo.save(user);
+					userMongo.save(user);
 			} catch (Exception e){
 					e.printStackTrace();
 					result = false;
