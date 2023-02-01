@@ -254,3 +254,16 @@
   new PureCounter();
 
 })()
+
+
+function make_review(){
+  let area = document.getElementById("text_review")
+  if(area.value == ""){
+    alert("Write a review first")
+    return
+  }
+
+  // Guardo se lo user ha già fatto la review per questo anime
+
+  // Aggiungo la review al database
+}
