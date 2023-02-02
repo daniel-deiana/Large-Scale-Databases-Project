@@ -6,7 +6,6 @@ $(document).ready(function () {
         password_ = document.getElementById("floatingPassword").value
         $.ajax({
                     url : "/api/signup",
-                    data : {username: username_, date: date_, gender:gender_, password: password_},
                     dataType : 'json',
                     data : {username: username_, gender: gender_, date: date_, password : password_ },
                     method : "post",
