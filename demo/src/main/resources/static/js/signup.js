@@ -4,10 +4,15 @@ $(document).ready(function () {
         gender_ = document.getElementById("gender").value
         date_ = document.getElementById("date").value
         password_ = document.getElementById("floatingPassword").value
+        country_ = document.getElementById("country").value
+        if(!username_ || !gender_ || !date_ || !password_ || !country_){
+            alert("Fill the fields")
+            return
+        }
         $.ajax({
                     url : "/api/signup",
                     dataType : 'json',
-                    data : {username: username_, gender: gender_, date: date_, password : password_ },
+                    data : {username: username_, gender: gender_, date: date_, password : password_, country : country_ },
                     method : "post",
                     success: function(data) {
                         jsonObject = JSON.parse(data)

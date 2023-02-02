@@ -18,7 +18,6 @@ public class User {
 		private String birthday;
 		@Field("hashed_password")
 		private String hashed_password;
-
 		@Field("country")
 		private String country;
 
@@ -27,6 +26,7 @@ public class User {
 				this.birthday = date;
 				this.gender = gender;
 				this.hashed_password = hashed_password;
+				this.country = country; 
 		}
 
 }
