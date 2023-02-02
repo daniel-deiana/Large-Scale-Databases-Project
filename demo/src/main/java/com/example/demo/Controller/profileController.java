@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class profileController {
 		@GetMapping("/profile")
 		public String profile(){
-						return "profile";
+				return "profile";
 		}
 }
