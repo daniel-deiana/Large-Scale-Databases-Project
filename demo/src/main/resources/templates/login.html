@@ -53,14 +53,14 @@
           <div style="display: flex; justify-content: center;">
             <form>
               <div style="display: flex; flex-direction: column; gap: 15px;">
-                <input class="form-control" placeholder="marckgt7" style="text-align: center;">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" style="text-align: center;">
+                <input id="username" class="form-control" placeholder="marckgt7" style="text-align: center;" required>
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" style="text-align: center;" required>
                 <div class="form-check mb-3">
                   <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
                   <label class="form-check-label" for="rememberPasswordCheck" style="color: white;">Remember password</label>
                 </div>
               </div>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Signin</a>
+              <a id="login_button" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Login</a>
               <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;"href="signup.html">Signup</a>
             </form>
           </div>
