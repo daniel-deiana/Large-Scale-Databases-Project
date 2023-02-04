@@ -22,4 +22,12 @@ public class UserRepository {
 			}
 			return result;
 		}
-}
+	     // 2. Get item by name
+		 /* 
+	public void getGroceryItemByName(String name) {
+		System.out.println("Getting item by name: " + name);
+		User user = groceryItemRepo.findItemByName(name);
+		System.out.println(getItemDetails(item));
+		}
+*/
+	}

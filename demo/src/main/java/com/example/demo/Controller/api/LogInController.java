@@ -13,22 +13,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @RestController
-public class SignUpController {
+public class LogInController {
 	@Autowired
 	UserService userService;
-	@PostMapping("/api/signup")
-		public String signup(Model model,
+	@PostMapping("/api/login")
+		public String login(Model model,
 												 @RequestParam(value = "username") String username,
 												 @RequestParam(value = "gender") String gender,
 												 @RequestParam(value = "date") String date,
-												 @RequestParam(value = "country") String country,
-												 @RequestParam(value = "password") String password) {
+												 @RequestParam(value = "password") String password,
+		                     @RequestParam(value = "country") String country) {
 
 			String hashed = Hashing.sha256()
 							.hashString(password, StandardCharsets.UTF_8)
 							.toString();
 			User user = new User(username,gender,date, country ,hashed);
-			userService.addUser(user);
 			return "ok";
 	}
 
