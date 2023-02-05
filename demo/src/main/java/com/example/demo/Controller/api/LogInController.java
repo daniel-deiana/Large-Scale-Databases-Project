@@ -34,7 +34,6 @@ public class LogInController {
 	String hashed = Hashing.sha256()
 							.hashString(password, StandardCharsets.UTF_8)
 							.toString();
-
 	if(!hashed.equals(user.getPassword()))
 		return gson.toJson("{\"type\":2, \"message\": \"Wrong password\"}");
 	if((SVariables) model.getAttribute("SVariables") == null)
@@ -42,7 +41,7 @@ public class LogInController {
 	SVariables sv = (SVariables) model.getAttribute("SVariables");
 	sv.myself = user.getUsername();
 	sv.admin = userService.isAdmin(sv.myself);
-	model.addAttribute("SVariables",sv);
+	model.addAttribute("username",sv.myself);
 	return gson.toJson("{\"type\": 0, \"message\" : \"ok\"}");
 	}
 

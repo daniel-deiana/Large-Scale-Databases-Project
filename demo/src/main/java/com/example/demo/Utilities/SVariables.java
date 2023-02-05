@@ -19,7 +19,7 @@ public class SVariables {
     public String toString() {
         return "SessionVariables{" +
                 "myself='" + myself + '\'' +
-                ", gameToDisplay='" + animeToDisplay + '\'' +
+                ", animeToDisplay='" + animeToDisplay + '\'' +
                 ", userToDisplay='" + userToDisplay + '\'' +
                 '}';
     }
