@@ -8,23 +8,20 @@ import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @RestController
-@SessionAttributes("SVariables")
+@SessionAttributes("sessionVariables")
 public class LogInController {
 	@Autowired
 	UserService userService;
 	@PostMapping("/api/login")
-		public String login(Model model,
-							 @RequestParam(value = "username") String username,
-						 	 @RequestParam(value = "password") String password
+		public @ResponseBody String login(Model model,
+										  @RequestParam(value = "username") String username,
+										  @RequestParam(value = "password") String password
 	) {
 
 	Gson gson = new Gson();
@@ -37,13 +34,12 @@ public class LogInController {
 
 	if(!hashed.equals(user.getPassword()))
 		return gson.toJson("{\"type\":2, \"message\": \"Wrong password\"}");
-	if((SVariables) model.getAttribute("SVariables") == null)
-		model.addAttribute("SVariables", new SVariables());
-	SVariables sv = (SVariables) model.getAttribute("SVariables");
+	if(model.getAttribute("sessionVariables") == null)
+		model.addAttribute("sessionVariables", new SVariables());
+	SVariables sv = (SVariables) model.getAttribute("sessionVariables");
 	sv.myself = user.getUsername();
-	sv.admin = userService.isAdmin(sv.myself);
-	model.addAttribute("SVariables",sv);
-	return gson.toJson("{\"type\": 0, \"message\" : \"ok\"}");
+	model.addAttribute("sessionVariables",sv);
+	return gson.toJson("{\"type\": 0, \"message\" : \"ok\", \"username\":\""+ sv.myself+"\"}");
 	}
 
 }
