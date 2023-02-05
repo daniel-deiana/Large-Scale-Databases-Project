@@ -1,12 +1,29 @@
 $(document).ready(function () {
     document.getElementById('login_button').onclick = function (e) {
-        console.log("start")
+        username_ = document.getElementById("username").value
+        password_ = document.getElementById("floatingPassword").value
+        if(!username_ || !password_ ){
+                    alert("Fill the fields")
+                    return
+                }
         $.ajax({
                     url : "/api/login",
+                    data : {username: username_, password: password_},
                     dataType : 'json',
-                    method : "get",
+                    method : "post",
                     success: function(data) {
-                        console.log(data)
+                        result = jQuery.parseJSON(data)
+                        console.log(result)
+                        if(result["type"] == 1) {
+                            alert("Wrong Username")
+                            $("#username").val("")
+                            $("#password").val("")
+                        } else if(result["type"] == 2) {
+                            alert("Wrong Password")
+                            $("#username").val("")
+                            $("#password").val("")
+                        } else
+                            window.location.href= "http://localhost:8080/home"
                     }
                 })
     }
