@@ -18,15 +18,29 @@ public class User {
 		private String birthday;
 		@Field("hashed_password")
 		private String hashed_password;
-
 		@Field("country")
 		private String country;
+
+		@Field("admin")
+		private boolean admin;
 
 		public User(String username,String gender,String date,String country,String hashed_password){
 				this.username = username;
 				this.birthday = date;
 				this.gender = gender;
 				this.hashed_password = hashed_password;
+				this.country = country; 
 		}
 
+		public User(){}
+		public String getUsername() {
+				return username;
+		}
+		public String getPassword() {
+				return hashed_password;
+		}
+
+		public boolean isAdmin() {
+			return admin;
+		}
 }

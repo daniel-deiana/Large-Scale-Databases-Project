@@ -21,8 +21,8 @@ public class SignUpController {
 												 @RequestParam(value = "username") String username,
 												 @RequestParam(value = "gender") String gender,
 												 @RequestParam(value = "date") String date,
-												 @RequestParam(value = "password") String password,
-		                     @RequestParam(value = "country") String country) {
+												 @RequestParam(value = "country") String country,
+												 @RequestParam(value = "password") String password) {
 
 			String hashed = Hashing.sha256()
 							.hashString(password, StandardCharsets.UTF_8)

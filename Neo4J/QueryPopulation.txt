@@ -34,7 +34,7 @@ MERGE (u)-[rel:HAS{}]->(c)
 
 # Per inserire ADDTOTOP10
 
-LOAD CSV WITH HEADERS FROM 'file:///Has.csv' AS row
+LOAD CSV WITH HEADERS FROM 'file:///AddToTop10.csv' AS row
 MATCH (u:User {username: row['username']})
 MATCH (c:Character {name: row['Name']})
-MERGE (u)-[rel:HAS{}]->(c)
+MERGE (u)-[rel:ADDTOTOP10{}]->(c)
