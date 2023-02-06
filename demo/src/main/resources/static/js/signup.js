@@ -18,6 +18,7 @@ $(document).ready(function () {
                         jsonObject = JSON.parse(data)
                         console.log(jsonObject)
                         console.log(typeof(jsonObject))
+                        window.location.href= "http://localhost:8080/home"
                     }
                 })
     }
