@@ -36,14 +36,12 @@ public class SignUpController {
 			userService.addUser(user);
 		if(model.getAttribute("sessionVariables") == null)
 			model.addAttribute("sessionVariables", new SVariables());
-			SVariables sv = (SVariables) model.getAttribute("sessionVariables");
-			sv.myself = user.getUsername();
-			model.addAttribute("sessionVariables",sv);
 
-			// add to graph db
-			userService.addUserGraph(user.getUsername());
+		SVariables sv = (SVariables) model.getAttribute("sessionVariables");
+		sv.myself = user.getUsername();
+		model.addAttribute("sessionVariables",sv);
+		return gson.toJson("{\"type\": 0, \"message\" : \"ok\"}");
 
-			return gson.toJson("{\"type\": 0, \"message\" : \"ok\"}");
 	}
 
 }
