@@ -9,9 +9,9 @@ $(document).ready(function () {
                     success: function(data) {
                         result = JSON.parse(data)
                         console.log(result)
-                        //obj.textContent = result['title']
+                        obj.textContent = result['title']
                         desc.textContent = result['desc']
-                        //img.setAttribute('src', result['img'])
+                        img.setAttribute('src', result['img'])
                     }
                 })
 });
