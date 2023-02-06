@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script language="javascript" src="js/home.js" type="text/javascript"></script>
+
 
   <title>OkiboAnime</title>
   <h1 th:text="${username}"></h1>
@@ -43,6 +46,7 @@
   <header id="header" class="fixed-top ">
     <div class="container d-flex align-items-center justify-content-between">
       <h1 class="logo"><a href="/home">OkiboAnime</a></h1>
+      <div id="NameUser"></div>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -220,4 +224,5 @@
 
   <!-- Template Main JS File -->
   <script src="js/main.js"></script>
+
 </body>
