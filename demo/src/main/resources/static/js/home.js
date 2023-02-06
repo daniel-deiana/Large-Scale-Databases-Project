@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    console.log('ao')
+        const div = document.getElementById("NameUser")
+        const name = document.createElement('h1')
         $.ajax({
                     url : "/api/currentUser",
+                    dataType: 'json',
                     method : "get",
                     success: function(data) {
-                        data = JSON.parse(data)
-                        console.log(data)
-                        console.log(data["username"])
-                        name = document.createElement('h1')
-                        name.textContent = data['username']
+                        result = jQuery.parseJSON(data)
+                        name.textContent = "Welcome "+ result['username'] + "!"
+                        div.appendChild(name)
                     }
                 })
 });
