@@ -39,6 +39,10 @@ public class SignUpController {
 			SVariables sv = (SVariables) model.getAttribute("sessionVariables");
 			sv.myself = user.getUsername();
 			model.addAttribute("sessionVariables",sv);
+
+			// add to graph db
+			userService.addUserGraph(user.getUsername());
+
 			return gson.toJson("{\"type\": 0, \"message\" : \"ok\"}");
 	}
 

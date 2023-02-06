@@ -1,19 +1,24 @@
 package com.example.demo.Repository;
 import com.example.demo.Repository.MongoDB.UserRepositoryMongo;
+import com.example.demo.Repository.Neo4j.UserGraph;
+import com.example.demo.Repository.Neo4j.UserRepositoryNeo4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 import com.example.demo.Model.User;
+import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
 @Repository
 public class UserRepository {
+
 	@Autowired
 		private UserRepositoryMongo userMongo;
 	@Autowired
 		private MongoOperations mongoOperations;
-
+	@Autowired
+		private UserRepositoryNeo4j userNeo4j;
 	public boolean addUser(User user){
 			boolean result = true;
 			try{
@@ -59,6 +64,11 @@ public class UserRepository {
 			return false;
 		}
 		return true;
+	}
+
+
+	public Mono<UserGraph> addUserGraph(String username) {
+		return userNeo4j.save(new UserGraph(username));
 	}
 /*
     public Object findFollowerNumberByUsername(String username) {

@@ -5,6 +5,7 @@ import com.example.demo.DTO.CharacterDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.CharacterRepository;
+import com.example.demo.Repository.Neo4j.UserGraph;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ import java.util.Optional;
 
 @Service("mainUserService")
 public class UserService {
-
 		@Autowired
 		UserRepository userRepos;
 		@Autowired
@@ -97,4 +97,9 @@ public class UserService {
 
 		return userDTO;
 	}
+
+	public Boolean addUserGraph(String username) {
+				userRepos.addUserGraph(username);
+				return true;
+		}
 }
