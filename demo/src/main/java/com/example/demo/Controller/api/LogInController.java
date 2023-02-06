@@ -31,7 +31,6 @@ public class LogInController {
 	String hashed = Hashing.sha256()
 							.hashString(password, StandardCharsets.UTF_8)
 							.toString();
-
 	if(!hashed.equals(user.getPassword()))
 		return gson.toJson("{\"type\":2, \"message\": \"Wrong password\"}");
 	if(model.getAttribute("sessionVariables") == null)
