@@ -6,6 +6,8 @@ import java.util.List;
 
 public class SVariables {
     public String myself;
+    public String animeToDisplay;
+
 
     //public List<Anime> current_results;
     public int currentPage;
@@ -17,7 +19,7 @@ public class SVariables {
     public String toString() {
         return "SessionVariables{" +
                 "myself='" + myself + '\'' +
-                //", animeToDisplay='" + animeToDisplay + '\'' +
+                ", animeToDisplay='" + animeToDisplay + '\'' +
                 //", userToDisplay='" + userToDisplay + '\'' +
                 '}';
     }

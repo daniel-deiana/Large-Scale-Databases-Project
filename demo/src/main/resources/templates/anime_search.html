@@ -8,6 +8,9 @@
   <title>OkiboAnime</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script language="javascript" src="js/anime_search.js" type="text/javascript"></script>
+
 
   <!-- Favicons -->
   <link href="img/hero-img.png" rel="icon">
@@ -69,8 +72,8 @@
               <div style="display: flex; flex-direction: column; gap: 15px;">
                 <h1 style="font-size: 30px;">Search an Anime by its title</h1>
                 <div style="display: flex; gap: 15px;">
-                  <input class="form-control" type="text" placeholder="Dragonall" style="text-align: center;">
-                  <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Search</a>
+                  <input id="title" class="form-control" type="text" placeholder="Dragonall" style="text-align: center;">
+                  <a id="search_button" class="btn-get-started scrollto" style=" text-align: center; margin: auto;">Search</a>
                 </div>
                 <div style="display: flex; gap: 15px;">
                   <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Query 1</a>
