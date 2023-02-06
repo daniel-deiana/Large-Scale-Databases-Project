@@ -5,9 +5,10 @@ $(document).ready(function () {
                     method : "get",
                     success: function(data) {
                         data = JSON.parse(data)
-                        //let h1 = document.getElementById("NameUser").value
-                        //console.log(h1)
                         console.log(data)
+                        console.log(data["username"])
+                        name = document.createElement('h1')
+                        name.textContent = data['username']
                     }
                 })
 });
