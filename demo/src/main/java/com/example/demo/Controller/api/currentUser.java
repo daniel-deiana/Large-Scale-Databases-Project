@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class currentUser {
     @Autowired
     UserService userService;
+
     @RequestMapping("/api/currentUser")
-        public @ResponseBody String returnUserName(Model model){
-        String username;
+    public @ResponseBody String returnUserName(Model model) {
         Gson gson = new Gson();
         SVariables sv = (SVariables) model.getAttribute("sessionVariables");
-        if(sv == null||sv.myself==null){
+        if (sv == null || sv.myself == null) {
             return gson.toJson("{\"type\":1, \"message\": \"Something went wrong\"}");
-        } else {
-            username = sv.myself;
         }
-        return gson.toJson("{\"type\":0, \"message\": \"ok\", \"username\":" + username+"}");}
+        return gson.toJson("{\"type\":0, \"message\": \"ok\", \"username\":\"" + sv.myself + "\"}");
+    }
 }
