@@ -60,7 +60,10 @@ public class UserRepository {
 		}
 		return true;
 	}
-	// 2. Get item by name
+/*
+    public Object findFollowerNumberByUsername(String username) {
+    }
+    // 2. Get item by name
 		 /* 
 	public void getGroceryItemByName(String name) {
 		System.out.println("Getting item by name: " + name);

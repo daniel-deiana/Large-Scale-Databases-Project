@@ -1,10 +1,13 @@
 package com.example.demo.Model;
 
+import com.example.demo.DTO.ReviewDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "users")
 public class User {
@@ -20,6 +23,9 @@ public class User {
 		private String hashed_password;
 		@Field("country")
 		private String country;
+
+		@Field("reviews")
+		private List<Review> mostRecentReviews = new ArrayList<>();
 
 		@Field("admin")
 		private boolean admin;
@@ -43,4 +49,13 @@ public class User {
 		public boolean isAdmin() {
 			return admin;
 		}
+
+		public String getCountry() { return country;}
+
+		public List<Review> getMostRecentReviews() { return mostRecentReviews;}
+		public void setMostRecentReviews(List<Review> mostRecentPosts) { this.mostRecentReviews = mostRecentPosts; }
+
+		public String getGender() { return gender;}
+
+		public String getBirthday() { return birthday;}
 }
