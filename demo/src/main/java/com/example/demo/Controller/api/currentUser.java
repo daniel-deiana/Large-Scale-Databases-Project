@@ -1,6 +1,5 @@
 package com.example.demo.Controller.api;
 
-import com.example.demo.DOT.UserDTO;
 import com.example.demo.Service.UserService;
 import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
