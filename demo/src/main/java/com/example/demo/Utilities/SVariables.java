@@ -6,8 +6,6 @@ import java.util.List;
 
 public class SVariables {
     public String myself;
-    public String animeToDisplay;
-    public String userToDisplay;
 
     //public List<Anime> current_results;
     public int currentPage;
@@ -23,4 +21,5 @@ public class SVariables {
                 ", userToDisplay='" + userToDisplay + '\'' +
                 '}';
     }
+
 }
