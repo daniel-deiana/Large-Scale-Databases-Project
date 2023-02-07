@@ -19,7 +19,12 @@ public class AnimeService {
 			Optional<Anime> result = animeRepos.getAnimeByTitle(title);
 			if (result.isEmpty())
 				return null;
-			return new AnimeDTO(result.get().getTitle(),result.get().getSynopsis(), result.get().getImg_url());
+			return new AnimeDTO(
+					result.get().getTitle(),
+					result.get().getSynopsis(),
+					result.get().getImg_url(),
+					result.get().getFigures()
+			);
 		}
 
 }

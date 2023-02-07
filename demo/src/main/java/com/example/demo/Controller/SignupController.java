@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("sessionVariables")
 public class SignupController {
 		@GetMapping("/signup")
-		public String signup(Model model) {
-			if(model.getAttribute("sessionVariables") == null)
-				model.addAttribute("sessionVariables", new SVariables());
+		public String signup() {
+
 						return "signup";
 		}
 }

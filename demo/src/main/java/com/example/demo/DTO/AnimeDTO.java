@@ -1,9 +1,11 @@
 package com.example.demo.DOT;
 
+import com.example.demo.DTO.FigureDTO;
+import com.example.demo.DTO.ReviewDTO;
+import com.example.demo.Model.Figure;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 @NoArgsConstructor
 public class AnimeDTO {
@@ -15,17 +17,34 @@ public class AnimeDTO {
     private String episodes;
     private String img_url;
     //private String aired_bool;
-    private List<String> reviews;
-    private List<String> characters;
+    private List<ReviewDTO> reviews;
+    private List<FigureDTO> figures;
 
 
     private boolean isMyself;
 
-    public AnimeDTO(String title, String synopsis, String img_url) {
+    public AnimeDTO(String title, String synopsis, String img_url, List<Figure> figures_list) {
         this.title = title;
         this.synopsis = synopsis;
         this.img_url = img_url;
+        setFigures(figures_list);
     }
+
+    public void setFigures(List<Figure> characters) {
+        List<FigureDTO> characterDTOList = new ArrayList<>();
+        for (Figure fig : characters) {
+            FigureDTO characterDTO = new FigureDTO(
+                    fig.getCharacterName(),
+                    fig.getAnime(),
+                    fig.getGender(),
+                    fig.getUrl(),
+                    fig.getDescription()
+            );
+            characterDTOList.add(characterDTO);
+        }
+        this.figures =  characterDTOList;
+    }
+
 
     private boolean isMyself(){
         return isMyself;
@@ -46,4 +65,8 @@ public class AnimeDTO {
     public String getImg_url() {
         return img_url;
     }
+    public List<FigureDTO> getCharacters() {
+        return figures;
+    }
+
 }

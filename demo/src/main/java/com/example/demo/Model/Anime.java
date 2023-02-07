@@ -26,14 +26,15 @@ public class Anime {
 		@Field("aired_bool")
 		private String aired_bool;
 		@Field("reviews")
-		private List<String> reviews;
+		private List<Review> reviews;
 		@Field("characters")
-		private List<String> characters;
+		private List<Figure> figures;
 
-		public Anime(String title, String synopsis, String img_url){
+		public Anime(String title, String synopsis, String img_url, List<Figure> characters){
 				this.title = title;
 				this.synopsis = synopsis;
 				this.img_url = img_url;
+				this.figures = characters;
 		}
 
 		public Anime(){}
@@ -45,6 +46,9 @@ public class Anime {
 		}
 		public String getImg_url() {
 		return img_url;
+	}
+		public List<Figure> getFigures() {
+		return figures;
 	}
 
 }
