@@ -1,6 +1,7 @@
 package com.example.demo.Controller.api;
 
 import com.example.demo.Model.User;
+import com.example.demo.Repository.Neo4j.Neo4jManager;
 import com.example.demo.Service.UserService;
 import com.example.demo.Utilities.SVariables;
 import com.google.common.hash.Hashing;
@@ -13,14 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 @SessionAttributes("sessionVariables")
 @RestController
 public class SignUpController {
+
+		private Neo4jManager manager = new Neo4jManager();
 	@Autowired
 	UserService userService;
-	@PostMapping("/api/signup")
+
+
+
+
+		@PostMapping("/api/signup")
 		public String signup(Model model,
 												 @RequestParam(value = "username") String username,
 												 @RequestParam(value = "gender") String gender,
@@ -40,7 +46,9 @@ public class SignUpController {
 		SVariables sv = (SVariables) model.getAttribute("sessionVariables");
 		sv.myself = user.getUsername();
 		model.addAttribute("sessionVariables",sv);
+		manager.connect();
 		return gson.toJson("{\"type\": 0, \"message\" : \"ok\"}");
+
 
 	}
 
