@@ -65,6 +65,7 @@ public class UserDTO {
             reviewDTO.setUser(review.getUser());
             reviewDTO.setTimestamp(review.getTimestamp());
             reviewDTO.setText(review.getText());
+            reviewDTO.setScore(review.getScore());
             reviewDTOList.add(reviewDTO);
         }
         this.mostRecentReviews =  reviewDTOList;

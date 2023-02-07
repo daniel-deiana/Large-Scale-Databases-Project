@@ -20,12 +20,15 @@ public class Review {
     private String user;
     private String anime;
     private String text;
+
+    private Integer score;
     private String timestamp;
 
-    public Review(String user, String anime, String text) {
+    public Review(String user, String anime, String text, Integer score) {
         this.user = user;
         this.anime = anime;
         this.text = text;
+        this.score = score;
         this.timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
                 .format(Calendar.getInstance().getTime());
     }
@@ -39,7 +42,12 @@ public class Review {
     public String getUser() {
         return user;
     }
-    public void setUser(String user) {
+    public void setUser(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getScore() {return score;}
+    public void setScore(String user) {
         this.user = user;
     }
     public String getAnime() {

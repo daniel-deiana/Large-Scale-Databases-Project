@@ -58,6 +58,7 @@ public class UserService {
 		userDTO.setBirthday(result.get().getBirthday());
 		userDTO.setCountry(result.get().getCountry());
 		userDTO.setMostRecentReviews(result.get().getMostRecentReviews(), username);
+
 		//userDTO.setFollowers(userRepos.findFollowerNumberByUsername(username));
 		/*
 		if(myself != null){
