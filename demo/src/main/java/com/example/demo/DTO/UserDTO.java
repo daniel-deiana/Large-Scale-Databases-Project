@@ -4,7 +4,6 @@ import com.example.demo.Model.Review;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 @NoArgsConstructor
 public class UserDTO {
@@ -62,7 +61,7 @@ public class UserDTO {
             ReviewDTO reviewDTO = new ReviewDTO();
             reviewDTO.setId(review.getId());
             reviewDTO.setAnime(review.getAnime());
-            reviewDTO.setUser(review.getUser());
+            reviewDTO.setProfile(review.getProfile());
             reviewDTO.setTimestamp(review.getTimestamp());
             reviewDTO.setText(review.getText());
             reviewDTO.setScore(review.getScore());
