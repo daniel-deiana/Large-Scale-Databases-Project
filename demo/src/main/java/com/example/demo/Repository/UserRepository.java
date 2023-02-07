@@ -1,6 +1,7 @@
 package com.example.demo.Repository;
 import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.ReviewDTO;
+import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
 import com.example.demo.Repository.MongoDB.UserRepositoryMongo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.Model.User;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,20 +70,7 @@ public class UserRepository {
 		}
 		return true;
 	}
-/*
-	public List<AnimeDTO> getAnimeReviewedByUsername(String username) {
-		List<AnimeDTO> animeList = null;
-		List<ReviewDTO> revList = null;
-		try{
-			revList.addAll(revMongo.findByProfile(username));
-			if(revList.isEmpty())
-				return null;
-		} catch (Exception e){
-			e.printStackTrace();
-			return null;
-		}
-		for()
-	}
+
 /*
     public Object findFollowerNumberByUsername(String username) {
     }
