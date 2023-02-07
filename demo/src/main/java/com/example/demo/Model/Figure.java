@@ -6,14 +6,14 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 
 @Document(collection = "users")
-public class Character {
+public class Figure {
     @Id
     private String id;
     @Field("name")
     private String name;
     @Field("gender")
     private String gender;
-    @Field("Description")
+    @Field("description")
     private String description;
     @Field("url")
     private String url;
@@ -28,7 +28,7 @@ public class Character {
     @Field("Hate Rank")
     private String hateRank;
 
-    public Character(String name,String gender,String description,String url,String anime){
+    public Figure(String name, String gender, String description, String url, String anime){
         this.name = name;
         this.gender = gender;
         this.description = description;
@@ -36,10 +36,24 @@ public class Character {
         this.anime = anime;
     }
 
-    public Character(){}
+    public Figure(){}
     public String getCharacterName() {
         return name;
     }
+    public String getAnime() {
+        return anime;
+    }
+    public String getUrl() {
+        return url;
+    }
+    public String getGender() {
+        return gender;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+
     public String getAnimeByCharacterName(String name) {
         return anime;
     }

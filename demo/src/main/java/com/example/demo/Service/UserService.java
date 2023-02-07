@@ -1,17 +1,13 @@
 package com.example.demo.Service;
 
 
-import com.example.demo.DTO.CharacterDTO;
+import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.CharacterRepository;
-import com.example.demo.Repository.Neo4j.UserGraph;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +37,7 @@ public class UserService {
 		return userRepos.checkAdmin(username);
 	}
 
-		public List<CharacterDTO> openPack(){
+		public List<FigureDTO> openPack(){
 			return characterRepos.openPack();
 		}
 

@@ -1,5 +1,5 @@
 package com.example.demo.Repository;
-import com.example.demo.DTO.CharacterDTO;
+import com.example.demo.DTO.FigureDTO;
 import com.example.demo.Repository.MongoDB.CharacterRepositoryMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -17,8 +17,8 @@ public class CharacterRepository {
     @Autowired
     private MongoOperations mongoOperations;
 
-    public List<CharacterDTO> openPack() {
-        List<CharacterDTO> result = new ArrayList<>();
+    public List<FigureDTO> openPack() {
+        List<FigureDTO> result = new ArrayList<>();
         try {
             result.addAll(characterMongo.findAll());
         } catch(Exception e){
