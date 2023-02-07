@@ -1,4 +1,4 @@
-package com.example.demo.DOT;
+package com.example.demo.DTO;
 
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.ReviewDTO;

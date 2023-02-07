@@ -5,7 +5,7 @@ import com.example.demo.Model.Figure;
 import com.example.demo.Service.AnimeService;
 import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
-import com.example.demo.DOT.AnimeDTO;
+import com.example.demo.DTO.AnimeDTO;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -34,7 +34,6 @@ public class currentAnime {
             return gson.toJson("{\"type\":1, \"message\": \"Inexistent anime\"}");
         String desc = anime.getSynopsis().replace("\n", " ");
         List<FigureDTO> characters = anime.getCharacters();
-        characters.
         return gson.toJson(
                 "{\"title\":\"" + sv.animeToDisplay + "\"," +
                         "\"desc\":\"" + desc + "\"," +

@@ -3,6 +3,7 @@ package com.example.demo.Service;
 
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.UserDTO;
+import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.CharacterRepository;
 import com.example.demo.Repository.UserRepository;
@@ -19,6 +20,7 @@ public class UserService {
 		UserRepository userRepos;
 		@Autowired
 		CharacterRepository characterRepos;
+
 		public boolean addUser(User user){
 				if (!userRepos.addUser(user))
 					return false;
@@ -41,6 +43,11 @@ public class UserService {
 			return characterRepos.openPack();
 		}
 
+/*
+		public List<String> getReviews(String username){
+			List<Review> = userRepos.getAnimeReviewedByUsername(username);
+		}
+*/
 	public UserDTO loadProfile(String username, String myself) {
 		Optional<User> result = userRepos.getUserByUsername(username);
 		if(result.isEmpty())

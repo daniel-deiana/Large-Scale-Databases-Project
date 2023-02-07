@@ -1,6 +1,6 @@
 package com.example.demo.Controller.api;
 
-import com.example.demo.DOT.AnimeDTO;
+import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.Service.AnimeService;
 import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
