@@ -1,5 +1,7 @@
 package com.example.demo.Controller.api;
 
+import com.example.demo.DTO.FigureDTO;
+import com.example.demo.Model.Figure;
 import com.example.demo.Service.AnimeService;
 import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import java.util.List;
 
 @RestController
 @SessionAttributes("sessionVariables")
@@ -29,6 +33,13 @@ public class currentAnime {
         if(anime==null)
             return gson.toJson("{\"type\":1, \"message\": \"Inexistent anime\"}");
         String desc = anime.getSynopsis().replace("\n", " ");
-        return gson.toJson("{\"title\":\"" + sv.animeToDisplay + "\"," + "\"desc\":\"" + desc + "\"," + "\"img\":\"" + anime.getImg_url() + "\"}");
+        List<FigureDTO> characters = anime.getCharacters();
+        characters.
+        return gson.toJson(
+                "{\"title\":\"" + sv.animeToDisplay + "\"," +
+                        "\"desc\":\"" + desc + "\"," +
+                        "\"img\":\"" + anime.getImg_url() + "\"," +
+                        "\"characters\":\"" + characters + "\"}"
+        );
     }
 }

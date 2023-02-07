@@ -1,19 +1,23 @@
 package com.example.demo.DTO;
 
 import lombok.NoArgsConstructor;
-import java.util.Date;
+
 @NoArgsConstructor
-public class CharacterDTO {
+public class FigureDTO {
     private String name;
     private String anime;
-    private Date gender;
+    private String gender;
     private String url;
     private String description;
 
     private boolean isMyself;
 
-    public CharacterDTO(String name) {
+    public FigureDTO(String name, String anime, String gender, String url, String description) {
         this.name = name;
+        this.anime = anime;
+        this.gender = gender;
+        this.url = url;
+        this.description = description;
     }
 
     private boolean isMyself(){

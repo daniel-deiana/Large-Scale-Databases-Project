@@ -12,6 +12,10 @@ $(document).ready(function () {
                         obj.textContent = result['title']
                         desc.textContent = result['desc']
                         img.setAttribute('src', result['img'])
+                        let characters = result['characters']
+                        characters.
+                        console.log(characters)
+
                     }
-                })
+        })
 });

@@ -1,7 +1,7 @@
 package com.example.demo.Service;
 
 
-import com.example.demo.DTO.CharacterDTO;
+import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.CharacterRepository;
@@ -37,7 +37,7 @@ public class UserService {
 		return userRepos.checkAdmin(username);
 	}
 
-		public List<CharacterDTO> openPack(){
+		public List<FigureDTO> openPack(){
 			return characterRepos.openPack();
 		}
 
