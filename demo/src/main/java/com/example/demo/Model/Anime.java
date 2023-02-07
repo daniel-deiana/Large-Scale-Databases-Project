@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "anime")
@@ -28,7 +29,7 @@ public class Anime {
 		@Field("reviews")
 		private List<Review> reviews;
 		@Field("characters")
-		private List<Figure> figures;
+		private List<Figure> figures = new ArrayList<>();
 
 		public Anime(String title, String synopsis, String img_url, List<Figure> characters){
 				this.title = title;

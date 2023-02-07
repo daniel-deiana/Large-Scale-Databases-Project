@@ -5,17 +5,29 @@ $(document).ready(function () {
         $.ajax({
                     url : "/api/currentAnime",
                     method : "get",
-                    dataType: "json",
                     success: function(data) {
                         result = JSON.parse(data)
                         console.log(result)
                         obj.textContent = result['title']
-                        desc.textContent = result['desc']
-                        img.setAttribute('src', result['img'])
-                        let characters = result['characters']
-                        characters.
-                        console.log(characters)
+                        desc.textContent = result['synopsis']
+                        img.setAttribute('src', result['img_url'])
+                        let characters = result['figures']
+                        for (fig in characters){
+                            let html = '' +
+                                '<div">\n' +
+                                '            <div>\n' +
+                                '              <img src='+ characters[fig].url +' class="img-fluid" alt="">\n' +
+                                '              <div>\n' +
+                                '                <h4>'+ characters[fig].name + '</h4>\n' +
+                                '              </div>\n' +
+                                '              <div>\n' +
+                                '                <a href="characters.html" title="More Details"><i class="bx bx-link"></i></a>\n' +
+                                '              </div>\n' +
+                                '            </div>\n' +
+                                '          </div>'
+                            $('#figures').append(html)
 
+                        }
                     }
         })
 });
