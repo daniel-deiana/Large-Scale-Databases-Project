@@ -6,17 +6,18 @@ import lombok.NoArgsConstructor;
 public class ReviewDTO {
     private String id;
     private String profile;
-    private String anime;
+
+    private String anime_uid;
     private String text;
 
     private Integer score;
 
     private String timestamp;
 
-    public ReviewDTO(String id, String user, String anime, String text, String timestamp, Integer score) {
+    public ReviewDTO(String id, String user, String anime_uid, String text, String timestamp, Integer score) {
         this.id = id;
         this.profile = user;
-        this.anime = anime;
+        this.anime_uid = anime_uid;
         this.text = text;
         this.timestamp = timestamp;
         this.score = score;
@@ -25,7 +26,7 @@ public class ReviewDTO {
     //for anime
     public ReviewDTO(String user, String anime, String text, Integer score) {
         this.profile = user;
-        this.anime = anime;
+        this.anime_uid = anime;
         this.text = text;
         this.score = score;
     }
@@ -35,8 +36,8 @@ public class ReviewDTO {
 
     public Integer getScore() { return score; }
     public void setScore(Integer score) { this.score = score; }
-    public String getAnime() { return anime; }
-    public void setAnime(String anime) { this.anime = anime; }
+    public String getAnime() { return anime_uid; }
+    public void setAnime(String anime) { this.anime_uid = anime; }
     public String getProfile() {
         return profile;
     }

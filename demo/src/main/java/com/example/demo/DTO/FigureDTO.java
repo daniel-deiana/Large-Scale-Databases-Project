@@ -20,6 +20,8 @@ public class FigureDTO {
         this.description = description;
     }
 
+    public FigureDTO(String name,String url){this.name = name; this.url = url;}
+
     private boolean isMyself(){
         return isMyself;
     }
@@ -30,5 +32,8 @@ public class FigureDTO {
 
     public String getAnime(String name) {
         return anime;
+    }
+
+    public String getUrl() { return url;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.demo.Service;
 
 
-import com.example.demo.DOT.AnimeDTO;
+import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Repository.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

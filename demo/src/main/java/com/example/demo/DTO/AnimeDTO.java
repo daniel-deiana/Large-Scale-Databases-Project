@@ -1,4 +1,4 @@
-package com.example.demo.DOT;
+package com.example.demo.DTO;
 
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.ReviewDTO;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 @NoArgsConstructor
 public class AnimeDTO {
-    //private Date uid;
+    private String uid;
     private String title;
     private String synopsis;
     //private String genre;
@@ -24,7 +24,7 @@ public class AnimeDTO {
 
     private boolean isMyself;
 
-    public AnimeDTO(String title, String synopsis, String img_url, List<Figure> figures_list,  List<Review> reviews) {
+    public AnimeDTO(String title,String synopsis, String img_url, List<Figure> figures_list,  List<Review> reviews) {
         this.title = title;
         this.synopsis = synopsis;
         this.img_url = img_url;
@@ -74,6 +74,8 @@ public class AnimeDTO {
         return title;
     }
 
+    public String getUid(){return uid;}
+
     public String getSynopsis() {
         return synopsis;
     }
@@ -81,8 +83,9 @@ public class AnimeDTO {
     public String getImg_url() {
         return img_url;
     }
-    public List<FigureDTO> getCharacters() {
+    public List<FigureDTO> getFigures() {
         return figures;
     }
+
 
 }

@@ -17,13 +17,5 @@ public class CharacterRepository {
     @Autowired
     private MongoOperations mongoOperations;
 
-    public List<FigureDTO> openPack() {
-        List<FigureDTO> result = new ArrayList<>();
-        try {
-            result.addAll(characterMongo.findAll());
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        return result;
-    }
+
 }

@@ -12,8 +12,8 @@ public class Anime {
 		@Id
 		private String id;
 
-		//@Field("uid")
-		//private String uid;
+		@Field("uid")
+		private String uid;
 		@Field("title")
 		private String title;
 		@Field("synopsis")
@@ -31,8 +31,9 @@ public class Anime {
 		@Field("characters")
 		private List<Figure> figures = new ArrayList<>();
 
-		public Anime(String title, String synopsis, String img_url, List<Figure> characters, List<Review> reviews){
+		public Anime(String title, String uid, String synopsis, String img_url, List<Figure> characters, List<Review> reviews){
 				this.title = title;
+				this.uid = uid;
 				this.synopsis = synopsis;
 				this.img_url = img_url;
 				this.figures = characters;

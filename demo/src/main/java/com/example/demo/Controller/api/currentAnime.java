@@ -7,7 +7,7 @@ import com.example.demo.Service.AnimeService;
 import com.example.demo.Utilities.SVariables;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
-import com.example.demo.DOT.AnimeDTO;
+import com.example.demo.DTO.AnimeDTO;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

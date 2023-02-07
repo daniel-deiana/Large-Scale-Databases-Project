@@ -24,4 +24,15 @@ public class AnimeRepository {
 		return anime;
 	}
 
+	///// DA CAMBIARE QUANDO VIENE MESSO IL NOME DELL'ANIME NELLE REVIEW//////
+
+	public Optional<Anime> getAnimeByUid(String uid) {
+		Optional<Anime> anime = Optional.empty();
+		try {
+			anime = animeMongo.findAnimeByUid(uid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return anime;
+	}
 }

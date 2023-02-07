@@ -1,4 +1,8 @@
 package com.example.demo.Repository;
+import com.example.demo.DTO.AnimeDTO;
+import com.example.demo.DTO.ReviewDTO;
+import com.example.demo.Model.Review;
+import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
 import com.example.demo.Repository.MongoDB.UserRepositoryMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -6,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.Model.User;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,6 +21,8 @@ public class UserRepository {
 		private UserRepositoryMongo userMongo;
 	@Autowired
 		private MongoOperations mongoOperations;
+	@Autowired
+		private ReviewRepositoryMongo revMongo;
 
 	public boolean addUser(User user){
 			boolean result = true;
@@ -62,6 +70,7 @@ public class UserRepository {
 		}
 		return true;
 	}
+
 /*
     public Object findFollowerNumberByUsername(String username) {
     }

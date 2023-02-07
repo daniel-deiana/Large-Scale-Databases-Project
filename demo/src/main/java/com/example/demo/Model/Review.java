@@ -10,12 +10,12 @@ import java.util.Calendar;
 
 @Data
 @NoArgsConstructor
-@Document(collection = "post")
+@Document(collection = "reviews")
 public class Review {
     @Id
     private String id;
     private String profile;
-    private String anime;
+    private String anime_uid;
     private String text;
 
     private Integer score;
@@ -23,7 +23,7 @@ public class Review {
 
     public Review(String user, String anime, String text, Integer score) {
         this.profile = user;
-        this.anime = anime;
+        this.anime_uid = anime;
         this.text = text;
         this.score = score;
         this.timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
@@ -48,10 +48,10 @@ public class Review {
         this.profile = user;
     }
     public String getAnime() {
-        return anime;
+        return anime_uid;
     }
     public void setGame(String anime) {
-        this.anime = anime;
+        this.anime_uid = anime;
     }
     public String getText() {
         return text;
