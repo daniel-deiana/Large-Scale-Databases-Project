@@ -35,8 +35,6 @@ public class currentAnime {
         AnimeDTO anime =  animeService.getAnime(sv.animeToDisplay);
         if(anime==null)
             return gson.toJson("{\"type\":1, \"message\": \"Inexistent anime\"}");
-        String desc = anime.getSynopsis().replace("\n", " ");
-        List<FigureDTO> characters_list = anime.getCharacters();
         return gson.toJson(anime);
     }
 }

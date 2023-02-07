@@ -4,12 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +14,7 @@ import java.util.Date;
 public class Review {
     @Id
     private String id;
-    private String user;
+    private String profile;
     private String anime;
     private String text;
 
@@ -25,7 +22,7 @@ public class Review {
     private String timestamp;
 
     public Review(String user, String anime, String text, Integer score) {
-        this.user = user;
+        this.profile = user;
         this.anime = anime;
         this.text = text;
         this.score = score;
@@ -39,16 +36,16 @@ public class Review {
     public void setId(String id) {
         this.id = id;
     }
-    public String getUser() {
-        return user;
+    public String getProfile() {
+        return profile;
     }
-    public void setUser(Integer score) {
+    public void setProfile(Integer score) {
         this.score = score;
     }
 
     public Integer getScore() {return score;}
     public void setScore(String user) {
-        this.user = user;
+        this.profile = user;
     }
     public String getAnime() {
         return anime;

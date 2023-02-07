@@ -23,7 +23,8 @@ public class AnimeService {
 					result.get().getTitle(),
 					result.get().getSynopsis(),
 					result.get().getImg_url(),
-					result.get().getFigures()
+					result.get().getFigures(),
+					result.get().getReviews()
 			);
 		}
 

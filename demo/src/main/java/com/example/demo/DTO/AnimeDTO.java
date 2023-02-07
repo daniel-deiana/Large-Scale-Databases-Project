@@ -3,6 +3,7 @@ package com.example.demo.DOT;
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.ReviewDTO;
 import com.example.demo.Model.Figure;
+import com.example.demo.Model.Review;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -23,11 +24,12 @@ public class AnimeDTO {
 
     private boolean isMyself;
 
-    public AnimeDTO(String title, String synopsis, String img_url, List<Figure> figures_list) {
+    public AnimeDTO(String title, String synopsis, String img_url, List<Figure> figures_list,  List<Review> reviews) {
         this.title = title;
         this.synopsis = synopsis;
         this.img_url = img_url;
         setFigures(figures_list);
+        setMostRecentReviews(reviews);
     }
 
     public void setFigures(List<Figure> characters) {
@@ -45,6 +47,20 @@ public class AnimeDTO {
         this.figures =  characterDTOList;
     }
 
+    public void setMostRecentReviews(List<Review> reviewList) {
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        for (Review review : reviewList) {
+            ReviewDTO reviewDTO = new ReviewDTO();
+            reviewDTO.setId(review.getId());
+            reviewDTO.setAnime(review.getAnime());
+            reviewDTO.setProfile(review.getProfile());
+            reviewDTO.setTimestamp(review.getTimestamp());
+            reviewDTO.setText(review.getText());
+            reviewDTO.setScore(review.getScore());
+            reviewDTOList.add(reviewDTO);
+        }
+        this.reviews =  reviewDTOList;
+    }
 
     private boolean isMyself(){
         return isMyself;

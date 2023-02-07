@@ -27,15 +27,16 @@ public class Anime {
 		@Field("aired_bool")
 		private String aired_bool;
 		@Field("reviews")
-		private List<Review> reviews;
+		private List<Review> reviews = new ArrayList<>();
 		@Field("characters")
 		private List<Figure> figures = new ArrayList<>();
 
-		public Anime(String title, String synopsis, String img_url, List<Figure> characters){
+		public Anime(String title, String synopsis, String img_url, List<Figure> characters, List<Review> reviews){
 				this.title = title;
 				this.synopsis = synopsis;
 				this.img_url = img_url;
 				this.figures = characters;
+				this.reviews = reviews;
 		}
 
 		public Anime(){}
@@ -50,6 +51,9 @@ public class Anime {
 	}
 		public List<Figure> getFigures() {
 		return figures;
+	}
+		public List<Review> getReviews() {
+		return reviews;
 	}
 
 }
