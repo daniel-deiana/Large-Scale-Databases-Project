@@ -1,10 +1,12 @@
 package com.example.demo.Repository;
 import com.example.demo.Model.Anime;
+import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -34,5 +36,21 @@ public class AnimeRepository {
 			e.printStackTrace();
 		}
 		return anime;
+	}
+
+    public List<Anime> getAllAnime() {
+		/*List<Anime> animeList;
+		try {
+			//animeList = animeMongo.findAnimeBy();
+			if (animeList.isEmpty())
+				return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return animeList;
+	}*/
+		return null;
 	}
 }

@@ -1,19 +1,20 @@
 $(document).ready(function () {
     document.getElementById("buy_button").onclick = function (e) {
         init_div = document.getElementById("change")
+        paste_button = document.getElementById("paste_button")
         init_div.style.display = 'None'
-        console.log('ao')
         $.ajax({
                             url : "/api/LoadPack",
                             method : "get",
                             success: function(data) {
-                                console.log('dati ricevuti')
                                 result = jQuery.parseJSON(data)
                                 console.log(result)
                                 for(fig in result){
-                                console.log(result[fig].name)
+                                    console.log(result[fig].name)
+                                    let html = '<div style= "display: flex; flex-direction: column; align-items: center; justify-content: center;"><img src="img/unkown_c.png" class="img-fluid animated" alt="" style="width = 80%; height= 80%;"><h2>' + result[fig].name +'</h2></div>'
+                                    $('#pack').append(html)
                                 }
-
+                                paste_button.style.display=""
                             }
                         })
     }

@@ -67,8 +67,36 @@ public class UserService {
 					figures.add(figure);
 				}
 			}
-		return figures;
-		}
+			int len = figures.size();
+			int i;
+			List<FigureDTO> pack = new ArrayList<>();
+			int num1 = -1;
+			int num2 = -1;
+
+			for(i =0; i<3; i++){
+					int rand = (int) Math.floor(Math.random() * len);
+					if(i==0){
+						num1 = rand;
+					}
+					else if(i==1){
+						if(rand==num1){
+							i--;
+							continue;
+						}
+						num2 = rand;
+					}
+					else {
+						if(rand==num1 || rand == num2){
+							i--;
+							continue;
+						}
+					}
+
+					pack.add(figures.get(rand));
+			}
+
+			return pack;
+	}
 
 	public UserDTO loadProfile(String username, String myself) {
 		Optional<User> result = userRepos.getUserByUsername(username);

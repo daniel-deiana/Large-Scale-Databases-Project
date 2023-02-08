@@ -34,6 +34,5 @@ public class FigureDTO {
         return anime;
     }
 
-    public String getUrl() { return url;
-    }
+    public String getUrl() { return url;}
 }
