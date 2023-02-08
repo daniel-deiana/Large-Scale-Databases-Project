@@ -22,7 +22,7 @@ public class UserRepository {
 	@Autowired
 		private MongoOperations mongoOperations;
 	@Autowired
-		private ReviewRepositoryMongo revMongo;
+	private ReviewRepositoryMongo revMongo;
 
 	public boolean addUser(User user){
 			boolean result = true;
@@ -33,7 +33,7 @@ public class UserRepository {
 					result = false;
 			}
 			return result;
-		}
+	}
 
 	public boolean deleteUser(User user) {
 		boolean result = true;

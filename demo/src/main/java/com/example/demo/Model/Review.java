@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,16 +15,23 @@ import java.util.Calendar;
 public class Review {
     @Id
     private String id;
-    private String profile;
-    private String anime_uid;
-    private String text;
 
+    @Field("uid")
+    private String uid;
+    @Field("profile")
+    private String profile;
+    @Field("anime_uid")
+    private String anime;
+    @Field("text")
+    private String text;
+    @Field("score")
     private Integer score;
+    @Field("timestamp")
     private String timestamp;
 
     public Review(String user, String anime, String text, Integer score) {
         this.profile = user;
-        this.anime_uid = anime;
+        this.anime = anime;
         this.text = text;
         this.score = score;
         this.timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
@@ -48,10 +56,10 @@ public class Review {
         this.profile = user;
     }
     public String getAnime() {
-        return anime_uid;
+        return anime;
     }
     public void setGame(String anime) {
-        this.anime_uid = anime;
+        this.anime = anime;
     }
     public String getText() {
         return text;

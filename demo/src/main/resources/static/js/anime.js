@@ -41,12 +41,30 @@ $(document).ready(function () {
 
 
 function make_review(){
-    let area = document.getElementById("text_review")
-    if(area.value === ""){
+    let text = document.getElementById("text_review").value
+    let score = document.getElementById("score_review").value
+    if(!text || !score){
         alert("Write a review first")
+        return
     }
+    score = parseInt(score)
+    $.ajax({
+        url : "/api/MakeReview",
+        dataType : 'json',
+        data : {text_review: text, score_review: score},
+        method : "post",
+        success: function(data) {
+            result = JSON.parse(data)
+            console.log(result)
+            console.log(typeof(result))
+            if(result["type"] === 1) {
+                alert("You have already reviewed this anime!")
+            }
+            else
+                alert("Your review has been correctly registered!")
 
-    // Guardo se lo user ha già fatto la review per questo anime
+        }
+    })
 
-    // Aggiungo la review al database
+
 }
