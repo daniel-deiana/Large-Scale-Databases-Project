@@ -25,7 +25,7 @@ public class User {
 		private String country;
 
 		@Field("reviews")
-		private List<Review> mostRecentReviews = new ArrayList<>();
+		private List<Review> mostRecentReviews;
 
 		@Field("admin")
 		private boolean admin;
@@ -35,7 +35,8 @@ public class User {
 				this.birthday = date;
 				this.gender = gender;
 				this.hashed_password = hashed_password;
-				this.country = country; 
+				this.country = country;
+				this.mostRecentReviews = new ArrayList<>();
 		}
 
 		public User(){}
@@ -58,4 +59,6 @@ public class User {
 		public String getGender() { return gender;}
 
 		public String getBirthday() { return birthday;}
+		public List<Review>  getReview() { return mostRecentReviews;}
+
 }
