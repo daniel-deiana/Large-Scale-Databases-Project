@@ -3,13 +3,11 @@ package com.example.demo.Service;
 
 import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.FigureDTO;
-import com.example.demo.DTO.ReviewDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.AnimeRepository;
-import com.example.demo.Repository.CharacterRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +29,14 @@ public class UserService {
 		AnimeRepository animeRepos;
 
 		public boolean addUser(User user){
-				if (!userRepos.addUser(user))
-					return false;
-				return true;
-				// aggiungi neo4j
+			return userRepos.addUser(user);
+			// aggiungi neo4j
+		}
+		public boolean addReview(Review review){
+			if (revRepos.getReviewsByUsernameAndAnime(review.getProfile(), review.getAnime()))
+				return false;
+			revRepos.addReview(review);
+			return true;
 		}
 
 
