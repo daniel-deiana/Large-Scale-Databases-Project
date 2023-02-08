@@ -1,6 +1,4 @@
 package com.example.demo.Repository;
-import com.example.demo.DTO.AnimeDTO;
-import com.example.demo.DTO.ReviewDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
 import com.example.demo.Repository.MongoDB.UserRepositoryMongo;
@@ -8,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 import com.example.demo.Model.User;
-import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +30,26 @@ public class UserRepository {
 			}
 			return result;
 	}
+
+	//This function update the list of the most recent reviews of a user when a new review is added
+	public void updateMostReviewed(Review review){
+		try {
+			Optional<User> user = userMongo.findByUsername(review.getProfile());
+			List<Review> reviewList = user.get().getMostRecentReviews();
+			if(reviewList.size() >= 5) {
+				reviewList.remove(4);
+				reviewList.add(0, review);
+			}
+			else {
+				reviewList.add(0, review);
+			}
+			user.get().setMostRecentReviews(reviewList);
+			userMongo.save(user.get());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	public boolean deleteUser(User user) {
 		boolean result = true;

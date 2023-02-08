@@ -18,7 +18,7 @@ $(document).ready(function() {
             birthday.textContent = "Birthday: " + data['birthday']
             reviews = data['mostRecentReviews']
             for(rev in reviews){
-                let html = '<div class="swiper-slide"><div class="testimonial-item"><p id="rev1"><i class="bx bxs-quote-alt-left quote-icon-left"></i>' + reviews[rev].text + '<i class="bx bxs-quote-alt-right quote-icon-right"></i></p><img src="../img/unkown_c.png" class="testimonial-img" alt=""><h3>' + reviews[rev].anime +' - '+ reviews[rev].score+'</h3><h4>'+data['username']+'</h4></div></div>'
+                let html = '<div class="swiper-slide"><div class="testimonial-item"><p id="rev1"><i class="bx bxs-quote-alt-left quote-icon-left"></i>' + reviews[rev].text + '<i class="bx bxs-quote-alt-right quote-icon-right"></i></p><img src="../img/unkown_c.png" class="testimonial-img" alt=""><h3>' + reviews[rev].anime_uid +' - '+ reviews[rev].score+'</h3><h4>'+data['username']+'</h4></div></div>'
                 $('#swiper').append(html)
             }
         }

@@ -36,6 +36,7 @@ public class UserService {
 			if (revRepos.getReviewsByUsernameAndAnime(review.getProfile(), review.getAnime()))
 				return false;
 			revRepos.addReview(review);
+			userRepos.updateMostReviewed(review);
 			return true;
 		}
 
