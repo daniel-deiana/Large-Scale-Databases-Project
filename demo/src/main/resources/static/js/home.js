@@ -11,4 +11,13 @@ $(document).ready(function () {
                         div.appendChild(name)
                     }
                 })
+
+        $.ajax({
+                            url : "/api/TopAnime",
+                            method : "get",
+                            success: function(data) {
+                                result = jQuery.parseJSON(data)
+                                console.log(result)
+                            }
+                        })
 });
