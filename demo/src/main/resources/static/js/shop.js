@@ -8,9 +8,7 @@ $(document).ready(function () {
                             method : "get",
                             success: function(data) {
                                 result = jQuery.parseJSON(data)
-                                console.log(result)
                                 for(fig in result){
-                                    console.log(result[fig].name)
                                     let html = '<div style= "display: flex; flex-direction: column; align-items: center; justify-content: center;"><img src="img/unkown_c.png" class="img-fluid animated" alt="" style="width = 80%; height= 80%;"><h2>' + result[fig].name +'</h2></div>'
                                     $('#pack').append(html)
                                 }
