@@ -24,92 +24,91 @@ import java.util.Optional;
 
 @Service("mainUserService")
 public class UserService {
-		Logger logger = LoggerFactory.getLogger(UserRepository.class);
-		@Autowired
-		UserRepository userRepos;
-		@Autowired
-		ReviewRepository revRepos;
+	Logger logger = LoggerFactory.getLogger(UserRepository.class);
+	@Autowired
+	UserRepository userRepos;
+	@Autowired
+	ReviewRepository revRepos;
 
-		@Autowired
-		AnimeRepository animeRepos;
-
-
-		public boolean addUser(User user){
-			return userRepos.addUser(user);
-			// aggiungi neo4j
-		}
-		public boolean addReview(Review review){
-			if (revRepos.getReviewsByUsernameAndAnime(review.getProfile(), review.getAnime()))
-				return false;
-			revRepos.addReview(review);
-			userRepos.updateMostReviewed(review);
-			return true;
-		}
+	@Autowired
+	AnimeRepository animeRepos;
 
 
-		public UserDTO getUser(String username) {
-			Optional<User> result = userRepos.getUserByUsername(username);
-			if (result.isEmpty())
-				return null;
-			return new UserDTO(result.get().getUsername(),result.get().getPassword());
-			}
-		public boolean isAdmin(String username) {
+	public boolean addUser(User user) {
+		return userRepos.addUser(user);
+		// aggiungi neo4j
+	}
+
+	public boolean addReview(Review review) {
+		if (revRepos.getReviewsByUsernameAndAnime(review.getProfile(), review.getAnime()))
+			return false;
+		revRepos.addReview(review);
+		userRepos.updateMostReviewed(review);
+		return true;
+	}
+
+
+	public UserDTO getUser(String username) {
+		Optional<User> result = userRepos.getUserByUsername(username);
+		if (result.isEmpty())
+			return null;
+		return new UserDTO(result.get().getUsername(), result.get().getPassword());
+	}
+
+	public boolean isAdmin(String username) {
 		return userRepos.checkAdmin(username);
 	}
 
 
+	public List<FigureDTO> getReviewedFigures(String username) {
+		List<Review> reviews;
+		reviews = revRepos.getReviewsByUsername(username);
+		List<FigureDTO> figures = new ArrayList<>();
+		for (Review rev : reviews) {
+			String name_anime = rev.getAnime();
+			Optional<Anime> result = animeRepos.getAnimeByUid(name_anime);
+			AnimeDTO anime = new AnimeDTO(result.get().getTitle(),
+					result.get().getSynopsis(),
+					result.get().getImg_url(),
+					result.get().getFigures(),
+					result.get().getReviews());
+			for (FigureDTO fig : anime.getFigures()) {
+				FigureDTO figure = new FigureDTO(fig.getName(), fig.getUrl());
+				figures.add(figure);
+			}
+		}
+		int len = figures.size();
+		int i;
+		List<FigureDTO> pack = new ArrayList<>();
+		int num1 = -1;
+		int num2 = -1;
 
-	public List<FigureDTO> getReviewedFigures(String username){
-			List<Review> reviews;
-			reviews = revRepos.getReviewsByUsername(username);
-			List<FigureDTO> figures = new ArrayList<>();
-			for(Review rev: reviews){
-				String name_anime =  rev.getAnime();
-				Optional<Anime> result = animeRepos.getAnimeByUid(name_anime);
-				AnimeDTO anime = new AnimeDTO(result.get().getTitle(),
-						result.get().getSynopsis(),
-						result.get().getImg_url(),
-						result.get().getFigures(),
-						result.get().getReviews());
-				for(FigureDTO fig: anime.getFigures()) {
-					FigureDTO figure = new FigureDTO(fig.getName(),fig.getUrl());
-					figures.add(figure);
+		for (i = 0; i < 3; i++) {
+			int rand = (int) Math.floor(Math.random() * len);
+			if (i == 0) {
+				num1 = rand;
+			} else if (i == 1) {
+				if (rand == num1) {
+					i--;
+					continue;
+				}
+				num2 = rand;
+			} else {
+				if (rand == num1 || rand == num2) {
+					i--;
+					continue;
 				}
 			}
-			int len = figures.size();
-			int i;
-			List<FigureDTO> pack = new ArrayList<>();
-			int num1 = -1;
-			int num2 = -1;
 
-			for(i =0; i<3; i++){
-					int rand = (int) Math.floor(Math.random() * len);
-					if(i==0){
-						num1 = rand;
-					}
-					else if(i==1){
-						if(rand==num1){
-							i--;
-							continue;
-						}
-						num2 = rand;
-					}
-					else {
-						if(rand==num1 || rand == num2){
-							i--;
-							continue;
-						}
-					}
+			pack.add(figures.get(rand));
+		}
 
-					pack.add(figures.get(rand));
-			}
-
-			return pack;
+		return pack;
 	}
 
 	public UserDTO loadProfile(String username, String myself) {
 		Optional<User> result = userRepos.getUserByUsername(username);
-		if(result.isEmpty())
+		if (result.isEmpty())
 			return null;
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUsername(result.get().getUsername());
@@ -136,8 +135,12 @@ public class UserService {
 	public int AddToTop10(String username, String name_character) {
 		return userRepos.AddToTop10(username, name_character);
 	}
+
 	public int removeFromTop10(String username, String name_character) {
 		return userRepos.removeFromTop10(username, name_character);
 	}
 
+	public void addHasCharacter(String username, List<FigureDTO> list_characters) {
+		userRepos.addHasCharacter(username, list_characters);
+	}
 }

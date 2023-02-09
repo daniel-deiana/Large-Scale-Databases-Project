@@ -15,8 +15,8 @@ $(document).ready(function () {
                                 '<img src="../img/unkown_c.png"  style="width: 50%; height: 50%" alt="">' +
                                 '<h3>'+ result[fig].name +'</h3>' +
                                 '<h4>'+ result[fig].anime+'</h4>' +
-                                '<a class="form-control" style=" text-align: center; margin: auto;" onclick="addToTop10(this.parentElement.childNodes[1].textContent)">Add to Top10</a>' +
-                                '<a class="form-control" style=" text-align: center; margin: auto;" onclick="removeFromTop10(this.parentElement.childNodes[1].textContent)">Remove from Top10</a>'+
+                                '<a class="form-control" style=" text-align: center; margin: auto; cursor: pointer;" onclick="addToTop10(this.parentElement.childNodes[1].textContent)">Add to Top10</a>' +
+                                '<a class="form-control" style=" text-align: center; margin: auto; cursor: pointer;" onclick="removeFromTop10(this.parentElement.childNodes[1].textContent)">Remove from Top10</a>'+
                                 '</div>' +
                                 '</div>'
                             $('#swiper').append(html)
@@ -51,8 +51,8 @@ function search_character(){
                 let html = '<img id="pic_anime" src='+ result.url +' alt=""> ' +
                     '<h1>'+ result.name +'</h1> ' +
                     '<h2>'+ result.anime +'</h2>' +
-                    '<a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="addToTop10(this.offsetParent.childNodes[2].textContent)">Add to Top10</a><br>' +
-                    '<a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="removeFromTop10(this.offsetParent.childNodes[2].textContent)">Remove from Top10</a>';
+                    '<a class="btn-get-started scrollto" style=" text-align: center; margin: auto; cursor: pointer;" onclick="addToTop10(this.offsetParent.childNodes[2].textContent)">Add to Top10</a><br>' +
+                    '<a class="btn-get-started scrollto" style=" text-align: center; margin: auto; cursor: pointer;" onclick="removeFromTop10(this.offsetParent.childNodes[2].textContent)">Remove from Top10</a>';
                 $('#characters_info').append(html)
             }
         }

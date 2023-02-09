@@ -177,4 +177,12 @@ public class UserRepository {
 		}
 		return 1;
 	}
+
+	public void addHasCharacter(String username, List<FigureDTO> list_characters) {
+		for (FigureDTO fig : list_characters) {
+			if (!neo4j.getCharacter(fig.getName(), username).isEmpty())
+				continue;
+			neo4j.addHasCharacter(username, fig.getName());
+		}
+	}
 }
