@@ -18,6 +18,12 @@ public class UserDTO {
 
     private boolean isMyself;
 
+    private boolean isfollowed;
+    private int numFollowers;
+    private int numFollowed;
+
+    private int CardOwned;
+
     public UserDTO(String username, String password) {
         this.username = username;
         this.password = password;
@@ -73,8 +79,19 @@ public class UserDTO {
         return mostRecentReviews;
     }
 
-    public void setFollowers(Object followerNumberByUsername) {
+    public void setFollowers(int followerNumberByUsername) {
+        this.numFollowers = followerNumberByUsername;
     }
+    public void setFollowedNum(int followedNumberByUsername) {
+        this.numFollowed = followedNumberByUsername;
+    }
+
+
+
+    public void setCardOwned(int numcardOwned) {
+        this.CardOwned = numcardOwned;
+    }
+
 
     public void setMyself(boolean equals) {
     }
@@ -83,5 +100,9 @@ public class UserDTO {
     }
 
     public void setBirthday(String birthday) { this.birthday = birthday;
+    }
+
+    public void setFollowed(boolean followed) {
+        this.isfollowed = followed;
     }
 }
