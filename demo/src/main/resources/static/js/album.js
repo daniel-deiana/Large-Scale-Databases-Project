@@ -1,4 +1,4 @@
-$(document).ready(function () {
+/*$(document).ready(function () {
         $.ajax({
                     url : "/api/currentAlbum",
                     method : "get",
@@ -35,18 +35,17 @@ $(document).ready(function () {
                     }
         })
 });
-
+*/
 
 function search_character(){
     let fig = document.getElementById("searched_char")
-    if(!fig.textContent){
+    if(!fig.value){
         alert("Write the name of a character first")
         return
     }
     $.ajax({
-        url : "/api/MakeReview",
-        dataType : 'json',
-        data : {name_fig: fig.textContent},
+        url : "/api/FindCharacter",
+        data : {name_fig: fig.value},
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
@@ -55,8 +54,13 @@ function search_character(){
             if(result["type"] === 1) {
                 alert("You have already reviewed this anime!")
             }
-            else
-                alert("Your review has been correctly registered!")
+            else{
+                let html = '<img id="pic_anime" src='+ result.url +' alt=""> ' +
+                    '<h1>'+ result.name +'</h1> ' +
+                    '<h2>'+ result.anime +'</h2>' + '';
+                $('#characters_info').append(html)
+
+            }
         }
     })
 
