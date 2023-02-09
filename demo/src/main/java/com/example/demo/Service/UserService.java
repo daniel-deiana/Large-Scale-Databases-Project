@@ -125,4 +125,8 @@ public class UserService {
 		return userRepos.getTop10(username);
 	}
 
+	public List<FigureDTO> loadCharacters(String username) {
+		return userRepos.getCharacters(username);
+	}
+
 }
