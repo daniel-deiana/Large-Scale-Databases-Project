@@ -31,11 +31,12 @@ public class currentAlbum {
     }
 
     @RequestMapping("/api/FindCharacter")
-    public @ResponseBody String returnCharacter(@RequestParam(value = "name_fig") String name) {
+    public @ResponseBody String returnCharacter(Model model, @RequestParam(value = "name_fig") String name) {
         Gson gson = new Gson();
-        FigureDTO fig =  animeService.getCharacter(name);
+        SVariables sv = (SVariables) model.getAttribute("sessionVariables");
+        FigureDTO fig =  animeService.getCharacter(name, sv.myself);
         if(fig==null)
-            return gson.toJson("{\"type\":1, \"message\": \"Inexistent anime\"}");
+            return gson.toJson(null);
         return gson.toJson(fig);
     }
 }
