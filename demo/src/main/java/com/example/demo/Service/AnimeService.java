@@ -62,8 +62,8 @@ public class AnimeService {
 
 	/////***** NEO4J *****/////
 
-	public FigureDTO getCharacter(String name) {
-		return characterRepository.findCharacter(name);
+	public FigureDTO getCharacter(String name, String username) {
+		return characterRepository.findCharacter(name, username);
 	}
 
 
