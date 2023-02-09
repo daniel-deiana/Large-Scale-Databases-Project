@@ -5,11 +5,15 @@ import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.Anime;
+import com.example.demo.Model.Figure;
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.AnimeRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
+import org.neo4j.driver.Record;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +24,7 @@ import java.util.Optional;
 
 @Service("mainUserService")
 public class UserService {
+		Logger logger = LoggerFactory.getLogger(UserRepository.class);
 		@Autowired
 		UserRepository userRepos;
 		@Autowired
@@ -27,6 +32,7 @@ public class UserService {
 
 		@Autowired
 		AnimeRepository animeRepos;
+
 
 		public boolean addUser(User user){
 			return userRepos.addUser(user);
@@ -105,8 +111,6 @@ public class UserService {
 		Optional<User> result = userRepos.getUserByUsername(username);
 		if(result.isEmpty())
 			return null;
-		//logger.warn(Long.toString(System.currentTimeMillis()));
-		// creating the DTO to show to the user
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUsername(result.get().getUsername());
 		userDTO.setPassword(result.get().getPassword());
@@ -114,45 +118,11 @@ public class UserService {
 		userDTO.setBirthday(result.get().getBirthday());
 		userDTO.setCountry(result.get().getCountry());
 		userDTO.setMostRecentReviews(result.get().getMostRecentReviews(), username);
-
-		//userDTO.setFollowers(userRepos.findFollowerNumberByUsername(username));
-		/*
-		if(myself != null){
-			if(!myself.equals(username)) {
-				List<InCommonGenericDTO> inCommonFollowers = userRepo.findInCommonFollowers(myself, username);
-				logger.warn(Long.toString(System.currentTimeMillis()));
-				List<Tournament> inCommonTournaments = tournamentRepo.getInCommonTournaments(myself, username);
-				logger.warn(Long.toString(System.currentTimeMillis()));
-				List<TournamentDTO> tournamentDTOList = new ArrayList<>();
-				for (Tournament t : inCommonTournaments) {
-					TournamentDTO tDTO = new TournamentDTO();
-					tDTO.setDate(t.getDate());
-					tDTO.setTournamentGame(t.getTournamentGame());
-					tDTO.setClosed(t.isClosed());
-					tournamentDTOList.add(tDTO);
-				}
-				userDTO.setInCommonFollowers(inCommonFollowers);
-				userDTO.setInCommonTournaments(tournamentDTOList);
-			} else {
-				List<Tournament> myTournaments = tournamentRepo.getTournamentsByUser(myself);
-				logger.warn(Long.toString(System.currentTimeMillis()));
-				List<TournamentDTO> tournamentDTOList = new ArrayList<>();
-				for (Tournament t : myTournaments) {
-					TournamentDTO tDTO = new TournamentDTO();
-					tDTO.setDate(t.getDate());
-					tDTO.setTournamentGame(t.getTournamentGame());
-					tDTO.setClosed(t.isClosed());
-					tournamentDTOList.add(tDTO);
-				}
-				userDTO.setInCommonTournaments(tournamentDTOList);
-			}
-
-			logger.warn(Long.toString(System.currentTimeMillis()));
-			userDTO.setFollowed(userRepo.isFollowed(myself, username));
-			logger.warn(Long.toString(System.currentTimeMillis()));
-		}*/
-
 		return userDTO;
+	}
+
+	public List<FigureDTO> loadTop10(String username, String myself) {
+		return userRepos.getTop10(username);
 	}
 
 }

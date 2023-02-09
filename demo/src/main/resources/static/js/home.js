@@ -13,7 +13,7 @@ $(document).ready(function () {
                 })
 
         $.ajax({
-                            url : "/api/TopAnime",
+                            url : "/api/Top10",
                             method : "get",
                             success: function(data) {
                                 result = jQuery.parseJSON(data)

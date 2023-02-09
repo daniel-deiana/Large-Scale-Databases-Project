@@ -1,7 +1,6 @@
 package com.example.demo.Controller.api;
 
 import com.example.demo.Model.User;
-import com.example.demo.Repository.Neo4j.Neo4jManager;
 import com.example.demo.Service.UserService;
 import com.example.demo.Utilities.SVariables;
 import com.google.common.hash.Hashing;
@@ -19,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 @RestController
 public class SignUpController {
 
-		private Neo4jManager manager = new Neo4jManager();
 	@Autowired
 	UserService userService;
 
@@ -46,7 +44,6 @@ public class SignUpController {
 		SVariables sv = (SVariables) model.getAttribute("sessionVariables");
 		sv.myself = user.getUsername();
 		model.addAttribute("sessionVariables",sv);
-		manager.connect();
 		return gson.toJson("{\"type\": 0, \"message\" : \"ok\"}");
 
 
