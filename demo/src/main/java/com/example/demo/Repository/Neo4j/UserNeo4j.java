@@ -22,7 +22,7 @@ public class UserNeo4j {
     */
     public List<Record> getTop10ByUsername(String username){
         try{
-            return neo4j.read("MATCH (n:Character) RETURN n LIMIT 25",null);
+            return neo4j.read("MATCH p=(:User{username:$username})-[r:ADDTOTOP10]->(m) RETURN m",parameters("username",username));
         } catch (Exception e){
             e.printStackTrace();
         }

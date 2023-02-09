@@ -54,7 +54,7 @@ public class User {
 		public String getCountry() { return country;}
 
 		public List<Review> getMostRecentReviews() { return mostRecentReviews;}
-		public void setMostRecentReviews(List<Review> mostRecentPosts) { this.mostRecentReviews = mostRecentPosts; }
+		public void setMostRecentReviews(List<Review> mostRecentReviews) { this.mostRecentReviews = mostRecentReviews; }
 
 		public String getGender() { return gender;}
 

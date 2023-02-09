@@ -33,10 +33,11 @@ public class LoadHome {
     public @ResponseBody String returnTop10(Model model) {
         Gson gson = new Gson();
         SVariables sv = (SVariables) model.getAttribute("sessionVariables");
-        List<FigureDTO> figures = userService.loadTop10("baekbeans", null);
+        List<FigureDTO> figures = userService.loadTop10(sv.myself, null);
         return gson.toJson(figures);
     }
 
 
 
 }
+
