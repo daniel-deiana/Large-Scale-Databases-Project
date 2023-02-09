@@ -3,6 +3,7 @@ package com.example.demo.Controller.api;
 import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.Service.AnimeService;
+import com.example.demo.Service.UserService;
 import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import java.util.List;
 public class currentAlbum {
     @Autowired
     AnimeService animeService;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping("/api/currentAlbum")
     public @ResponseBody String returnAlbum(Model model) {
@@ -38,5 +42,13 @@ public class currentAlbum {
         if(fig==null)
             return gson.toJson(null);
         return gson.toJson(fig);
+    }
+
+    @RequestMapping("/api/GetCharacters")
+    public @ResponseBody String returnTop10(Model model) {
+        Gson gson = new Gson();
+        SVariables sv = (SVariables) model.getAttribute("sessionVariables");
+        List<FigureDTO> figures = userService.loadCharacters(sv.myself);
+        return gson.toJson(figures);
     }
 }

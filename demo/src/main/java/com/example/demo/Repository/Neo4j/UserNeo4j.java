@@ -29,5 +29,14 @@ public class UserNeo4j {
         return null;
     }
 
+    public List<Record> getCharacters(String username){
+        try{
+            return neo4j.read("MATCH p=(:User{username:$username})-[r:HAS]->(m) RETURN m LIMIT 25",parameters("username",username));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
