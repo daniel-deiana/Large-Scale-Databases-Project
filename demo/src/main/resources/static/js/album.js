@@ -43,6 +43,10 @@ function search_character(){
         alert("Write the name of a character first")
         return
     }
+
+    let box = document.getElementById("characters_info");
+    box.replaceChildren()
+
     $.ajax({
         url : "/api/FindCharacter",
         data : {name_fig: fig.value},
@@ -51,15 +55,14 @@ function search_character(){
             result = JSON.parse(data)
             console.log(result)
             console.log(typeof(result))
-            if(result["type"] === 1) {
-                alert("You have already reviewed this anime!")
+            if(!result) {
+                alert("You do not have this character!")
             }
             else{
                 let html = '<img id="pic_anime" src='+ result.url +' alt=""> ' +
                     '<h1>'+ result.name +'</h1> ' +
                     '<h2>'+ result.anime +'</h2>' + '';
                 $('#characters_info').append(html)
-
             }
         }
     })

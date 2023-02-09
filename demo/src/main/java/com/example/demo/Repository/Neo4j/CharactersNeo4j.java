@@ -20,9 +20,13 @@ public class CharactersNeo4j {
             return graphNeo4j;
         }
     */
-    public List<Record> getCharacter(String name){
+    public List<Record> getCharacter(String name, String username){
         try{
-            return neo4j.read("MATCH (n:Character {name : $name }) RETURN n", parameters("name", name));
+            //MATCH p=(u:User{username: 'baekbeans'})-[r:HAS]->(c:Character{name: 'Mizune'}) RETURN c
+            return neo4j.read(
+                    "MATCH p=(u:User{username: $username})-[r:HAS]->(c:Character{name: $name}) RETURN c ",
+                    parameters("name", name, "username", username)
+            );
         } catch (Exception e){
             e.printStackTrace();
         }
