@@ -75,7 +75,7 @@
           <h1 style="font-size: 30px;">Search a user</h1>
           <div style="display: flex; gap: 15px;">
             <input id="searched_user" class="form-control" type="text" style="text-align: center;">
-            <a id="search_button" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="search_user()">Search</a>
+            <a id="search_button" class="btn-get-started scrollto" style="cursor:pointer; text-align: center; margin: auto;" onclick="search_user()">Search</a>
           </div>
         </div>
       </form>
@@ -90,15 +90,15 @@
 
 <main id="main">
 
-  <!-- ======= Characters Section ======= -->
   <section id="testimonials" class="testimonials section-bg">
     <div class="container" data-aos="fade-up">
 
       <div class="section-title">
-        <h2>Some of your followers</h2>
+        <h2>Last 5 Reviews</h2>
+        <p id="user_rev"></p>
       </div>
 
-      <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+      <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="10000">
         <div id="swiper" class="swiper-wrapper">
 
 
@@ -108,7 +108,20 @@
       </div>
 
     </div>
-  </section><!-- Characters Section -->
+  </section><!-- End Testimonials Section -->
+  <section class="d-flex align-items-center">
+  <div class="container-fluid" data-aos="fade-up">
+    <div style="text-align: center;">
+      <h2 id="user_top">You can't see the Top10 if you don't follow the user</h2><br>
+    </div>
+    <div id="top10" data-aos="zoom-in" data-aos-delay="100" style="display: flex; flex-direction: column; align-items: center;">
+      <div id="first5" style="display: flex; justify-content: center;">
+      </div>
+      <div id="second5" style="display: flex; justify-content: center;">
+      </div>
+    </div>
+  </div>
+  </section><!-- End Hero -->
 
 
 

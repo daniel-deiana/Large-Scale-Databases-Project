@@ -12,9 +12,8 @@ $(document).ready(function () {
                         div.appendChild(name)
                     }
                 })
-
         $.ajax({
-                            url : "/api/Top10",
+                            url : "/api/PersonalTop10",
                             method : "get",
                             success: function(data) {
                                 result = jQuery.parseJSON(data)

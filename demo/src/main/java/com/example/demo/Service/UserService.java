@@ -113,11 +113,15 @@ public class UserService {
 			return null;
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUsername(result.get().getUsername());
-		userDTO.setPassword(result.get().getPassword());
 		userDTO.setGender(result.get().getGender());
 		userDTO.setBirthday(result.get().getBirthday());
 		userDTO.setCountry(result.get().getCountry());
 		userDTO.setMostRecentReviews(result.get().getMostRecentReviews(), username);
+		userDTO.setFollowers(userRepos.findFollowerNumberByUsername(username));
+		userDTO.setFollowedNum(userRepos.findFollowedNumberByUsername(username));
+		userDTO.setCardOwned(userRepos.findCardNumberByUsername(username));
+		if(myself != null)
+			userDTO.setFollowed(userRepos.isFollowed(myself, username));
 		return userDTO;
 	}
 
@@ -125,4 +129,10 @@ public class UserService {
 		return userRepos.getTop10(username);
 	}
 
+	public boolean followUser(String current, String toFollow) {
+		return userRepos.followUserByUsername(current, toFollow);
+	}
+	public boolean unfollowUser(String current, String toUnfollow) {
+		return userRepos.unfollowUserByUsername(current, toUnfollow);
+	}
 }

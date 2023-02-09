@@ -113,4 +113,26 @@ public class UserRepository {
 		}
 		return figures;
 	}
+
+	public boolean followUserByUsername(String current, String toFollow){
+		return neo4j.followUserByUsername(current, toFollow);
+	}
+	public boolean unfollowUserByUsername(String current, String toUnfollow){
+		return neo4j.unfollowUserByUsername(current, toUnfollow);
+	}
+	public boolean isFollowed(String myself, String username){
+		return neo4j.isFollowed(myself, username).get(0).get("isFollowed").asBoolean();
+	}
+
+	public int findFollowerNumberByUsername(String username){
+		return neo4j.findFollowerNumberByUsername(username).get(0).get("numFollowers").asInt();
+	}
+
+	public int findFollowedNumberByUsername(String username) {
+		return neo4j.findFollowedNumberByUsername(username).get(0).get("numFollowed").asInt();
+	}
+
+	public int findCardNumberByUsername(String username) {
+		return neo4j.findCardNumberByUsername(username).get(0).get("numCard").asInt();
+	}
 }
