@@ -23,33 +23,7 @@ public class CharacterRepository {
 
     //////////////////////////////// NEO4J /////////////////////////////////
 
-    public FigureDTO findCharacter(String name, String username) {
-        List<Record> records = neo4j.getCharacter(name, username);
-        if (records.isEmpty()) {
-            return null;
-        }
-        return new FigureDTO(
-                records.get(0).values().get(0).get("name").asString(),
-                records.get(0).values().get(0).get("anime").asString(),
-                records.get(0).values().get(0).get("img").asString()
-        );
-    }
 
-    /*
-    *     public FigureDTO findCharacter(String name) {
-        List<FigureDTO> figures = new ArrayList<>();
-        List<Record> records = neo4j.getCharacter(name);
-        for (Record r : records) {
-            FigureDTO fig = new FigureDTO(
-                    r.values().get(0).get("name").asString(),
-                    r.get(0).get("anime").asString(),
-                    r.get(0).get("img").asString()
-            );
-            figures.add(fig);
-        }
-        return figures;
-    }
-    *
-    * */
+
 
 }

@@ -129,4 +129,15 @@ public class UserService {
 		return userRepos.getCharacters(username);
 	}
 
+	public FigureDTO getCharacter(String name, String username) {
+		return userRepos.findCharacter(name, username);
+	}
+
+	public int AddToTop10(String username, String name_character) {
+		return userRepos.AddToTop10(username, name_character);
+	}
+	public int removeFromTop10(String username, String name_character) {
+		return userRepos.removeFromTop10(username, name_character);
+	}
+
 }

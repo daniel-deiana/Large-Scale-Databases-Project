@@ -38,5 +38,44 @@ public class UserNeo4j {
         return null;
     }
 
+    //Check if a user has that character
+    public List<Record> getCharacter(String name, String username){
+        try{
+            return neo4j.read(
+                    "MATCH p=(u:User{username: $username})-[r:HAS]->(c:Character{name: $name}) RETURN c ",
+                    parameters("name", name, "username", username)
+            );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public boolean AddToTop10(String name, String username){
+        try{
+            neo4j.write(" MATCH(u:User), (c:Character) " +
+                            "WHERE u.username = $username AND c.name =  $name " +
+                            "CREATE (u)-[r:ADDTOTOP10]->(c)",
+                            parameters("name", name, "username", username)
+            );
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean removeFromTop10(String name, String username){
+        try{
+            neo4j.write(" MATCH (n:User {username: $username})-[r:ADDTOTOP10]->(c:Character{name: $name})DELETE r",
+                    parameters("name", name, "username", username)
+            );
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

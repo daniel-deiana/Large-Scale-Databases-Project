@@ -126,4 +126,55 @@ public class UserRepository {
 		}
 		return figures;
 	}
+
+	public FigureDTO findCharacter(String name, String username) {
+		List<Record> records = neo4j.getCharacter(name, username);
+		if (records.isEmpty()) {
+			return null;
+		}
+		return new FigureDTO(
+				records.get(0).values().get(0).get("name").asString(),
+				records.get(0).values().get(0).get("anime").asString(),
+				records.get(0).values().get(0).get("img").asString()
+		);
+	}
+
+	public boolean addToTop10(String name, String username) {
+		List<Record> records = neo4j.getCharacter(name, username);
+		if (records.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	public int AddToTop10(String username, String name_character) {
+
+		// è già nella top10? errore 2
+		List<FigureDTO> top10 = getTop10(username);
+		for (FigureDTO r : top10) {
+			String name = r.getName();
+			if(name.equals(name_character))
+				return 1;
+		}
+
+		//Top10 piena. Errore 10
+		if(top10.size() == 10)
+			return -1;
+
+		neo4j.AddToTop10(name_character, username);
+		return 0;
+	}
+
+	public int removeFromTop10(String username, String name_character) {
+
+		List<FigureDTO> top10 = getTop10(username);
+		for (FigureDTO r : top10) {
+			String name = r.getName();
+			if(name.equals(name_character)){
+				neo4j.removeFromTop10(name_character, username);
+				return 0;
+			}
+		}
+		return 1;
+	}
 }

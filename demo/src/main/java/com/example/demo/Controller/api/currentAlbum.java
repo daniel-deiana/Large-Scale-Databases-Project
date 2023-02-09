@@ -38,17 +38,30 @@ public class currentAlbum {
     public @ResponseBody String returnCharacter(Model model, @RequestParam(value = "name_fig") String name) {
         Gson gson = new Gson();
         SVariables sv = (SVariables) model.getAttribute("sessionVariables");
-        FigureDTO fig =  animeService.getCharacter(name, sv.myself);
+        FigureDTO fig =  userService.getCharacter(name, sv.myself);
         if(fig==null)
             return gson.toJson(null);
         return gson.toJson(fig);
     }
 
     @RequestMapping("/api/GetCharacters")
-    public @ResponseBody String returnTop10(Model model) {
+    public @ResponseBody String returnCharacter(Model model) {
         Gson gson = new Gson();
         SVariables sv = (SVariables) model.getAttribute("sessionVariables");
         List<FigureDTO> figures = userService.loadCharacters(sv.myself);
         return gson.toJson(figures);
+    }
+
+    @RequestMapping("/api/AddToTop10")
+    public @ResponseBody String AddToTop10(Model model, @RequestParam(value = "name")String name_character){
+        Gson gson = new Gson();
+        SVariables sv = (SVariables) model.getAttribute("sessionVariables");
+        return gson.toJson(userService.AddToTop10(sv.myself, name_character));
+    }
+    @RequestMapping("/api/removeFromTop10")
+    public @ResponseBody String removeFromTop10(Model model, @RequestParam(value = "name")String name_character){
+        Gson gson = new Gson();
+        SVariables sv = (SVariables) model.getAttribute("sessionVariables");
+        return gson.toJson(userService.removeFromTop10(sv.myself, name_character));
     }
 }
