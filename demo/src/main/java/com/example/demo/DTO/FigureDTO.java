@@ -1,6 +1,7 @@
 package com.example.demo.DTO;
 
 import lombok.NoArgsConstructor;
+import org.neo4j.driver.Value;
 
 @NoArgsConstructor
 public class FigureDTO {
@@ -20,6 +21,13 @@ public class FigureDTO {
         this.description = description;
     }
 
+    public FigureDTO(String name, String anime,String url) {
+        this.name = name;
+        this.anime = anime;
+        this.url = url;
+    }
+
+
     public FigureDTO(String name,String url){this.name = name; this.url = url;}
 
     private boolean isMyself(){
@@ -35,4 +43,7 @@ public class FigureDTO {
     }
 
     public String getUrl() { return url;}
+
+    public void setAnime(String anime) { this.anime = anime;
+    }
 }

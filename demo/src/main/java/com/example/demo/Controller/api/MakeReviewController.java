@@ -2,7 +2,6 @@ package com.example.demo.Controller.api;
 
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
-import com.example.demo.Repository.Neo4j.Neo4jManager;
 import com.example.demo.Service.UserService;
 import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
@@ -19,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 @RestController
 public class MakeReviewController {
 
-	private Neo4jManager manager = new Neo4jManager();
 	@Autowired
 	UserService userService;
 
