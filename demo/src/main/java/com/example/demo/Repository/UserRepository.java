@@ -106,8 +106,8 @@ public class UserRepository {
 		List<Record> records = neo4j.getTop10ByUsername(username);
 		for (Record r : records) {
 			String name = r.values().get(0).get("name").asString();
-			String anime = r.get(0).get("anime").asString();
-			String img = r.get(0).get("img").asString();
+			String anime = r.values().get(0).get("anime").asString();
+			String img = r.values().get(0).get("img").asString();
 			FigureDTO fig = new FigureDTO(name, anime, img);
 			figures.add(fig);
 		}
