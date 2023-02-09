@@ -135,4 +135,75 @@ public class UserRepository {
 	public int findCardNumberByUsername(String username) {
 		return neo4j.findCardNumberByUsername(username).get(0).get("numCard").asInt();
 	}
+	public List<FigureDTO> getCharacters(String username) {
+		List<FigureDTO> figures = new ArrayList<>();
+		List<Record> records = neo4j.getCharacters(username);
+		for (Record r : records) {
+			String name = r.values().get(0).get("name").asString();
+			String anime = r.values().get(0).get("anime").asString();
+			String img = r.values().get(0).get("img").asString();
+			FigureDTO fig = new FigureDTO(name, anime, img);
+			figures.add(fig);
+		}
+		return figures;
+	}
+
+	public FigureDTO findCharacter(String name, String username) {
+		List<Record> records = neo4j.getCharacter(name, username);
+		if (records.isEmpty()) {
+			return null;
+		}
+		return new FigureDTO(
+				records.get(0).values().get(0).get("name").asString(),
+				records.get(0).values().get(0).get("anime").asString(),
+				records.get(0).values().get(0).get("img").asString()
+		);
+	}
+
+	public boolean addToTop10(String name, String username) {
+		List<Record> records = neo4j.getCharacter(name, username);
+		if (records.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	public int AddToTop10(String username, String name_character) {
+
+		// è già nella top10? errore 2
+		List<FigureDTO> top10 = getTop10(username);
+		for (FigureDTO r : top10) {
+			String name = r.getName();
+			if(name.equals(name_character))
+				return 1;
+		}
+
+		//Top10 piena. Errore 10
+		if(top10.size() == 10)
+			return -1;
+
+		neo4j.AddToTop10(name_character, username);
+		return 0;
+	}
+
+	public int removeFromTop10(String username, String name_character) {
+
+		List<FigureDTO> top10 = getTop10(username);
+		for (FigureDTO r : top10) {
+			String name = r.getName();
+			if(name.equals(name_character)){
+				neo4j.removeFromTop10(name_character, username);
+				return 0;
+			}
+		}
+		return 1;
+	}
+
+	public void addHasCharacter(String username, List<FigureDTO> list_characters) {
+		for (FigureDTO fig : list_characters) {
+			if (!neo4j.getCharacter(fig.getName(), username).isEmpty())
+				continue;
+			neo4j.addHasCharacter(username, fig.getName());
+		}
+	}
 }

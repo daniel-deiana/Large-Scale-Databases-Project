@@ -21,7 +21,7 @@ $(document).ready(function () {
                                 '                <h4>'+ characters[fig].name + '</h4>\n' +
                                 '              </div>\n' +
                                 '              <div>\n' +
-                                '                <a href="characters.html" title="More Details"><i class="bx bx-link"></i></a>\n' +
+                                '                <a title="More Details"><i class="bx bx-link"></i></a>\n' +
                                 '              </div>\n' +
                                 '            </div>\n' +
                                 '          </div>'
