@@ -18,7 +18,7 @@ public class LoadFriends {
     @RequestMapping("/api/FindUser")
     public @ResponseBody String FindUser(Model model,@RequestParam(value = "user") String name) {
         SVariables sv = (SVariables) model.getAttribute("sessionVariables");
-        return new Gson().toJson(userService.loadProfile(name, null));
+        return new Gson().toJson(userService.loadProfile(name, sv.myself));
     }
     /*
     @GetMapping("api/loadProfile")
