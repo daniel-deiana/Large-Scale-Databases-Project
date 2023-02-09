@@ -2,6 +2,7 @@ package com.example.demo.Repository.Neo4j;
 
 import java.util.List;
 
+import com.example.demo.DTO.FigureDTO;
 import org.neo4j.driver.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,30 +53,37 @@ public class UserNeo4j {
     }
 
 
-    public boolean AddToTop10(String name, String username){
+    public void AddToTop10(String name, String username){
         try{
             neo4j.write(" MATCH(u:User), (c:Character) " +
                             "WHERE u.username = $username AND c.name =  $name " +
                             "CREATE (u)-[r:ADDTOTOP10]->(c)",
                             parameters("name", name, "username", username)
             );
-            return true;
         } catch (Exception e){
             e.printStackTrace();
         }
-        return false;
     }
 
-    public boolean removeFromTop10(String name, String username){
+    public void removeFromTop10(String name, String username){
         try{
             neo4j.write(" MATCH (n:User {username: $username})-[r:ADDTOTOP10]->(c:Character{name: $name})DELETE r",
                     parameters("name", name, "username", username)
             );
-            return true;
         } catch (Exception e){
             e.printStackTrace();
         }
-        return false;
     }
 
+    public void addHasCharacter(String username, String name_character){
+        try{
+            neo4j.write(" MATCH(u:User), (c:Character) " +
+                            "WHERE u.username = $username AND c.name =  $name " +
+                            "CREATE (u)-[r:HAS]->(c)",
+                    parameters("name", name_character, "username", username)
+            );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
