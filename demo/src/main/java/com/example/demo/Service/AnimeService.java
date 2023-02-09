@@ -6,6 +6,7 @@ import com.example.demo.DTO.FigureDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.AnimeRepository;
+import com.example.demo.Repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ public class AnimeService {
 
 	@Autowired
 	AnimeRepository revRepos;
+
+	@Autowired
+	CharacterRepository characterRepository;
 
 		public AnimeDTO getAnime(String title) {
 			Optional<Anime> result = animeRepos.getAnimeByTitle(title);
@@ -54,4 +58,13 @@ public class AnimeService {
 		}*/
 		return null;
     }
+
+
+	/////***** NEO4J *****/////
+
+	public FigureDTO getCharacter(String name) {
+		return characterRepository.findCharacter(name);
+	}
+
+
 }
