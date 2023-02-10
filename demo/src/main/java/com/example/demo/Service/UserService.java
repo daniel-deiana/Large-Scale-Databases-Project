@@ -59,8 +59,8 @@ public class UserService {
 		return userRepos.checkAdmin(username);
 	}
 
-
-	public List<FigureDTO> getReviewedFigures(String username) {
+// if type is 3, is used to open pack, if type is 10, is used for visualizing the other cards
+	public List<FigureDTO> getReviewedFigures(String username, int k) {
 		List<Review> reviews;
 		reviews = revRepos.getReviewsByUsername(username);
 		List<FigureDTO> figures = new ArrayList<>();
@@ -79,30 +79,16 @@ public class UserService {
 		}
 		int len = figures.size();
 		int i;
+		if(len<k)
+			k = len;
 		List<FigureDTO> pack = new ArrayList<>();
-		int num1 = -1;
-		int num2 = -1;
 
-		for (i = 0; i < 3; i++) {
+		for (i = 0; i < k; i++) {
 			int rand = (int) Math.floor(Math.random() * len);
-			if (i == 0) {
-				num1 = rand;
-			} else if (i == 1) {
-				if (rand == num1) {
-					i--;
-					continue;
-				}
-				num2 = rand;
-			} else {
-				if (rand == num1 || rand == num2) {
-					i--;
-					continue;
-				}
-			}
-
 			pack.add(figures.get(rand));
+			figures.remove(i);
+			len = len-1;
 		}
-
 		return pack;
 	}
 
