@@ -38,7 +38,7 @@ public class FigureDTO {
         return name;
     }
 
-    public String getAnime(String name) {
+    public String getAnime() {
         return anime;
     }
 

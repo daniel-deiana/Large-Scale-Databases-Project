@@ -1,7 +1,10 @@
 package com.example.demo.Repository;
+import com.example.demo.DTO.FigureDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
+import com.example.demo.Repository.Neo4j.CharactersNeo4j;
+import com.example.demo.Repository.Neo4j.UserNeo4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
@@ -12,9 +15,10 @@ import java.util.Optional;
 @Repository
 public class AnimeRepository {
 	@Autowired
-		private AnimeRepositoryMongo animeMongo;
+	private AnimeRepositoryMongo animeMongo;
 	@Autowired
-		private MongoOperations mongoOperations;
+	private MongoOperations mongoOperations;
+	UserNeo4j neo4j = new UserNeo4j();
 
 	public Optional<Anime> getAnimeByTitle(String title){
 		Optional<Anime> anime = Optional.empty();
@@ -53,4 +57,5 @@ public class AnimeRepository {
 	}*/
 		return null;
 	}
+
 }
