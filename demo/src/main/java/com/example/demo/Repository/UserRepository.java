@@ -2,6 +2,7 @@ package com.example.demo.Repository;
 
 
 import com.example.demo.DTO.FigureDTO;
+import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
@@ -205,5 +206,30 @@ public class UserRepository {
 				continue;
 			neo4j.addHasCharacter(username, fig.getName());
 		}
+	}
+
+    public List<UserDTO> getSuggestedUsers(String myself) {
+		List<UserDTO> users = new ArrayList<>();
+		List<Record> records = neo4j.getSuggestedUsersByTop10(myself);
+		for (Record r : records) {
+			String username = r.get("suggestedUser").asString();
+			UserDTO user = new UserDTO();
+			user.setUsername(username);
+			users.add(user);
+		}
+		return users;
+    }
+
+
+	public List<UserDTO> getUsers(String myself) {
+		List<UserDTO> users = new ArrayList<>();
+		List<Record> records = neo4j.getSuggestedUsersByTop10(myself);
+		for (Record r : records) {
+			String username = r.values().get(0).get("username").asString();
+			UserDTO user = new UserDTO();
+			user.setUsername(username);
+			users.add(user);
+		}
+		return users;
 	}
 }
