@@ -1,15 +1,29 @@
 $(document).ready(function () {
-        const swiper = document.getElementById("swiper_user")
         $.ajax({
                     url : "/api/suggestedUser",
                     method : "get",
                     success: function(data) {
                         result = jQuery.parseJSON(data)
                         console.log(result)
+                         for(user in result){
+                            let html = '<div class="swiper-slide">' +
+                                '<div class="testimonial-item" style="display: flex; flex-direction: column; align-items: center">' +
+                                '<h1 onclick="user_profile(this.textContent)" style=" cursor: pointer; text-align: center; margin: auto;">'+ result[user].username +'</h1>\n' +
+                                '<img src="../img/unkown_c.png" class="testimonial-img" alt="">' +
+                                '</div>' +
+                                '</div>'
+                            $('#swiper_user').append(html)
+                        }
                     }
                 })
 
 })
+
+function user_profile(username){
+    let user = document.getElementById("searched_user")
+    user.value = username
+    search_user()
+}
 
 
 function search_user(){
@@ -17,6 +31,7 @@ function search_user(){
     let user_rev = document.getElementById("user_rev")
     let user_top = document.getElementById("user_top")
     let top10 = document.getElementById("top10")
+    let reviews = document.getElementById("reviews")
 
 
 
@@ -32,6 +47,7 @@ function search_user(){
     box3.replaceChildren()
     let box4 = document.getElementById("second5")
     box4.replaceChildren()
+    reviews.style.display=""
 
     $.ajax({
         url : "/api/FindUser",
