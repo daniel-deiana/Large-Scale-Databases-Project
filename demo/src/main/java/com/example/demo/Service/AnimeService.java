@@ -7,6 +7,7 @@ import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.AnimeRepository;
 import com.example.demo.Repository.CharacterRepository;
+import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,9 @@ public class AnimeService {
 
 	@Autowired
 	CharacterRepository characterRepository;
+
+	@Autowired
+	UserRepository userRepos;
 
 		public AnimeDTO getAnime(String title) {
 			Optional<Anime> result = animeRepos.getAnimeByTitle(title);
@@ -60,9 +64,9 @@ public class AnimeService {
     }
 
 
-	/////***** NEO4J *****/////
-
-
+	public List<String> GetSuggestedAnime(String username) {
+		return userRepos.GetSuggestedAnime(username);
+	}
 
 
 }
