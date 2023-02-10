@@ -220,16 +220,4 @@ public class UserRepository {
 		return users;
     }
 
-
-	public List<UserDTO> getUsers(String myself) {
-		List<UserDTO> users = new ArrayList<>();
-		List<Record> records = neo4j.getSuggestedUsersByTop10(myself);
-		for (Record r : records) {
-			String username = r.values().get(0).get("username").asString();
-			UserDTO user = new UserDTO();
-			user.setUsername(username);
-			users.add(user);
-		}
-		return users;
-	}
 }
