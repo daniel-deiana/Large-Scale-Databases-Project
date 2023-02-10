@@ -208,6 +208,19 @@ public class UserRepository {
 		}
 	}
 
+
+    public List<UserDTO> getSuggestedUsers(String myself) {
+		List<UserDTO> users = new ArrayList<>();
+		List<Record> records = neo4j.getSuggestedUsersByTop10(myself);
+		for (Record r : records) {
+			String username = r.get("suggestedUser").asString();
+			UserDTO user = new UserDTO();
+			user.setUsername(username);
+			users.add(user);
+		}
+		return users;
+    }
+
 	public List<String> GetSuggestedAnime(String username){
 		// TROVO LA LISTA DEGLI ANIME DEGLI AMICI
 		List<String> following_list  = neo4j.findFollowingByUsername(username);

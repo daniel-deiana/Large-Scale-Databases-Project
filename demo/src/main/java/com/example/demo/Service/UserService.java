@@ -154,4 +154,8 @@ public class UserService {
 	public void addHasCharacter(String username, List<FigureDTO> list_characters) {
 		userRepos.addHasCharacter(username, list_characters);
 	}
+
+    public List<UserDTO> suggestedUsers(String myself) {
+		return userRepos.getSuggestedUsers(myself);
+    }
 }

@@ -1,3 +1,16 @@
+$(document).ready(function () {
+        const swiper = document.getElementById("swiper_user")
+        $.ajax({
+                    url : "/api/suggestedUser",
+                    method : "get",
+                    success: function(data) {
+                        result = jQuery.parseJSON(data)
+                        console.log(result)
+                    }
+                })
+
+})
+
 
 function search_user(){
     let user = document.getElementById("searched_user")
@@ -13,7 +26,7 @@ function search_user(){
     }
     let box = document.getElementById("user_info")
     box.replaceChildren()
-    let box2 = document.getElementById("swiper")
+    let box2 = document.getElementById("swiper_review")
     box2.replaceChildren()
     let box3 = document.getElementById("first5")
     box3.replaceChildren()
@@ -56,7 +69,7 @@ function search_user(){
 
                 for(rev in reviews){
                                 let html = '<div class="swiper-slide"><div style="overflow-y: scroll; height: 50px;"class="testimonial-item"><p id="rev1"><i class="bx bxs-quote-alt-left quote-icon-left"></i>' + reviews[rev].text + '<i class="bx bxs-quote-alt-right quote-icon-right"></i></p><img src="../img/unkown_c.png" class="testimonial-img" alt=""><h3>' + reviews[rev].anime_uid +' - '+ reviews[rev].score+'</h3><h4>'+result.username+'</h4></div></div>'
-                                $('#swiper').append(html)
+                                $('#swiper_review').append(html)
                             }
                 user_rev.textContent ="Here are " + result.username + " last reviews!"
 
