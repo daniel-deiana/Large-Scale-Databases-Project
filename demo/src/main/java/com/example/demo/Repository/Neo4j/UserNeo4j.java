@@ -195,5 +195,25 @@ public class UserNeo4j {
         }
         return null;
     }
+    
 
+    public List<Record> getSuggestedUsersByHas(String username) {
+        try {
+            return neo4j.read("MATCH(u:User{username: $username})-[r:HAS]-> (c:Character)<-[:HAS]-(commonTop10:User) WHERE NOT (commonTop10)<-[:FOLLOWS]-(u) RETURN DISTINCT(commonTop10.username) AS suggestedUser,  COUNT(r) AS CommonCharacters ORDER BY CommonCharacters DESC LIMIT 5",
+                    parameters("username", username));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Record> getSuggestedUsersByFollowed(String username) {
+        try {
+            return neo4j.read("MATCH(u1:User{username: $username})-[:FOLLOWS]-> (u2:User)- [:FOLLOWS]->(u3:User) WHERE NOT (u3)<-[:FOLLOWS]-(u1) RETURN DISTINCT(u3.username) AS suggestedUser LIMIT 5",
+                    parameters("username", username));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -214,11 +214,42 @@ public class UserRepository {
 		List<Record> records = neo4j.getSuggestedUsersByTop10(myself);
 		for (Record r : records) {
 			String username = r.get("suggestedUser").asString();
+			int CardOwned = r.get("CommonCharacters").asInt();
+			if(CardOwned<2)
+				continue;
 			UserDTO user = new UserDTO();
 			user.setUsername(username);
 			users.add(user);
 		}
+		if(users.size()<5){
+			records = neo4j.getSuggestedUsersByHas(myself);
+			for (Record r : records) {
+				if(users.size()==5)
+					continue;
+				String username = r.get("suggestedUser").asString();
+				int CardOwned = r.get("CommonCharacters").asInt();
+				if(CardOwned<5)
+					continue;
+				UserDTO user = new UserDTO();
+				user.setUsername(username);
+				users.add(user);
+			}
+		}
+
+		if(users.size()<5){
+			records = neo4j.getSuggestedUsersByFollowed(myself);
+			for (Record r : records) {
+				if(users.size()==5)
+					continue;
+				String username = r.get("suggestedUser").asString();
+				UserDTO user = new UserDTO();
+				user.setUsername(username);
+				users.add(user);
+			}
+		}
+
 		return users;
+
     }
 
 	public List<String> GetSuggestedAnime(String username){
