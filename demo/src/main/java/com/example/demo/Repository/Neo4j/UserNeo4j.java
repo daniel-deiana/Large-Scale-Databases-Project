@@ -1,5 +1,6 @@
 package com.example.demo.Repository.Neo4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -93,6 +94,28 @@ public class UserNeo4j {
         return null;
     }
 
+    public List<String> findFollowingByUsername(String username){
+        try{
+            List<Record> record_list  = neo4j.read("MATCH (u:User)-[:FOLLOWS]->(u_following:User)" +
+                                                        " WHERE u.username=$username" +
+                                                        " RETURN u_following",
+                                                parameters("username", username));
+
+            if (record_list.isEmpty()) return null;
+
+            List<String> following_list = new ArrayList<>();
+            for (Record following : record_list) {
+                String user = following.values().get(0).get("username").asString();
+                following_list.add(user);
+            }
+            return following_list;
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public List<Record> findFollowerNumberByUsername(String username){
         try{
@@ -172,4 +195,5 @@ public class UserNeo4j {
         }
         return null;
     }
+
 }

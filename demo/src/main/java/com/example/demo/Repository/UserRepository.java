@@ -208,6 +208,7 @@ public class UserRepository {
 		}
 	}
 
+
     public List<UserDTO> getSuggestedUsers(String myself) {
 		List<UserDTO> users = new ArrayList<>();
 		List<Record> records = neo4j.getSuggestedUsersByTop10(myself);
@@ -220,4 +221,45 @@ public class UserRepository {
 		return users;
     }
 
+	public List<String> GetSuggestedAnime(String username){
+		// TROVO LA LISTA DEGLI ANIME DEGLI AMICI
+		List<String> following_list  = neo4j.findFollowingByUsername(username);
+
+		// Lista degli anime che ha recensito l'utente
+		List<Record> your_character_list = neo4j.getCharacters(username);
+		List<String> anime_reviewedList = new ArrayList<>();
+		for (Record your_character : your_character_list) {
+			String anime = your_character.values().get(0).get("anime").asString();
+			if(!anime_reviewedList.contains(anime)) {
+				anime_reviewedList.add(anime);
+			}
+		}
+
+		//SE NON HA AMICI
+		if (following_list.isEmpty()){
+
+			// Ritorna gli anime più visti
+			return null;
+		}
+
+
+		//Lista degli anime consigliati non ancora recensiti
+		List<String> anime_from_top10FollowingList = new ArrayList<>();
+		//Per ogni amico
+		for (String following : following_list) {
+			//Trovo la top 10
+			List<FigureDTO> top_10_following = getTop10(following);
+			//per ogni personaggio aggiungo l'anime nella lista da ritornare
+			for (FigureDTO fig: top_10_following){
+				String anime_name = fig.getAnime();
+				if(!anime_from_top10FollowingList.contains(anime_name)) {
+					if(!anime_reviewedList.contains(anime_name)) {
+						anime_from_top10FollowingList.add(anime_name);
+					}
+				}
+			}
+		}
+
+		return anime_from_top10FollowingList;
+	}
 }
