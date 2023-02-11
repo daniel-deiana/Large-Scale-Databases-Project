@@ -36,8 +36,9 @@ public class LogInController {
 		model.addAttribute("sessionVariables", new SVariables());
 	SVariables sv = (SVariables) model.getAttribute("sessionVariables");
 	sv.myself = user.getUsername();
+	sv.admin = user.getAdmin();
 	model.addAttribute("sessionVariables",sv);
-	return gson.toJson("{\"type\": 0, \"message\" : \"ok\", \"username\":\""+ sv.myself+"\"}");
+	return gson.toJson("{\"type\": 0, \"message\" : \"ok\", \"username\":\""+ sv.myself+"\", \"admin\":\""+ sv.admin+"\"}");
 	}
 
 }

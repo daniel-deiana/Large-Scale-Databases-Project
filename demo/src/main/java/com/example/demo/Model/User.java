@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,9 @@ public class User {
 
 		@Field("reviews")
 		private List<Review> mostRecentReviews;
+
+		@Field("token")
+		private LocalDateTime token;
 
 		@Field("admin")
 		private boolean admin;
@@ -60,5 +64,14 @@ public class User {
 
 		public String getBirthday() { return birthday;}
 		public List<Review>  getReview() { return mostRecentReviews;}
+		public LocalDateTime getToken() { return token;}
 
+
+		public void setToken(LocalDateTime now) {
+			this.token = now;
+		}
+
+	public boolean getAdmin() {
+			return admin;
+	}
 }
