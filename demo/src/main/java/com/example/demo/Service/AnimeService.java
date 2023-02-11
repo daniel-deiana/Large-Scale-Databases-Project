@@ -73,4 +73,8 @@ public class AnimeService {
 		return revRepos.GetSuggestedAnime(how_order);
 	}
 
+	public List<ResultSetDTO> getLongAnime(String how_order) {
+		return animeRepos.getLongAnime(how_order);
+	}
+
 }

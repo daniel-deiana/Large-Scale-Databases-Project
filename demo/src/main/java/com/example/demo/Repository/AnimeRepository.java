@@ -1,23 +1,20 @@
 package com.example.demo.Repository;
+import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
-import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
 import com.example.demo.Repository.Neo4j.UserNeo4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
 @Repository
 public class AnimeRepository {
@@ -65,15 +62,25 @@ public class AnimeRepository {
 		return null;
 	}
 
-	public List<Anime> GetAppreciatedAnime(String howOrder) {
-		Page<Anime> list_anime;
-		if(Objects.equals(howOrder, "DESC"))
-			list_anime =  animeMongo.findAll(PageRequest.of(0, 5,Sort.by(Sort.Direction.DESC, "score")));
-		else
-			list_anime =  animeMongo.findAll(PageRequest.of(0, 5,Sort.by(Sort.Direction.ASC, "score")));
-		return list_anime.getContent();
+	public List<ResultSetDTO> getLongAnime(String how_order) {
+
+		ProjectionOperation projectFields = project()
+				.andExpression("title").as("field1")
+				.andExpression("episodes").as("field2");
+
+		SortOperation sortOperation;
+		if(how_order.equals("DESC")) {
+			sortOperation = sort(Sort.by(Sort.Direction.DESC, "episodes"));
+		} else {
+			sortOperation = sort(Sort.by(Sort.Direction.ASC, "episodes", "episodes"));
+		}
+
+		AggregationOperation limit = Aggregation.limit(5);
+
+		Aggregation aggregation = Aggregation.newAggregation(sortOperation, projectFields, limit);
+
+		AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "anime", ResultSetDTO.class);
+
+		return result.getMappedResults();
 	}
-
-
 }
-//animeMongo.findAll(Sort.by(Sort.Direction.DESC, "score"));

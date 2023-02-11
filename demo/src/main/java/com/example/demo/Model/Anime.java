@@ -1,5 +1,7 @@
 package com.example.demo.Model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -21,7 +23,7 @@ public class Anime {
 		@Field("aired")
 		private String aired;
 		@Field("episodes")
-		private String episodes;
+		private Integer episodes;
 		@Field("img_url")
 		private String img_url;
 		@Field("aired_bool")

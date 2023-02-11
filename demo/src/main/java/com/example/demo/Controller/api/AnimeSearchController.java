@@ -54,4 +54,10 @@ public class AnimeSearchController {
 		return gson.toJson(AppreciatedAnime.toArray());
 	}
 
+	@RequestMapping("/api/GetLongAnime")
+	public @ResponseBody String returnGetLongAnime(@RequestParam(value = "how_order") String how_order) {
+		Gson gson = new Gson();
+		List<ResultSetDTO> AppreciatedAnime = animeService.getLongAnime(how_order);
+		return gson.toJson(AppreciatedAnime.toArray());
+	}
 }
