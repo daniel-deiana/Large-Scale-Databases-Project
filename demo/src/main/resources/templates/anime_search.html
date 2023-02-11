@@ -46,8 +46,6 @@
   <header id="header" class="fixed-top ">
     <div class="container d-flex align-items-center justify-content-between">
       <h1 class="logo"><a href="/home">OkiboAnime</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo"><img src="img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
@@ -66,9 +64,8 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-
-    <div class="container-fluid" data-aos="fade-up">
+  <section id="hero" class="align-items-center">
+    <div data-aos="fade-up">
       <div data-aos="zoom-in" data-aos-delay="100" style="display: flex; flex-direction: column; align-items: center;">
           <div style="display: flex; justify-content: center;">
             <form>
@@ -79,10 +76,12 @@
                   <a id="search_button" class="btn-get-started scrollto" style=" text-align: center; margin: auto;">Search</a>
                 </div>
                 <div style="display: flex; gap: 15px;">
-                  <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Query 1</a>
-                  <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Query 2</a>
+                  <a class="btn-get-started scrollto" onclick="appreciated(this.onclick.name)" ondblclick="appreciated(this.ondblclick.name)" style=" text-align: center; margin: auto;" type="submit">Most Appreciated</a>
+                  <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Most Long</a>
                   <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Query 3</a>
-                  <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Query 4</a>
+                  <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">With Most Popular</a>
+                </div>
+                <div id="result_query" style="display: flex; flex-direction: column;">
                 </div>
               </div>
             </form>
