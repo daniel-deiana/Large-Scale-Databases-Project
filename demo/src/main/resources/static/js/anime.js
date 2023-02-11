@@ -31,7 +31,7 @@ $(document).ready(function () {
                         let reviews = result['reviews']
                         for(rev in reviews){
                             let html = '<div class="swiper-slide">' +
-                                '<div class="testimonial-item"><p id="rev1">' +
+                                '<div style="overflow-y: scroll; height: 50px;" class="testimonial-item"><p id="rev1">' +
                                 '<i class="bx bxs-quote-alt-left quote-icon-left"></i>' + reviews[rev].text + '<i class="bx bxs-quote-alt-right quote-icon-right"></i></p><img src="../img/unkown_c.png" class="testimonial-img" alt=""><h3>' + reviews[rev].profile +' - '+ reviews[rev].score+'</h3></div></div>'
                             $('#swiper').append(html)
                         }
