@@ -59,4 +59,8 @@ public class Anime {
 		return reviews;
 	}
 
+		public List<Review> getMostRecentReviews() { return reviews;}
+
+		public void setMostRecentReviews(List<Review> mostRecentReviews) { this.reviews = mostRecentReviews; }
+
 }

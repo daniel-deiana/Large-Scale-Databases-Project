@@ -1,12 +1,12 @@
 package com.example.demo.Repository;
-import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
@@ -52,7 +52,14 @@ public class ReviewRepository {
         return revMongo.existsByProfileAndAnime(username, anime);
     }
 
+    //This function check if a username has already made a review for that Anime
+    public Page<Review> getReviews(String anime, int current_page) {
+        return revMongo.findByAnime(anime, PageRequest.of(current_page, 10));
+    }
 
+    public int getCountReviews(String anime) {
+        return revMongo.countByAnime("Naruto");
+    }
 
     public List<ResultSetDTO> animeMostReviewed() {
 

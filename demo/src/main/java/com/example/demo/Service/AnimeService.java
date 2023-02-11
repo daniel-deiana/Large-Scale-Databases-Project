@@ -10,6 +10,7 @@ import com.example.demo.Repository.CharacterRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,5 +77,14 @@ public class AnimeService {
 	public List<ResultSetDTO> getLongAnime(String how_order) {
 		return animeRepos.getLongAnime(how_order);
 	}
+
+	public Page<Review> getReviews(String title_anime, int current_review) {
+		return revRepos.getReviews(title_anime, current_review);
+	}
+
+	public int getCountReviews(String title_anime) {
+		return revRepos.getCountReviews(title_anime);
+	}
+
 
 }
