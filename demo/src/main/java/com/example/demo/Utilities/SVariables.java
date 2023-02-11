@@ -11,7 +11,7 @@ public class SVariables {
 
     //public List<Anime> current_results;
     public int currentPage;
-    public boolean lastPage;
+    public int lastPage;
 
     public boolean admin;
 

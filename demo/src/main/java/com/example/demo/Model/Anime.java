@@ -1,5 +1,7 @@
 package com.example.demo.Model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -22,6 +24,7 @@ public class Anime {
 
 		@Field("episodes")
 		private int episodes;
+
 		@Field("img_url")
 		private String img_url;
 		@Field("aired_bool")
@@ -61,5 +64,8 @@ public class Anime {
 			this.figures = figures;
 		}
 
+		public List<Review> getMostRecentReviews() { return reviews;}
+
+		public void setMostRecentReviews(List<Review> mostRecentReviews) { this.reviews = mostRecentReviews; }
 
 }

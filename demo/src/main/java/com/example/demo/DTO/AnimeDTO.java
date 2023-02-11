@@ -15,7 +15,7 @@ public class AnimeDTO {
     private String synopsis;
     //private String genre;
     //private String aired;
-    private String episodes;
+    private Integer episodes;
     private String img_url;
     //private String aired_bool;
     private List<ReviewDTO> reviews;

@@ -190,7 +190,10 @@ public class UserNeo4j {
 
     public List<Record> getSuggestedUsersByTop10(String username) {
         try {
-            return neo4j.read("MATCH(u:User{username: $username})-[r:ADDTOTOP10]-> (c:Character)<-[:ADDTOTOP10]-(commonTop10:User) WHERE NOT (commonTop10)<-[:FOLLOWS]-(u) RETURN DISTINCT(commonTop10.username) AS suggestedUser,  COUNT(r) AS CommonCharacters ORDER BY CommonCharacters DESC LIMIT 5",
+            return neo4j.read("MATCH(u:User{username: $username})-[r:ADDTOTOP10]-> (c:Character)<-[:ADDTOTOP10]-(commonTop10:User)" +
+                            "WHERE NOT (commonTop10)<-[:FOLLOWS]-(u) " +
+                            "RETURN DISTINCT(commonTop10.username) AS suggestedUser,  COUNT(r) AS CommonCharacters " +
+                            "ORDER BY CommonCharacters DESC LIMIT 5",
                     parameters("username", username));
         } catch (Exception e) {
             e.printStackTrace();
