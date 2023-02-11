@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.demo.DTO.FigureDTO;
+import com.example.demo.Model.Anime;
+import com.example.demo.Model.Figure;
 import org.neo4j.driver.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -215,5 +217,15 @@ public class UserNeo4j {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void addCharacter(Figure figure) {
+        try{
+            neo4j.write(" CREATE (n:Character {name: $name,anime: $anime, url: $image})",
+                    parameters("name", figure.getCharacterName(), "anime", figure.getAnime(), "image", figure.getUrl())
+            );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

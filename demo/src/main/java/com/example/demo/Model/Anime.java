@@ -14,14 +14,14 @@ public class Anime {
 
 		@Field("uid")
 		private String uid;
+
 		@Field("title")
 		private String title;
 		@Field("synopsis")
 		private String synopsis;
-		@Field("aired")
-		private String aired;
+
 		@Field("episodes")
-		private String episodes;
+		private int episodes;
 		@Field("img_url")
 		private String img_url;
 		@Field("aired_bool")
@@ -31,9 +31,9 @@ public class Anime {
 		@Field("characters")
 		private List<Figure> figures = new ArrayList<>();
 
-		public Anime(String title, String uid, String synopsis, String img_url, List<Figure> characters, List<Review> reviews){
+		public Anime(String title, String synopsis, int episodes,String img_url, List<Figure> characters, List<Review> reviews){
 				this.title = title;
-				this.uid = uid;
+				this.episodes = episodes;
 				this.synopsis = synopsis;
 				this.img_url = img_url;
 				this.figures = characters;
@@ -56,5 +56,10 @@ public class Anime {
 		public List<Review> getReviews() {
 		return reviews;
 	}
+
+		public void setFigures(List<Figure> figures) {
+			this.figures = figures;
+		}
+
 
 }

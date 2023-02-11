@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +53,7 @@ public class UserService {
 		Optional<User> result = userRepos.getUserByUsername(username);
 		if (result.isEmpty())
 			return null;
-		return new UserDTO(result.get().getUsername(), result.get().getPassword());
+		return new UserDTO(result.get().getUsername(), result.get().getPassword(), result.get().getAdmin());
 	}
 
 	public boolean isAdmin(String username) {
@@ -144,4 +145,8 @@ public class UserService {
     public List<UserDTO> suggestedUsers(String myself) {
 		return userRepos.getSuggestedUsers(myself);
     }
+
+	public boolean checkToken(String myself, LocalDateTime now) {
+		return userRepos.checkTokenTime(myself, now);
+	}
 }

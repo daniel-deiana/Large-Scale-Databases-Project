@@ -14,19 +14,20 @@ public class UserDTO {
     private String gender;
     private List<ReviewDTO> mostRecentReviews;
 
-
-
     private boolean isMyself;
 
     private boolean isfollowed;
+
+    private boolean isAdmin;
     private int numFollowers;
     private int numFollowed;
 
     private int CardOwned;
 
-    public UserDTO(String username, String password) {
+    public UserDTO(String username, String password, boolean isAdmin) {
         this.username = username;
         this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     private boolean isMyself(){
@@ -44,6 +45,7 @@ public class UserDTO {
     public String getUsername() {
         return username;
     }
+    public boolean getAdmin(){return isAdmin;}
 
     public void setUsername(String username) {
         this.username = username;
