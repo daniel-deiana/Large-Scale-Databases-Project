@@ -44,6 +44,7 @@ public class UserService {
 			return false;
 		revRepos.addReview(review);
 		userRepos.updateMostReviewed(review);
+		animeRepos.updateMostReviewed(review);
 		return true;
 	}
 

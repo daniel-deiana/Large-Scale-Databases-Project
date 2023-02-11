@@ -1,6 +1,8 @@
 package com.example.demo.Repository;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
+import com.example.demo.Model.Review;
+import com.example.demo.Model.User;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
 import com.example.demo.Repository.Neo4j.UserNeo4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,20 +48,22 @@ public class AnimeRepository {
 		return anime;
 	}
 
-    public List<Anime> getAllAnime() {
-		/*List<Anime> animeList;
+	//This function update the list of the most recent reviews of a user when a new review is added
+	public void updateMostReviewed(Review review) {
 		try {
-			//animeList = animeMongo.findAnimeBy();
-			if (animeList.isEmpty())
-				return null;
+			Optional<Anime> anime = animeMongo.findAnimeByTitle(review.getAnime());
+			List<Review> reviewList = anime.get().getMostRecentReviews();
+			if (reviewList.size() >= 5) {
+				reviewList.remove(4);
+				reviewList.add(0, review);
+			} else {
+				reviewList.add(0, review);
+			}
+			anime.get().setMostRecentReviews(reviewList);
+			animeMongo.save(anime.get());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		}
-
-		return animeList;
-	}*/
-		return null;
 	}
 
 	public List<ResultSetDTO> getLongAnime(String how_order) {
