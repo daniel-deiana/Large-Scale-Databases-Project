@@ -15,17 +15,14 @@ import java.util.Calendar;
 public class Review {
     @Id
     private String id;
-
-    @Field("uid")
-    private String uid;
     @Field("profile")
     private String profile;
-    @Field("anime_uid")
-    private String anime;
     @Field("text")
     private String text;
     @Field("score")
     private Integer score;
+    @Field("title")
+    private String anime;
     @Field("timestamp")
     private String timestamp;
 

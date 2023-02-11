@@ -19,13 +19,12 @@ import java.util.List;
 import java.util.Optional;
 import org.neo4j.driver.Record;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
-
 @Repository
 public class UserRepository {
 	Logger logger = LoggerFactory.getLogger(UserRepository.class);
 	@Autowired
 	private UserRepositoryMongo userMongo;
+
 	@Autowired
 	private MongoOperations mongoOperations;
 	@Autowired

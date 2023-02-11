@@ -1,4 +1,5 @@
 package com.example.demo.Repository;
+import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
@@ -56,13 +57,13 @@ public class ReviewRepository {
     public List<ResultSetDTO> animeMostReviewed() {
 
         // grouping by age.
-        GroupOperation groupOperation = Aggregation.group("anime_uid").count().as("NumberReviews");
+        GroupOperation groupOperation = Aggregation.group("anime").count().as("NumberReviews");
 
         ProjectionOperation projectFields = project()
                 .andExpression("_id").as("field1")
                 .andExpression("NumberReviews").as("field2");
 
-        SortOperation sortOperation = sort(Sort.by(Sort.Direction.DESC, "NumberReviews"));;
+        SortOperation sortOperation = sort(Sort.by(Sort.Direction.DESC, "NumberReviews"));
 
         Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, projectFields);
 
@@ -75,7 +76,7 @@ public class ReviewRepository {
     public List<ResultSetDTO> groupByAnime() {
 
         // grouping by age.
-        GroupOperation groupOperation = Aggregation.group("anime_uid").avg("score").as("AvgScore");
+        GroupOperation groupOperation = Aggregation.group("anime").avg("score").as("AvgScore");
 
         // filtering same age count > 1
 
@@ -97,7 +98,7 @@ public class ReviewRepository {
     public List<ResultSetDTO> GetSuggestedAnime(String how_order) {
 
         // grouping by age.
-        GroupOperation groupOperation = Aggregation.group("anime_uid").count().as("NumberReviews").avg("score").as("AvgScore");
+        GroupOperation groupOperation = Aggregation.group("title").count().as("NumberReviews").avg("score").as("AvgScore");
 
         // filtering same age count > 1
 

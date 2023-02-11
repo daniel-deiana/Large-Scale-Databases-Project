@@ -59,9 +59,16 @@ function anime_page(name_anime){
     })
 }
 
-function appreciated(e){
-    let orderby = "DESC";
-    if (e === "ondblclick") orderby = "ASC";
+function appreciated(){
+    let title_button = document.getElementById("Appreciated")
+    if(title_button.textContent === "Most Appreciated"){
+        orderby = "DESC";
+        title_button.textContent = "Least Appreciated"
+    }
+    else{
+        orderby = "ASC";
+        title_button.textContent = "Most Appreciated";
+    }
     $.ajax({
         url : "/api/GetAppreciatedAnime",
         data : {how_order: orderby},
@@ -70,17 +77,49 @@ function appreciated(e){
             result = JSON.parse(data)
             console.log(result)
             document.getElementById("result_query").replaceChildren()
-            let html = '<h1 style="font-size: 15px; text-align: center">Most Appreciated Anime ' + orderby + '</h1> '
+            let html = '<h1 style="font-size: 15px; text-align: center">Anime by ' + orderby + '</h1> '
             $('#result_query').append(html)
             for (fig in result){
                 let html = '<div style="display: flex; gap: 5px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px; text-align: center; margin: auto;" >'+ result[fig].field1 +' </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; margin: auto;" >Score: '+ result[fig].field3 +' </a>' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:500px; text-align: center; margin: auto;" >'+ result[fig].field1 +'</a>' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; margin: auto;" >Score: '+ (parseFloat(result[fig].field3).toFixed(2)) +' </a>' +
                     '</div>'
                 $('#result_query').append(html)
             }
         }
     })
+}
 
 
+function long(){
+    let title_button = document.getElementById("Long")
+
+    if(title_button.textContent === "Most Long"){
+        orderby = "DESC";
+        title_button.textContent = "Least Long"
+    }
+    else{
+        orderby = "ASC";
+        title_button.textContent = "Most Long";
+    }
+    console.log(orderby)
+    $.ajax({
+        url : "/api/GetLongAnime",
+        data : {how_order: orderby},
+        method : "post",
+        success: function(data) {
+            result = JSON.parse(data)
+            console.log(result)
+            document.getElementById("result_query").replaceChildren()
+            let html = '<h1 style="font-size: 15px; text-align: center">Anime by ' + orderby + '</h1> '
+            $('#result_query').append(html)
+            for (fig in result){
+                let html = '<div style="display: flex; gap: 5px">' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:500px; text-align: center; margin: auto;" >'+ result[fig].field1 +'</a>' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; margin: auto;" >Episodes: '+ result[fig].field2 +'</a>' +
+                    '</div>'
+                $('#result_query').append(html)
+            }
+        }
+    })
 }
