@@ -12,11 +12,12 @@ $(document).ready(function () {
                         desc.textContent = result['synopsis']
                         img.setAttribute('src', result['img_url'])
                         let characters = result['figures']
+
                         for (fig in characters){
                             let html = '' +
                                 '<div">\n' +
                                 '            <div>\n' +
-                                '              <img src='+ characters[fig].image_url +' class="img-fluid" alt="">\n' +
+                                '              <img style="height: 200px; width: 160px;" referrerpolicy="no-referrer" src='+ characters[fig].image_url +' class="img-fluid" alt="">\n' +
                                 '              <div>\n' +
                                 '                <h4>'+ characters[fig].name + '</h4>\n' +
                                 '              </div>\n' +

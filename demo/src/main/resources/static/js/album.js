@@ -12,7 +12,7 @@ $(document).ready(function () {
                         for(fig in result){
                             let html = '<div class="swiper-slide">' +
                                 '<div class="testimonial-item" style="display: flex; flex-direction: column; align-items: center">' +
-                                '<img src="../img/unkown_c.png"  style="width: 50%; height: 50%" alt="">' +
+                                '<img style="height:200px; width: 160px;"referrerpolicy="no-referrer" src='+result[fig].image_url+' alt="">' +
                                 '<h3>'+ result[fig].name +'</h3>' +
                                 '<h4>'+ result[fig].anime+'</h4>' +
                                 '<a class="form-control" style=" text-align: center; margin: auto; cursor: pointer;" onclick="addToTop10(this.parentElement.childNodes[1].textContent)">Add to Top10</a>' +
@@ -48,7 +48,7 @@ function search_character(){
                 alert("You do not have this character!")
             }
             else{
-                let html = '<img id="pic_anime" src='+ result.url +' alt=""> ' +
+                let html = '<img style="height:200px; width: 160px;"referrerpolicy="no-referrer" src='+result.image_url+' alt="">' +
                     '<h1>'+ result.name +'</h1> ' +
                     '<h2>'+ result.anime +'</h2>' +
                     '<a class="btn-get-started scrollto" style=" text-align: center; margin: auto; cursor: pointer;" onclick="addToTop10(this.offsetParent.childNodes[2].textContent)">Add to Top10</a><br>' +

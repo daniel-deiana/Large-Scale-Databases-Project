@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.DTO.FigureDTO;
+import com.example.demo.Model.User;
 import org.neo4j.driver.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -223,6 +224,16 @@ public class UserNeo4j {
         try{
             neo4j.write(" CREATE (n:Character {name: $name,anime: $anime, url: $image})",
                     parameters("name", figure.getName(), "anime", figure.getAnime(), "image", figure.getImage_url())
+            );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void addUser(User user) {
+        try{
+            neo4j.write(" CREATE (u:User {username: username})",
+                    parameters("username", user.getUsername())
             );
         } catch (Exception e){
             e.printStackTrace();
