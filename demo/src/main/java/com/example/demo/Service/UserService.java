@@ -66,9 +66,10 @@ public class UserService {
 		List<FigureDTO> figures = new ArrayList<>();
 		for (Review rev : reviews) {
 			String name_anime = rev.getAnime();
-			Optional<Anime> result = animeRepos.getAnimeByUid(name_anime);
+			Optional<Anime> result = animeRepos.getAnimeByTitle(name_anime);
 			AnimeDTO anime = new AnimeDTO(result.get().getTitle(),
 					result.get().getSynopsis(),
+					result.get().getEpisodes(),
 					result.get().getImg_url(),
 					result.get().getFigures(),
 					result.get().getReviews());
