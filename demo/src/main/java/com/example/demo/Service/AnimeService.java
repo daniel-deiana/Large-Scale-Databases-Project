@@ -38,6 +38,7 @@ public class AnimeService {
 			return result.map(anime -> new AnimeDTO(
 					anime.getTitle(),
 					anime.getSynopsis(),
+					anime.getEpisodes(),
 					anime.getImg_url(),
 					anime.getFigures(),
 					anime.getReviews()

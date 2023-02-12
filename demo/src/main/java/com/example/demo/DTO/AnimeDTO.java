@@ -19,9 +19,10 @@ public class AnimeDTO {
     private List<FigureDTO> figures;
 
 
-    public AnimeDTO(String title,String synopsis, String img_url, List<FigureDTO> figures_list,  List<Review> reviews) {
+    public AnimeDTO(String title,String synopsis, int episodes, String img_url, List<FigureDTO> figures_list,  List<Review> reviews) {
         this.title = title;
         this.synopsis = synopsis;
+        this.episodes = episodes;
         this.img_url = img_url;
         this.figures = figures_list;
         setFigures(figures_list, title);
