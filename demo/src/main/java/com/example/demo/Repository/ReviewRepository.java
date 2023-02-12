@@ -20,7 +20,6 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort
 @Repository
 public class ReviewRepository {
 
-
     @Autowired
     private MongoOperations mongoOperations;
     @Autowired
