@@ -2,6 +2,7 @@ package com.example.demo.Repository;
 
 
 import com.example.demo.DTO.FigureDTO;
+import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
@@ -152,6 +153,20 @@ public class UserRepository {
 
 	public int findFollowedNumberByUsername(String username) {
 		return neo4j.findFollowedNumberByUsername(username).get(0).get("numFollowed").asInt();
+	}
+
+	public List<ResultSetDTO> getMostPopularUsers(String how_order) {
+		List<ResultSetDTO> result = new ArrayList<>();
+		List<Record> records = neo4j.getMostPopularUsers(how_order);
+		for (Record r : records) {
+			String username = r.values().get(0).toString();
+			String numFollowers = r.values().get(1).toString();
+			ResultSetDTO aux = new ResultSetDTO();
+			aux.setField1(username);
+			aux.setField2(numFollowers);
+			result.add(aux);
+		}
+		return result;
 	}
 
 	public int findCardNumberByUsername(String username) {

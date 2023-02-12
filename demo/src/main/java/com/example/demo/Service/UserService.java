@@ -3,6 +3,7 @@ package com.example.demo.Service;
 
 import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.FigureDTO;
+import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
@@ -10,6 +11,7 @@ import com.example.demo.Model.User;
 import com.example.demo.Repository.AnimeRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
+import org.neo4j.driver.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,5 +149,9 @@ public class UserService {
 
 	public boolean checkToken(String myself, LocalDateTime now) {
 		return userRepos.checkTokenTime(myself, now);
+	}
+
+	public List<ResultSetDTO> getMostPopularUsers(String how_order) {
+		return userRepos.getMostPopularUsers(how_order);
 	}
 }

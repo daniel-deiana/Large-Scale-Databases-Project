@@ -1,4 +1,5 @@
 package com.example.demo.Repository;
+import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
@@ -14,8 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Repository
 public class AnimeRepository {
@@ -100,7 +100,7 @@ public class AnimeRepository {
 		if(how_order.equals("DESC")) {
 			sortOperation = sort(Sort.by(Sort.Direction.DESC, "episodes"));
 		} else {
-			sortOperation = sort(Sort.by(Sort.Direction.ASC, "episodes", "episodes"));
+			sortOperation = sort(Sort.by(Sort.Direction.ASC,  "episodes"));
 		}
 
 		AggregationOperation limit = Aggregation.limit(5);
@@ -111,5 +111,8 @@ public class AnimeRepository {
 
 		return result.getMappedResults();
 	}
+
+
+
 }
 

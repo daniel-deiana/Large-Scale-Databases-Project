@@ -1,4 +1,5 @@
 package com.example.demo.Repository;
+import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
@@ -61,56 +62,37 @@ public class ReviewRepository {
         return revMongo.countByAnime(anime);
     }
 
-    public List<ResultSetDTO> animeMostReviewed() {
+    public List<ResultSetDTO> getMostReviews(String how_order, String group_by) {
 
         // grouping by age.
-        GroupOperation groupOperation = Aggregation.group("anime").count().as("NumberReviews");
+        GroupOperation groupOperation = Aggregation.group(group_by).count().as("NumberReviews");
 
         ProjectionOperation projectFields = project()
                 .andExpression("_id").as("field1")
                 .andExpression("NumberReviews").as("field2");
 
-        SortOperation sortOperation = sort(Sort.by(Sort.Direction.DESC, "NumberReviews"));
+        SortOperation sortOperation;
+        if(how_order.equals("DESC")) {
+            sortOperation = sort(Sort.by(Sort.Direction.DESC,  "NumberReviews"));
+        } else {
+            sortOperation = sort(Sort.by(Sort.Direction.ASC, "NumberReviews"));
+        }
 
-        Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, projectFields);
+        AggregationOperation limit = Aggregation.limit(10);
 
-        AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
-
-        return result.getMappedResults();
-    }
-
-
-    public List<ResultSetDTO> groupByAnime() {
-
-        // grouping by age.
-        GroupOperation groupOperation = Aggregation.group("anime").avg("score").as("AvgScore");
-
-        // filtering same age count > 1
-
-        MatchOperation matchOperation = Aggregation.match(new Criteria("AvgScore").gt(5));
-
-        ProjectionOperation projectFields = project()
-                .andExpression("_id").as("field1")
-                .andExpression("AvgScore").as("field2");
-
-        SortOperation sortOperation = sort(Sort.by(Sort.Direction.DESC, "AvgScore"));;
-
-        Aggregation aggregation = Aggregation.newAggregation(groupOperation, matchOperation, sortOperation, projectFields);
+        Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, limit, projectFields);
 
         AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
 
         return result.getMappedResults();
     }
 
-    public List<ResultSetDTO> GetSuggestedAnime(String how_order) {
+    public List<ResultSetDTO> getTopReviewedAnime(String how_order, int limit_number) {
 
         // grouping by age.
         GroupOperation groupOperation = Aggregation.group("anime").count().as("NumberReviews").avg("score").as("AvgScore");
 
         // filtering same age count > 1
-
-        MatchOperation matchOperation = Aggregation.match(new Criteria("AvgScore").gt(5));
-
         ProjectionOperation projectFields = project()
                 .andExpression("_id").as("field1")
                 .andExpression("NumberReviews").as("field2")
@@ -123,12 +105,13 @@ public class ReviewRepository {
             sortOperation = sort(Sort.by(Sort.Direction.ASC, "AvgScore", "NumberReviews"));
         }
 
-        AggregationOperation limit = Aggregation.limit(5);
+        AggregationOperation limit = Aggregation.limit(limit_number);
 
-        Aggregation aggregation = Aggregation.newAggregation(groupOperation, matchOperation, sortOperation, limit, projectFields);
+        Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, limit, projectFields);
 
         AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
 
         return result.getMappedResults();
     }
+
 }
