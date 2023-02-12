@@ -10,6 +10,4 @@ import java.util.Optional;
 public interface AnimeRepositoryMongo extends MongoRepository<Anime,String> {
 
     Optional<Anime> findAnimeByTitle(String title);
-    Optional<Anime> findAnimeByUid(String uid);
-
 }

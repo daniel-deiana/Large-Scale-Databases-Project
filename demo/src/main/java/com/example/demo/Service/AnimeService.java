@@ -41,33 +41,12 @@ public class AnimeService {
 			return new AnimeDTO(
 					result.get().getTitle(),
 					result.get().getSynopsis(),
+					result.get().getEpisodes(),
 					result.get().getImg_url(),
 					result.get().getFigures(),
 					result.get().getReviews()
 			);
 		}
-
-    public List<AnimeDTO> getTopAnime() {
-		/*List<Review> reviews;
-		reviews = revRepos.getReviewsByUsername(username);
-		List<FigureDTO> figures = new ArrayList<>();
-		for(Review rev: reviews){
-			String name_anime =  rev.getAnime();
-			Optional<Anime> result = animeRepos.getAnimeByUid(name_anime);
-			AnimeDTO anime = new AnimeDTO(result.get().getTitle(),
-					result.get().getSynopsis(),
-					result.get().getImg_url(),
-					result.get().getFigures(),
-					result.get().getReviews());
-			for(FigureDTO fig: anime.getFigures()) {
-				FigureDTO figure = new FigureDTO(fig.getName(),fig.getUrl());
-				figures.add(figure);
-			}
-		}*/
-		return null;
-    }
-
-
 
 	public List<String> GetSuggestedAnime(String username) {
 		return userRepos.GetSuggestedAnime(username);

@@ -24,10 +24,11 @@ public class AnimeDTO {
 
     private boolean isMyself;
 
-    public AnimeDTO(String title,String synopsis, String img_url, List<Figure> figures_list,  List<Review> reviews) {
+    public AnimeDTO(String title,String synopsis, int episodes, String img_url, List<Figure> figures_list,  List<Review> reviews) {
         this.title = title;
         this.synopsis = synopsis;
         this.img_url = img_url;
+        this.episodes = episodes;
         setFigures(figures_list);
         setMostRecentReviews(reviews);
     }
