@@ -71,20 +71,25 @@
           <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
             <h1>ADMINISTRATOR PAGE</h1>
             <div style="text-align: center;">
-              <h1 style="font-size:30px;">CRUD Operations</h1><br>
+              <h1 style="font-size:30px;">CRUD Operations</h1>
             </div>
             <div style="display: flex; gap: 5px;">
               <a id="addAnime" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" href="/addAnime">Add Anime</a>
               <a id="addCharacter" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" href="/addCharacter">Add Character</a>
             </div>
             <div style="text-align: center;">
-              <h1 style="font-size:30px;">View Analytics</h1><br>
+              <h1 style="font-size:30px;">View Analytics For Anime</h1>
             </div>
             <div style="display: flex; gap: 5px;">
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Most reviewed Anime</a>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Top reviewed Anime</a>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Most characters Anime</a>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit">Top Reviewers</a>
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="getMostReviewedAnime(this)">Most Reviewed Anime</a>
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="getTopReviewedAnime(this)">Best Reviewed Anime</a>
+            </div>
+            <div style="text-align: center;">
+              <h1 style="font-size:30px;">View Analytics For Users</h1>
+            </div>
+            <div style="display: flex; gap: 5px;">
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="getTopReviewers(this)">Top Reviewers</a>
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="getMostPopularUsers(this)">Most Popular Users</a>
             </div>
           </div>
         </form>
@@ -95,11 +100,20 @@
 
 <main id="main">
 
+  <!-- ======= Testimonials Section ======= -->
+  <section id="testimonials" class="testimonials section-bg">
+    <div class="container" data-aos="fade-up">
 
+      <div class="section-title">
+        <h2 id="title_query">TITLE QUERY</h2>
+      </div>
+      <div id="result_query" style="display: flex; flex-direction: column;">
+      </div>
+    </div>
 
-
+  </section><!-- End Testimonials Section -->
 </main><!-- End #main -->
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#top" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <div id="preloader"></div>
 
 <!-- Vendor JS Files -->

@@ -50,7 +50,7 @@ public class AnimeService {
 	}
 
 	public List<ResultSetDTO> GetAppreciatedAnime(String how_order) {
-		return revRepos.GetSuggestedAnime(how_order);
+		return revRepos.getTopReviewedAnime(how_order, 5);
 	}
 
 	public List<ResultSetDTO> getLongAnime(String how_order) {
@@ -76,5 +76,13 @@ public class AnimeService {
 	public boolean addCharacter(String name, String anime, String image) {
 		FigureDTO figure = new FigureDTO(name,anime,image);
 		return animeRepos.addCharacter(figure);
+	}
+
+	public List<ResultSetDTO> getMostReviews(String how_order, String group_by) {
+		return revRepos.getMostReviews(how_order, group_by);
+	}
+
+	public List<ResultSetDTO> getTopReviewedAnime(String how_order, int number) {
+		return revRepos.getTopReviewedAnime(how_order, number);
 	}
 }
