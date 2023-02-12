@@ -57,8 +57,12 @@ public class AnimeRepository {
     public boolean addAnime(Anime anime) {
 			boolean result = true;
 			try {
-				if(animeMongo.findAnimeByTitle(anime.getTitle()).isEmpty())
+				if(animeMongo.findAnimeByTitle(anime.getTitle()).isEmpty()) {
 					animeMongo.save(anime);
+				}
+				else{
+					result = false;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				result = false;

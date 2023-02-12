@@ -35,7 +35,6 @@ public class UserService {
 
 	public boolean addUser(User user) {
 		return userRepos.addUser(user);
-		// aggiungi neo4j
 	}
 
 	public boolean addReview(Review review) {
@@ -74,7 +73,7 @@ public class UserService {
 					result.get().getFigures(),
 					result.get().getReviews());
 			for (FigureDTO fig : anime.getFigures()) {
-				FigureDTO figure = new FigureDTO(fig.getName(),fig.getAnime(), fig.getImage_url());
+				FigureDTO figure = new FigureDTO(fig.getName(),anime.getTitle(),fig.getImage_url());
 				figures.add(figure);
 			}
 		}
@@ -87,7 +86,7 @@ public class UserService {
 		for (i = 0; i < k; i++) {
 			int rand = (int) Math.floor(Math.random() * len);
 			pack.add(figures.get(rand));
-			figures.remove(i);
+			figures.remove(rand);
 			len = len-1;
 		}
 		return pack;
