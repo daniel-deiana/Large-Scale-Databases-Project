@@ -48,28 +48,6 @@ public class AnimeService {
 			);
 		}
 
-    public List<AnimeDTO> getTopAnime() {
-		/*List<Review> reviews;
-		reviews = revRepos.getReviewsByUsername(username);
-		List<FigureDTO> figures = new ArrayList<>();
-		for(Review rev: reviews){
-			String name_anime =  rev.getAnime();
-			Optional<Anime> result = animeRepos.getAnimeByUid(name_anime);
-			AnimeDTO anime = new AnimeDTO(result.get().getTitle(),
-					result.get().getSynopsis(),
-					result.get().getImg_url(),
-					result.get().getFigures(),
-					result.get().getReviews());
-			for(FigureDTO fig: anime.getFigures()) {
-				FigureDTO figure = new FigureDTO(fig.getName(),fig.getUrl());
-				figures.add(figure);
-			}
-		}*/
-		return null;
-    }
-
-
-
 	public List<String> GetSuggestedAnime(String username) {
 		return userRepos.GetSuggestedAnime(username);
 	}
@@ -94,9 +72,8 @@ public class AnimeService {
     public boolean addAnime(String title, String synopsis, int episodes, String image) {
 		List<Figure> figures = new ArrayList<>();
 		List<Review> reviews = new ArrayList<>(5);
-		//Anime anime = new Anime(title,synopsis,episodes,image,figures,reviews);
-		//return animeRepos.addAnime(anime);
-		return false;
+		Anime anime = new Anime(title,synopsis,episodes,image,figures,reviews);
+		return animeRepos.addAnime(anime);
     }
 
 	public boolean addCharacter(String name, String anime, String image) {

@@ -14,9 +14,6 @@ public class Anime {
 		@Id
 		private String id;
 
-		@Field("uid")
-		private String uid;
-
 		@Field("title")
 		private String title;
 		@Field("synopsis")
