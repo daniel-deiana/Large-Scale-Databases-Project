@@ -1,6 +1,7 @@
 package com.example.demo.Repository;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
+import com.example.demo.Model.Figure;
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
@@ -66,6 +67,38 @@ public class AnimeRepository {
 		}
 	}
 
+    public boolean addAnime(Anime anime) {
+			boolean result = true;
+			try {
+				if(animeMongo.findAnimeByTitle(anime.getTitle()).isEmpty())
+					animeMongo.save(anime);
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = false;
+			}
+			return result;
+		}
+
+	public boolean addCharacter(Figure figure0) {
+		boolean result = true;
+		try {
+			Optional<Anime> anime = animeMongo.findAnimeByTitle(figure0.getAnime());
+			if (anime.isEmpty())
+				return false;
+
+			List<Figure> figures = anime.get().getFigures();
+			Figure figure = new Figure(figure0.getCharacterName(), figure0.getUrl());
+			figures.add(figure);
+			anime.get().setFigures(figures);
+			animeMongo.save(anime.get());
+			neo4j.addCharacter(figure);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+	}
 	public List<ResultSetDTO> getLongAnime(String how_order) {
 
 		ProjectionOperation projectFields = project()
@@ -88,3 +121,4 @@ public class AnimeRepository {
 		return result.getMappedResults();
 	}
 }
+

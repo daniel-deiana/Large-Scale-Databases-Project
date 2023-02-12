@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -97,6 +98,26 @@ public class UserRepository {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean checkTokenTime(String username, LocalDateTime now) {
+		Optional<User> user;
+		boolean result;
+		try {
+			user = getUserByUsername(username);
+			if (user.isEmpty())
+				return false;
+			LocalDateTime prev = user.get().getToken();
+			if((now.getDayOfYear()>prev.getDayOfYear())||now.getYear()>prev.getYear()){
+				user.get().setToken(now);
+				userMongo.save(user.get());
+				return true;
+			}
+			else return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	//////////////////////////////// NEO4J /////////////////////////////////

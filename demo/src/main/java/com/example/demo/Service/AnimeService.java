@@ -4,7 +4,9 @@ package com.example.demo.Service;
 import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
+import com.example.demo.Model.Figure;
 import com.example.demo.Model.Review;
+import com.example.demo.Model.User;
 import com.example.demo.Repository.AnimeRepository;
 import com.example.demo.Repository.CharacterRepository;
 import com.example.demo.Repository.ReviewRepository;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,4 +90,15 @@ public class AnimeService {
 	}
 
 
+    public boolean addAnime(String title, String synopsis, int episodes, String image) {
+		List<Figure> figures = new ArrayList<>();
+		List<Review> reviews = new ArrayList<>(5);
+		Anime anime = new Anime(title,synopsis,episodes,image,figures,reviews);
+		return animeRepos.addAnime(anime);
+    }
+
+	public boolean addCharacter(String name, String anime, String image) {
+		Figure figure = new Figure(name,anime,image);
+		return animeRepos.addCharacter(figure);
+	}
 }

@@ -22,9 +22,12 @@ $(document).ready(function () {
                             alert("Wrong Password")
                             $("#username").val("")
                             $("#password").val("")
-                        } else
+                        }
+                        else if(result["admin"]=='false')
                             window.location.href= "http://localhost:8080/home"
-                    }
+                        else if(result["admin"]=='true')
+                            window.location.href= "http://localhost:8080/admin"
+                        }
                 })
     }
 });

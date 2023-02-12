@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
+@Document(collection = "characters")
 public class Figure {
     private String name;
     private String url;
@@ -16,6 +17,13 @@ public class Figure {
         this.anime = anime;
     }
 
+
+    public Figure(String name,String image){
+        this.name = name;
+        this.url = image;
+    }
+
+    public Figure(){}
     public String getCharacterName() {
         return name;
     }
