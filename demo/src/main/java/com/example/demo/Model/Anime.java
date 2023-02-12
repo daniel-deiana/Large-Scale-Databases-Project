@@ -23,10 +23,11 @@ public class Anime {
 		private String synopsis;
 
 		@Field("episodes")
-		private int episodes;
+		private Integer episodes;
 
 		@Field("img_url")
 		private String img_url;
+
 		@Field("aired_bool")
 		private String aired_bool;
 		@Field("reviews")
@@ -67,5 +68,9 @@ public class Anime {
 		public List<Review> getMostRecentReviews() { return reviews;}
 
 		public void setMostRecentReviews(List<Review> mostRecentReviews) { this.reviews = mostRecentReviews; }
+
+		public int getEpisodes() {
+		return episodes;
+	}
 
 }

@@ -71,6 +71,7 @@ public class UserService {
 			Optional<Anime> result = animeRepos.getAnimeByUid(name_anime);
 			AnimeDTO anime = new AnimeDTO(result.get().getTitle(),
 					result.get().getSynopsis(),
+					result.get().getEpisodes(),
 					result.get().getImg_url(),
 					result.get().getFigures(),
 					result.get().getReviews());
