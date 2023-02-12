@@ -41,8 +41,5 @@ public class LoadHome {
         List<FigureDTO> figures = userService.loadTop10(sv.myself, null);
         return gson.toJson(figures);
     }
-
-
-
 }
 

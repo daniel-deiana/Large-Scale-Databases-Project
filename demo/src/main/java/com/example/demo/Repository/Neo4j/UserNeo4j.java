@@ -128,12 +128,21 @@ public class UserNeo4j {
         return null;
     }
 
-    public List<Record> findFollowedNumberByUsername(String username){
+    public List<Record> getMostPopularUsers(String how_order){
         try{
-            return neo4j.read("MATCH (u:User)-[:FOLLOWS]->(:User)" +
-                            " WHERE u.username=$username" +
-                            " RETURN count(*) as numFollowed",
-                    parameters("username", username));
+            if(how_order.equals("DESC")){
+                return neo4j.read("MATCH (:User)-[:FOLLOWS]->(u:User) " +
+                        "RETURN u.username as username, count(*) as numFollowers " +
+                        "ORDER BY numFollowers DESC LIMIT 10"
+                );
+            }
+            else{
+                return neo4j.read("MATCH (:User)-[:FOLLOWS]->(u:User) " +
+                        "RETURN u.username as username, count(*) as numFollowers " +
+                        "ORDER BY numFollowers ASC LIMIT 10"
+                );
+            }
+
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -227,5 +236,17 @@ public class UserNeo4j {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public List<Record> findFollowedNumberByUsername(String username){
+        try{
+            return neo4j.read("MATCH (u:User)-[:FOLLOWS]->(:User)" +
+                            " WHERE u.username=$username" +
+                            " RETURN count(*) as numFollowed",
+                    parameters("username", username));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
