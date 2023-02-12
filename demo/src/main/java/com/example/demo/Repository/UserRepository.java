@@ -48,7 +48,7 @@ public class UserRepository {
 	//This function update the list of the most recent reviews of a user when a new review is added
 	public void updateMostReviewed(Review review) {
 		try {
-			Optional<User> user = userMongo.findByUsername(review.getProfile());
+			Optional<User> user = userMongo.findByUsername(review.getUser());
 			List<Review> reviewList = user.get().getMostRecentReviews();
 			if (reviewList.size() >= 5) {
 				reviewList.remove(4);

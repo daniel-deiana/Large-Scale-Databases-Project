@@ -15,19 +15,19 @@ import java.util.Calendar;
 public class Review {
     @Id
     private String id;
-    @Field("profile")
-    private String profile;
+    @Field("user")
+    private String user;
     @Field("text")
     private String text;
     @Field("score")
     private Integer score;
     @Field("anime")
     private String anime;
-    @Field("timestamp")
+    @Field("date")
     private String timestamp;
 
     public Review(String user, String anime, String text, Integer score) {
-        this.profile = user;
+        this.user = user;
         this.anime = anime;
         this.text = text;
         this.score = score;
@@ -35,22 +35,20 @@ public class Review {
                 .format(Calendar.getInstance().getTime());
     }
 
-
-
     public String getId() { return id; }
     public void setId(String id) {
         this.id = id;
     }
-    public String getProfile() {
-        return profile;
+    public String getUser() {
+        return user;
     }
-    public void setProfile(Integer score) {
+    public void setUser(Integer score) {
         this.score = score;
     }
 
     public Integer getScore() {return score;}
     public void setScore(String user) {
-        this.profile = user;
+        this.user = user;
     }
     public String getAnime() {
         return anime;

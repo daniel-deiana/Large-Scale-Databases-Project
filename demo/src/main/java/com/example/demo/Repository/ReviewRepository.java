@@ -36,7 +36,7 @@ public class ReviewRepository {
     public List<Review> getReviewsByUsername(String username) {
         List<Review> revList;
         try{
-            revList = revMongo.findByProfile(username);
+            revList = revMongo.findByUser(username);
             if(revList.isEmpty())
                 return null;
         } catch (Exception e){
@@ -49,7 +49,7 @@ public class ReviewRepository {
 
     //This function check if a username has already made a review for that Anime
     public boolean getReviewsByUsernameAndAnime(String username, String anime) {
-        return revMongo.existsByProfileAndAnime(username, anime);
+        return revMongo.existsByUserAndAnime(username, anime);
     }
 
     //This function check if a username has already made a review for that Anime
@@ -58,7 +58,7 @@ public class ReviewRepository {
     }
 
     public int getCountReviews(String anime) {
-        return revMongo.countByAnime("Naruto");
+        return revMongo.countByAnime(anime);
     }
 
     public List<ResultSetDTO> animeMostReviewed() {

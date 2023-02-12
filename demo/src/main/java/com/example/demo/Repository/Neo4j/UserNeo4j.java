@@ -2,11 +2,8 @@ package com.example.demo.Repository.Neo4j;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.example.demo.DTO.FigureDTO;
-import com.example.demo.Model.Anime;
-import com.example.demo.Model.Figure;
 import org.neo4j.driver.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -222,10 +219,10 @@ public class UserNeo4j {
         return null;
     }
 
-    public void addCharacter(Figure figure) {
+    public void addCharacter(FigureDTO figure) {
         try{
             neo4j.write(" CREATE (n:Character {name: $name,anime: $anime, url: $image})",
-                    parameters("name", figure.getCharacterName(), "anime", figure.getAnime(), "image", figure.getUrl())
+                    parameters("name", figure.getName(), "anime", figure.getAnime(), "image", figure.getImage_url())
             );
         } catch (Exception e){
             e.printStackTrace();
