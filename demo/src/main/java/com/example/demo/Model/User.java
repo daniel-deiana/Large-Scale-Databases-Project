@@ -26,7 +26,7 @@ public class User {
 		private String country;
 
 		@Field("reviews")
-		private List<Review> mostRecentReviews;
+		private List<Review> mostRecentReviews = new ArrayList<>();
 
 		@Field("token")
 		private LocalDateTime token;

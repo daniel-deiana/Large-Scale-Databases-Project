@@ -48,9 +48,7 @@ public class LoadPack {
         List<FigureDTO> pos_figures;
 
         pos_figures = userService.getReviewedFigures(sv.myself,10);
-        userService.addHasCharacter(sv.myself, pos_figures);
         return gson.toJson(pos_figures);
-
     }
 
 }

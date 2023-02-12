@@ -39,6 +39,7 @@ public class UserRepository {
 		boolean result = true;
 		try {
 			userMongo.save(user);
+			neo4j.addUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
@@ -129,7 +130,7 @@ public class UserRepository {
 		for (Record r : records) {
 			String name = r.values().get(0).get("name").asString();
 			String anime = r.values().get(0).get("anime").asString();
-			String img = r.values().get(0).get("img").asString();
+			String img = r.values().get(0).get("img_url").asString();
 			FigureDTO fig = new FigureDTO(name, anime, img);
 			figures.add(fig);
 		}
@@ -177,7 +178,7 @@ public class UserRepository {
 		for (Record r : records) {
 			String name = r.values().get(0).get("name").asString();
 			String anime = r.values().get(0).get("anime").asString();
-			String img = r.values().get(0).get("img").asString();
+			String img = r.values().get(0).get("img_url").asString();
 			FigureDTO fig = new FigureDTO(name, anime, img);
 			figures.add(fig);
 		}
@@ -192,17 +193,11 @@ public class UserRepository {
 		return new FigureDTO(
 				records.get(0).values().get(0).get("name").asString(),
 				records.get(0).values().get(0).get("anime").asString(),
-				records.get(0).values().get(0).get("img").asString()
+				records.get(0).values().get(0).get("img_url").asString()
 		);
 	}
 
-	public boolean addToTop10(String name, String username) {
-		List<Record> records = neo4j.getCharacter(name, username);
-		if (records.isEmpty()) {
-			return false;
-		}
-		return true;
-	}
+
 
 	public int AddToTop10(String username, String name_character) {
 

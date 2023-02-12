@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.DTO.FigureDTO;
+import com.example.demo.Model.User;
 import org.neo4j.driver.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -238,15 +239,25 @@ public class UserNeo4j {
         }
     }
 
-    public List<Record> findFollowedNumberByUsername(String username){
-        try{
+    public List<Record> findFollowedNumberByUsername(String username) {
+        try {
             return neo4j.read("MATCH (u:User)-[:FOLLOWS]->(:User)" +
                             " WHERE u.username=$username" +
                             " RETURN count(*) as numFollowed",
                     parameters("username", username));
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void addUser(User user) {
+        try{
+            neo4j.write(" CREATE (u:User {username: username})",
+                    parameters("username", user.getUsername())
+            );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

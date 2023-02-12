@@ -7,6 +7,7 @@ $(document).ready(function () {
         $.ajax({
                 url : "/api/AddAnime",
                 method : "post",
+                dataType: "json",
                 data : {title: title, synopsis: synopsis, episodes: episodes, image: image},
                 success: function(data) {
                     result = jQuery.parseJSON(data)
@@ -28,6 +29,7 @@ $(document).ready(function () {
         $.ajax({
                 url : "/api/AddCharacter",
                 method : "post",
+                dataType: "json",
                 data : {name: name, anime: anime, image: image},
                 success: function(data) {
                     result = jQuery.parseJSON(data)
