@@ -23,6 +23,7 @@ function user_profile(username){
     let user = document.getElementById("searched_user")
     user.value = username
     search_user()
+    window.scrollTo({top:0, behavior: "smooth"})
 }
 
 

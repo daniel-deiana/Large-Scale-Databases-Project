@@ -50,7 +50,7 @@ function search_character(){
             else{
                 let html = '<img style="height:200px; width: 160px;"referrerpolicy="no-referrer" src='+result.image_url+' alt="">' +
                     '<h1>'+ result.name +'</h1> ' +
-                    '<h2>'+ result.anime +'</h2>' +
+                    '<h2>'+ result.anime +'</h2><br>' +
                     '<a class="btn-get-started scrollto" style=" text-align: center; margin: auto; cursor: pointer;" onclick="addToTop10(this.offsetParent.childNodes[2].textContent)">Add to Top10</a><br>' +
                     '<a class="btn-get-started scrollto" style=" text-align: center; margin: auto; cursor: pointer;" onclick="removeFromTop10(this.offsetParent.childNodes[2].textContent)">Remove from Top10</a>';
                 $('#characters_info').append(html)

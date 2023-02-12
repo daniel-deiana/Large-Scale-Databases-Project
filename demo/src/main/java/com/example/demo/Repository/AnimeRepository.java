@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.*;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -105,7 +106,9 @@ public class AnimeRepository {
 
 		AggregationOperation limit = Aggregation.limit(5);
 
-		Aggregation aggregation = Aggregation.newAggregation(sortOperation, projectFields, limit);
+		AggregationOperation matchOperation = Aggregation.match(Criteria.where("episodes").ne(null));
+
+		Aggregation aggregation = Aggregation.newAggregation(sortOperation, matchOperation, projectFields, limit);
 
 		AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "anime", ResultSetDTO.class);
 

@@ -63,7 +63,6 @@ function make_review(){
             }
             else
                 alert("Your review has been correctly registered!")
-
         }
     })
 
