@@ -21,7 +21,7 @@ public class Review {
     private String text;
     @Field("score")
     private Integer score;
-    @Field("title")
+    @Field("anime")
     private String anime;
     @Field("timestamp")
     private String timestamp;

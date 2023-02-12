@@ -105,7 +105,7 @@ public class ReviewRepository {
     public List<ResultSetDTO> GetSuggestedAnime(String how_order) {
 
         // grouping by age.
-        GroupOperation groupOperation = Aggregation.group("title").count().as("NumberReviews").avg("score").as("AvgScore");
+        GroupOperation groupOperation = Aggregation.group("anime").count().as("NumberReviews").avg("score").as("AvgScore");
 
         // filtering same age count > 1
 

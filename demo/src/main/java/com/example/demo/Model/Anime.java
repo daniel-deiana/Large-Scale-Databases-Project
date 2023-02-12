@@ -20,8 +20,6 @@ public class Anime {
 		private String title;
 		@Field("synopsis")
 		private String synopsis;
-		@Field("aired")
-		private String aired;
 		@Field("episodes")
 		private Integer episodes;
 		@Field("img_url")

@@ -16,7 +16,7 @@ $(document).ready(function () {
                             let html = '' +
                                 '<div">\n' +
                                 '            <div>\n' +
-                                '              <img src='+ characters[fig].url +' class="img-fluid" alt="">\n' +
+                                '              <img src='+ characters[fig].image_url +' class="img-fluid" alt="">\n' +
                                 '              <div>\n' +
                                 '                <h4>'+ characters[fig].name + '</h4>\n' +
                                 '              </div>\n' +
