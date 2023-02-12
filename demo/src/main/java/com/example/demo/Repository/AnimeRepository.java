@@ -1,9 +1,8 @@
 package com.example.demo.Repository;
+import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
-import com.example.demo.Model.Figure;
 import com.example.demo.Model.Review;
-import com.example.demo.Model.User;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
 import com.example.demo.Repository.Neo4j.UserNeo4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
@@ -79,15 +77,15 @@ public class AnimeRepository {
 			return result;
 		}
 
-	public boolean addCharacter(Figure figure0) {
+	public boolean addCharacter(FigureDTO figure0) {
 		boolean result = true;
 		try {
 			Optional<Anime> anime = animeMongo.findAnimeByTitle(figure0.getAnime());
 			if (anime.isEmpty())
 				return false;
 
-			List<Figure> figures = anime.get().getFigures();
-			Figure figure = new Figure(figure0.getCharacterName(), figure0.getUrl());
+			List<FigureDTO> figures = anime.get().getFigures();
+			FigureDTO figure = new FigureDTO(figure0.getName(),figure0.getAnime(), figure0.getImage_url());
 			figures.add(figure);
 			anime.get().setFigures(figures);
 			animeMongo.save(anime.get());

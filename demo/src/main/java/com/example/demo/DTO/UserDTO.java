@@ -69,7 +69,7 @@ public class UserDTO {
             ReviewDTO reviewDTO = new ReviewDTO();
             reviewDTO.setId(review.getId());
             reviewDTO.setAnime(review.getAnime());
-            reviewDTO.setProfile(review.getProfile());
+            reviewDTO.setProfile(review.getUser());
             reviewDTO.setTimestamp(review.getTimestamp());
             reviewDTO.setText(review.getText());
             reviewDTO.setScore(review.getScore());

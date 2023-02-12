@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import com.example.demo.DTO.FigureDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -32,9 +33,9 @@ public class Anime {
 		@Field("reviews")
 		private List<Review> reviews = new ArrayList<>();
 		@Field("characters")
-		private List<Figure> figures = new ArrayList<>();
+		private List<FigureDTO> figures = new ArrayList<>();
 
-		public Anime(String title, String synopsis, int episodes,String img_url, List<Figure> characters, List<Review> reviews){
+		public Anime(String title, String synopsis, int episodes,String img_url, List<FigureDTO> characters, List<Review> reviews){
 				this.title = title;
 				this.episodes = episodes;
 				this.synopsis = synopsis;
@@ -53,14 +54,12 @@ public class Anime {
 		public String getImg_url() {
 		return img_url;
 	}
-		public List<Figure> getFigures() {
-		return figures;
-	}
+		public List<FigureDTO> getFigures() {return figures;}
 		public List<Review> getReviews() {
 		return reviews;
 	}
 
-		public void setFigures(List<Figure> figures) {
+		public void setFigures(List<FigureDTO> figures) {
 			this.figures = figures;
 		}
 

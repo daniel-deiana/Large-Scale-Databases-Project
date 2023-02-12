@@ -1,37 +1,17 @@
 package com.example.demo.DTO;
 
 import lombok.NoArgsConstructor;
-import org.neo4j.driver.Value;
 
 @NoArgsConstructor
 public class FigureDTO {
     private String name;
     private String anime;
-    private String gender;
-    private String url;
-    private String description;
+    private String image_url;
 
-    private boolean isMyself;
-
-    public FigureDTO(String name, String anime, String gender, String url, String description) {
+    public FigureDTO(String name, String anime, String url) {
         this.name = name;
         this.anime = anime;
-        this.gender = gender;
-        this.url = url;
-        this.description = description;
-    }
-
-    public FigureDTO(String name, String anime,String url) {
-        this.name = name;
-        this.anime = anime;
-        this.url = url;
-    }
-
-
-    public FigureDTO(String name,String url){this.name = name; this.url = url;}
-
-    private boolean isMyself(){
-        return isMyself;
+        this.image_url = url;
     }
 
     public String getName() {
@@ -42,8 +22,9 @@ public class FigureDTO {
         return anime;
     }
 
-    public String getUrl() { return url;}
+    public String getImage_url() { return image_url;}
 
-    public void setAnime(String anime) { this.anime = anime;
-    }
+    public void setAnime(String anime) { this.anime = anime;}
+    public void setName(String name) { this.name = name;}
+
 }

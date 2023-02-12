@@ -5,13 +5,11 @@ import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.Anime;
-import com.example.demo.Model.Figure;
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.AnimeRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
-import org.neo4j.driver.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class UserService {
 	}
 
 	public boolean addReview(Review review) {
-		if (revRepos.getReviewsByUsernameAndAnime(review.getProfile(), review.getAnime()))
+		if (revRepos.getReviewsByUsernameAndAnime(review.getUser(), review.getAnime()))
 			return false;
 		revRepos.addReview(review);
 		userRepos.updateMostReviewed(review);
@@ -75,7 +73,7 @@ public class UserService {
 					result.get().getFigures(),
 					result.get().getReviews());
 			for (FigureDTO fig : anime.getFigures()) {
-				FigureDTO figure = new FigureDTO(fig.getName(), fig.getUrl());
+				FigureDTO figure = new FigureDTO(fig.getName(),fig.getAnime(), fig.getImage_url());
 				figures.add(figure);
 			}
 		}

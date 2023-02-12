@@ -1,8 +1,5 @@
 package com.example.demo.DTO;
 
-import com.example.demo.DTO.FigureDTO;
-import com.example.demo.DTO.ReviewDTO;
-import com.example.demo.Model.Figure;
 import com.example.demo.Model.Review;
 import lombok.NoArgsConstructor;
 
@@ -13,37 +10,38 @@ public class AnimeDTO {
     private String uid;
     private String title;
     private String synopsis;
-    //private String genre;
-    //private String aired;
+
     private Integer episodes;
     private String img_url;
     //private String aired_bool;
     private List<ReviewDTO> reviews;
+
     private List<FigureDTO> figures;
 
 
-    private boolean isMyself;
-
-    public AnimeDTO(String title,String synopsis, String img_url, List<Figure> figures_list,  List<Review> reviews) {
+    public AnimeDTO(String title,String synopsis, String img_url, List<FigureDTO> figures_list,  List<Review> reviews) {
         this.title = title;
         this.synopsis = synopsis;
         this.img_url = img_url;
-        setFigures(figures_list);
+        this.figures = figures_list;
+        setFigures(figures_list, title);
         setMostRecentReviews(reviews);
     }
 
-    public void setFigures(List<Figure> characters) {
+    public void setFigures(List<FigureDTO> characters, String anime) {
         List<FigureDTO> characterDTOList = new ArrayList<>();
-        for (Figure fig : characters) {
+        for (FigureDTO fig : characters) {
             FigureDTO characterDTO = new FigureDTO(
-                    fig.getCharacterName(),
-                    fig.getAnime(),
-                    fig.getUrl()
+                    fig.getName(),
+                    anime,
+                    fig.getImage_url()
             );
+
             characterDTOList.add(characterDTO);
         }
         this.figures =  characterDTOList;
     }
+
 
     public void setMostRecentReviews(List<Review> reviewList) {
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
@@ -51,21 +49,13 @@ public class AnimeDTO {
             ReviewDTO reviewDTO = new ReviewDTO();
             reviewDTO.setId(review.getId());
             reviewDTO.setAnime(review.getAnime());
-            reviewDTO.setProfile(review.getProfile());
+            reviewDTO.setProfile(review.getUser());
             reviewDTO.setTimestamp(review.getTimestamp());
             reviewDTO.setText(review.getText());
             reviewDTO.setScore(review.getScore());
             reviewDTOList.add(reviewDTO);
         }
         this.reviews =  reviewDTOList;
-    }
-
-    private boolean isMyself(){
-        return isMyself;
-    }
-
-    public AnimeDTO(String title) {
-        this.title = title;
     }
 
     public String getTitle() {
