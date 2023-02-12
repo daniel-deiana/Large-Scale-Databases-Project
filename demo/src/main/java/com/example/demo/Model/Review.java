@@ -7,7 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -24,15 +27,17 @@ public class Review {
     @Field("anime")
     private String anime;
     @Field("date")
-    private String timestamp;
+    private Date date;
 
     public Review(String user, String anime, String text, Integer score) {
         this.user = user;
         this.anime = anime;
         this.text = text;
         this.score = score;
-        this.timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
-                .format(Calendar.getInstance().getTime());
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        formatter.format(date);
+        this.date = date;
     }
 
     public String getId() { return id; }
@@ -62,10 +67,10 @@ public class Review {
     public void setText(String text) {
         this.text = text;
     }
-    public String getTimestamp() {
-        return timestamp;
+    public Date getTimestamp() {
+        return date;
     }
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(Date date) {
+        this.date = date;
     }
 }

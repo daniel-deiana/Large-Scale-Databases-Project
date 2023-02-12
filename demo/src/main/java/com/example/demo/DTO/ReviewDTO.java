@@ -2,6 +2,9 @@ package com.example.demo.DTO;
 
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @NoArgsConstructor
 public class ReviewDTO {
     private String id;
@@ -12,14 +15,14 @@ public class ReviewDTO {
 
     private Integer score;
 
-    private String timestamp;
+    private Date date;
 
-    public ReviewDTO(String id, String user, String anime_uid, String text, String timestamp, Integer score) {
+    public ReviewDTO(String id, String user, String anime_uid, String text, Date date, Integer score) {
         this.id = id;
         this.profile = user;
         this.anime = anime_uid;
         this.text = text;
-        this.timestamp = timestamp;
+        this.date = date;
         this.score = score;
     }
 
@@ -55,12 +58,12 @@ public class ReviewDTO {
     }
 
 
-    public String getTimestamp() {
-        return timestamp;
+    public Date getTimestamp() {
+        return date;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(Date timestamp) {
+        this.date = timestamp;
     }
 
 
