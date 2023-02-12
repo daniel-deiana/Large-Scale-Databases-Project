@@ -39,9 +39,7 @@ public class AnimeDTO {
             FigureDTO characterDTO = new FigureDTO(
                     fig.getCharacterName(),
                     fig.getAnime(),
-                    fig.getGender(),
-                    fig.getUrl(),
-                    fig.getDescription()
+                    fig.getUrl()
             );
             characterDTOList.add(characterDTO);
         }
