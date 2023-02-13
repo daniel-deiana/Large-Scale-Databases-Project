@@ -8,7 +8,6 @@ import com.example.demo.Model.User;
 import com.example.demo.Repository.AnimeRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
-import org.neo4j.driver.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,4 +157,9 @@ public class UserService {
     public ReviewDTO yourReview(String myself, String animeToDisplay) {
 		return revRepos.getReviewByUsernameAndAnime(myself,animeToDisplay);
     }
+
+
+	public List<ResultSetDTO> getCountryView(String how_order) {
+		return userRepos.getCountryView(how_order);
+	}
 }

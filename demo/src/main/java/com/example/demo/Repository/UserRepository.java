@@ -13,7 +13,9 @@ import com.example.demo.Repository.Neo4j.UserNeo4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -21,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.neo4j.driver.Record;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
 @Repository
 public class UserRepository {
@@ -326,5 +331,29 @@ public class UserRepository {
 		}
 
 		return anime_from_top10FollowingList;
+	}
+
+	public List<ResultSetDTO> getCountryView(String how_order) {
+
+		GroupOperation groupOperation = Aggregation.group("country").count().as("NumberUsers");
+
+		ProjectionOperation projectFields = project()
+				.andExpression("_id").as("field1")
+				.andExpression("NumberUsers").as("field2");
+
+		SortOperation sortOperation;
+		if(how_order.equals("DESC")) {
+			sortOperation = sort(Sort.by(Sort.Direction.DESC,  "NumberUsers"));
+		} else {
+			sortOperation = sort(Sort.by(Sort.Direction.ASC, "NumberUsers"));
+		}
+
+		AggregationOperation limit = Aggregation.limit(10);
+
+		Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, limit, projectFields);
+
+		AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "users", ResultSetDTO.class);
+
+		return result.getMappedResults();
 	}
 }

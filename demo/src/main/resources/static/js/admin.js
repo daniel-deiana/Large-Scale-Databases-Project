@@ -49,7 +49,7 @@ function getMostReviewedAnime_btn(){
     document.getElementById("recalculate_review").setAttribute("onclick","getMostReviewedAnime()")
     document.getElementById("recalculate_review").value = null;
     not_view_filters();
-    view_filters("review");
+    view_filters();
     if(title_button.textContent === "Most Reviewed Anime"){
         orderby = "DESC";
         title_button.textContent = "Least Reviewed Anime"
@@ -89,7 +89,7 @@ function getTopReviewedAnime_btn(){
     document.getElementById("recalculate_review").setAttribute("onclick","getTopReviewedAnime()")
     document.getElementById("recalculate_review").value = null;
     not_view_filters();
-    view_filters("review");
+    view_filters();
     if(title_button.textContent === "Best Reviewed Anime"){
         orderby = "DESC";
         title_button.textContent = "Worst Reviewed Anime"
@@ -123,11 +123,15 @@ function getTopReviewedAnime(){
         }
     })
 }
-function getTopReviewers(){
+
+
+function getTopReviewers_btn(){
     let title_button = document.getElementById("getTopReviewers")
     document.getElementById('title_query').textContent = title_button.textContent;
+    document.getElementById("recalculate_review").setAttribute("onclick","getTopReviewers()")
+    document.getElementById("recalculate_review").value = null;
     not_view_filters();
-    view_filters("user");
+    view_filters();
     if(title_button.textContent === "Top Reviewers"){
         orderby = "DESC";
         title_button.textContent = "Worst Reviewers"
@@ -136,10 +140,13 @@ function getTopReviewers(){
         orderby = "ASC";
         title_button.textContent = "Top Reviewers";
     }
+    getTopReviewers()
+}
+function getTopReviewers(){
+    let year = document.getElementById("year").value;
     $.ajax({
         url : "/api/getTopReviewers",
-
-        data : {how_order: orderby},
+        data : {how_order: orderby, year: year},
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
@@ -189,6 +196,40 @@ function getMostPopularUsers(){
     })
 }
 
+function getCountryView(){
+    let title_button = document.getElementById("getCountryView")
+    document.getElementById('title_query').textContent = title_button.textContent;
+    not_view_filters();
+    if(title_button.textContent === "Most Frequent Countries"){
+        orderby = "DESC";
+        title_button.textContent = "Least Frequent Countries"
+    }
+    else{
+        orderby = "ASC";
+        title_button.textContent = "Most Frequent Countries";
+    }
+    $.ajax({
+        url : "/api/getCountryView",
+        data : {how_order: orderby},
+        method : "post",
+        success: function(data) {
+            result = JSON.parse(data)
+            console.log(result)
+            document.getElementById("result_query").replaceChildren()
+            for (fig in result){
+                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >#Users: '+ result[fig].field2 +'</a>' +
+                    '</div>'
+                $('#result_query').append(html)
+            }
+        }
+    })
+}
+
+
+
 function getMostLovedCharacter(){
     let title_button = document.getElementById("getMostLovedCharacter")
     document.getElementById('title_query').textContent = title_button.textContent;
@@ -222,12 +263,12 @@ function getMostLovedCharacter(){
 }
 
 function getMostRareCharacter(){
-    let title_button = document.getElementById("getMostLovedCharacter")
+    let title_button = document.getElementById("getMostRareCharacter")
     document.getElementById('title_query').textContent = title_button.textContent;
     not_view_filters();
     if(title_button.textContent === "Most Rare Character"){
         orderby = "ASC";
-        title_button.textContent = "Least Rare Character"
+        title_button.textContent = "Least Rare Character";
     }
     else{
         orderby = "DESC";
@@ -253,12 +294,11 @@ function getMostRareCharacter(){
     })
 }
 
-function view_filters(ofWhat){
-    let name = "filtri_" + ofWhat;
-    document.getElementById(name).style.display = "flex";
+function view_filters(){
+    document.getElementById("filtri_review").style.display = "flex";
 }
 
 function not_view_filters(){
-    document.getElementById("filtri_user").style.display = "none";
+    //document.getElementById("filtri_user").style.display = "none";
     document.getElementById("filtri_review").style.display = "none";
 }
