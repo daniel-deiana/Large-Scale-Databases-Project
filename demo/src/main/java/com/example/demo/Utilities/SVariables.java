@@ -7,12 +7,8 @@ import java.util.List;
 public class SVariables {
     public String myself;
     public String animeToDisplay;
-
-
-    //public List<Anime> current_results;
     public int currentPage;
     public int lastPage;
-
     public boolean admin;
 
     @Override

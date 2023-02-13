@@ -52,4 +52,18 @@ public class currentAdmin {
         List<ResultSetDTO> list_user = userService.getMostPopularUsers(how_order);
         return gson.toJson(list_user.toArray());
     }
+
+    @RequestMapping("/api/getMostLovedCharacter")
+    public @ResponseBody String getMostLovedCharacter(@RequestParam(value = "how_order") String how_order) {
+        Gson gson = new Gson();
+        List<ResultSetDTO> list_character = animeService.getMostLovedCharacter(how_order);
+        return gson.toJson(list_character.toArray());
+    }
+
+    @RequestMapping("/api/getMostRareCharacter")
+    public @ResponseBody String getMostRaredCharacter(@RequestParam(value = "how_order") String how_order) {
+        Gson gson = new Gson();
+        List<ResultSetDTO> list_character = animeService.getMostRareCharacter(how_order);
+        return gson.toJson(list_character.toArray());
+    }
 }

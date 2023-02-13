@@ -5,7 +5,9 @@ import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
+import com.example.demo.Repository.Neo4j.CharactersNeo4j;
 import com.example.demo.Repository.Neo4j.UserNeo4j;
+import org.neo4j.driver.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -13,6 +15,7 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +27,8 @@ public class AnimeRepository {
 	private AnimeRepositoryMongo animeMongo;
 	@Autowired
 	private MongoOperations mongoOperations;
-	UserNeo4j neo4j = new UserNeo4j();
+	UserNeo4j userNeo4j = new UserNeo4j();
+	CharactersNeo4j charactersNeo4j = new CharactersNeo4j();
 
 	public Optional<Anime> getAnimeByTitle(String title){
 		Optional<Anime> anime = Optional.empty();
@@ -83,7 +87,7 @@ public class AnimeRepository {
 			figures.add(figure);
 			anime.get().setFigures(figures);
 			animeMongo.save(anime.get());
-			neo4j.addCharacter(figure);
+			userNeo4j.addCharacter(figure);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,7 +119,14 @@ public class AnimeRepository {
 		return result.getMappedResults();
 	}
 
+	public List<ResultSetDTO> getMostLovedCharacter(String how_order) {
+		List<Record> records = charactersNeo4j.getMostLovedCharacter(how_order);
+		return Utilities.RecordToResultSet(records);
+	}
 
+	public List<ResultSetDTO> getMostRareCharacter(String how_order) {
+		List<Record> records = charactersNeo4j.getMostRareCharacter(how_order);
+		return Utilities.RecordToResultSet(records);
+	}
 
 }
-
