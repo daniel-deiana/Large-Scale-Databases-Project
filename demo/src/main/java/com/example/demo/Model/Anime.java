@@ -69,4 +69,12 @@ public class Anime {
 		return episodes;
 	}
 
+		public void setSynopsis(String synopsis) { this.synopsis = synopsis;
+		}
+
+		public void setEpisodes(int episodes) { this.episodes = episodes;
+		}
+
+		public void setImage(String img_url) { this.img_url = img_url;
+		}
 }

@@ -253,10 +253,30 @@ public class UserNeo4j {
 
     public void addUser(User user) {
         try{
-            neo4j.write(" CREATE (u:User {username: username})",
+            neo4j.write(" CREATE (u:User {username: $username})",
                     parameters("username", user.getUsername())
             );
         } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUser(String user) {
+        try{
+            neo4j.write(" MATCH (u:User {username: $username}) DELETE u",
+                    parameters("username", user)
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCharacter(String name) {
+        try{
+            neo4j.write(" MATCH (c:Character {name: $name}) DELETE c",
+                    parameters("name", name)
+            );
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

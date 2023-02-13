@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script language="javascript" src="js/admin.js" type="text/javascript"></script>
+  <script language="javascript" src="js/CRUD.js" type="text/javascript"></script>
 
 
 
@@ -61,44 +61,18 @@
 </header><!-- End Header -->
 
 <!-- ======= Hero Section ======= -->
-
 <section id="hero" class="d-flex align-items-center">
 
   <div class="container-fluid" data-aos="fade-up">
     <div data-aos="zoom-in" data-aos-delay="100" style="display: flex; flex-direction: column; align-items: center;">
       <div style="display: flex; justify-content: center;">
-        <form>
-          <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-            <h1>ADMINISTRATOR PAGE</h1>
-            <div style="text-align: center;">
-              <h2 style="font-size:25px;">CRUD Operations</h2>
-            </div>
-            <div style="display: flex; gap: 5px;">
-              <a id="addAnime" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" href="/addAnime">Add/Update Anime</a>
-              <a id="addCharacter" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" href="/addCharacter">Add/Remove Character</a>
-              <a id="deleteUser" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" href="/deleteUser">Delete User</a>
-            </div>
-            <div style="text-align: center;">
-              <h2 style="font-size:25px;">View Anime Analytics</h2>
-            </div>
-            <div style="display: flex; gap: 5px;">
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getMostReviewedAnime(this)">Most Reviewed Anime</a>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getTopReviewedAnime(this)">Best Reviewed Anime</a>
-            </div>
-            <div style="text-align: center;">
-              <h2 style="font-size:25px;">View User Analytics</h2>
-            </div>
-            <div style="display: flex; gap: 5px;">
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getTopReviewers(this)">Top Reviewers</a>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getMostPopularUsers(this)">Most Popular Users</a>
-            </div>
-            <div style="text-align: center;">
-              <h2 style="font-size:25px;">View Character Analytics</h2>
-            </div>
-            <div style="display: flex; gap: 5px;">
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getMostLovedCharacter(this)">Most Loved Character</a>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getMostRareCharacter(this)">Most Rare Character</a>
-            </div>
+        <form style=" gap: 5px;display: flex; flex-direction: column;; align-items: center;">
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <h1>DELETE USER</h1>
+            <h2>Username</h2>
+            <input id="user" class="form-control" type="text" placeholder="Giovanna1" style="text-align: center;">
+            <br>
+            <a id="deleteUser" class="btn-get-started scrollto" style=" cursor: pointer; text-align: center; margin: auto;" onclick="deleteUser();">Delete User</a>
           </div>
         </form>
       </div>
@@ -108,20 +82,11 @@
 
 <main id="main">
 
-  <!-- ======= Testimonials Section ======= -->
-  <section id="testimonials" class="testimonials section-bg">
-    <div class="container" data-aos="fade-up">
 
-      <div class="section-title">
-        <h2 id="title_query">TITLE QUERY</h2>
-      </div>
-      <div id="result_query" style="display: flex; flex-direction: column;">
-      </div>
-    </div>
 
-  </section><!-- End Testimonials Section -->
+
 </main><!-- End #main -->
-<a href="#top" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <div id="preloader"></div>
 
 <!-- Vendor JS Files -->
