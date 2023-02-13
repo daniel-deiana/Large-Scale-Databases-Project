@@ -23,7 +23,7 @@ public class LoadPack {
     public @ResponseBody String returnCharacters(Model model) {
         SVariables sv = (SVariables) model.getAttribute("sessionVariables");
         Gson gson = new Gson();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/dd/MM HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         dtf.format(now);
         boolean available = userService.checkToken(sv.myself,now);

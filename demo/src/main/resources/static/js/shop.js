@@ -10,6 +10,7 @@ $(document).ready(function () {
                 method : "get",
                 success: function(data) {
                     result = jQuery.parseJSON(data)
+                    console.log(result)
                     if(result == null){
                         token.textContent = "Wait until tomorrow to open a pack!"
                         return;
