@@ -1,7 +1,5 @@
 package com.example.demo.Controller.api;
 
-
-import com.example.demo.DTO.UserDTO;
 import com.example.demo.Service.UserService;
 import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
@@ -25,10 +23,17 @@ public class LoadFriends {
         SVariables sv = (SVariables) model.getAttribute("sessionVariables");
         return userService.followUser(sv.myself, username);
     }
+
     @RequestMapping("/api/unfollowUser")
     public @ResponseBody boolean unfollowUser(Model model, @RequestParam(value = "user")String username){
         SVariables sv = (SVariables) model.getAttribute("sessionVariables");
         return userService.unfollowUser(sv.myself, username);
+    }
+
+    @RequestMapping("/api/suggestedUser")
+    public @ResponseBody String SuggestUser(Model model) {
+        SVariables sv = (SVariables) model.getAttribute("sessionVariables");
+        return new Gson().toJson(userService.suggestedUsers(sv.myself));
     }
 
 }

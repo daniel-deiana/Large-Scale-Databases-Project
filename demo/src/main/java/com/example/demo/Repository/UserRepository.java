@@ -35,8 +35,6 @@ public class UserRepository {
 
 	@Autowired
 	private MongoOperations mongoOperations;
-	@Autowired
-	private ReviewRepositoryMongo revMongo;
 
 	UserNeo4j userNeo4j = new UserNeo4j();
 

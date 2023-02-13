@@ -1,5 +1,4 @@
 package com.example.demo.Repository.MongoDB;
-import com.example.demo.DTO.ReviewDTO;
 import com.example.demo.Model.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +11,5 @@ public interface ReviewRepositoryMongo extends MongoRepository<Review,String> {
     Page<Review> findByAnime(String anime, PageRequest pageable);
     int countByAnime(String anime);
     boolean existsByUserAndAnime(String profile, String anime);
-
     Review findByUserAndAnime(String username, String anime);
 }

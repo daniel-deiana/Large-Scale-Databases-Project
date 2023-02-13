@@ -1,24 +1,12 @@
 package com.example.demo.Controller.api;
 
-import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.ResultSetDTO;
-import com.example.demo.Model.Anime;
-import com.example.demo.Model.Review;
 import com.example.demo.Service.AnimeService;
 import com.example.demo.Service.UserService;
-import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
-import lombok.SneakyThrows;
-import org.neo4j.driver.Record;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,7 +18,6 @@ public class currentAdmin {
     @Autowired
     UserService userService;
 
-    @SneakyThrows
     @RequestMapping("/api/getMostReviewedAnime")
     public @ResponseBody String getMostReviewedAnime(
                                                     @RequestParam(value = "how_order") String how_order,
@@ -113,4 +100,83 @@ public class currentAdmin {
         List<ResultSetDTO> list_character = animeService.getMostUnusedCharacter(how_order);
         return gson.toJson(list_character.toArray());
     }
+
+
+
+
+    /************                          CRUD OPERATION                                    *************/
+
+
+
+
+    @PostMapping("/api/AddAnime")
+    public @ResponseBody String newAnime(Model model,
+                                         @RequestParam(value = "title") String title,
+                                         @RequestParam(value = "synopsis") String synopsis,
+                                         @RequestParam(value = "episodes") int episodes,
+                                         @RequestParam(value = "image") String image
+    ) {
+
+        Gson gson = new Gson();
+        boolean result = animeService.addAnime(title,synopsis,episodes,image);
+        if(!result)
+            return gson.toJson("{\"type\":1, \"message\": \"Impossible\"}");
+        return gson.toJson("{\"type\":0, \"message\": \"Possible\"}");
+    }
+
+    @PostMapping("/api/UpdateAnime")
+    public @ResponseBody String updateAnime(Model model,
+                                            @RequestParam(value = "title") String title,
+                                            @RequestParam(value = "synopsis") String synopsis,
+                                            @RequestParam(value = "episodes") int episodes,
+                                            @RequestParam(value = "image") String image
+    ) {
+        Gson gson = new Gson();
+        boolean result = animeService.updateAnime(title,synopsis,episodes,image);
+        if(!result)
+            return gson.toJson("{\"type\":1, \"message\": \"Impossible\"}");
+        return gson.toJson("{\"type\":0, \"message\": \"Possible\"}");
+    }
+
+    @PostMapping("/api/AddCharacter")
+    public @ResponseBody String newCharacter(Model model,
+                                             @RequestParam(value = "name") String name,
+                                             @RequestParam(value = "anime") String anime,
+                                             @RequestParam(value = "image") String image
+    ) {
+
+        Gson gson = new Gson();
+        boolean result = animeService.addCharacter(name,anime,image);
+        if(!result)
+            return gson.toJson("{\"type\":1, \"message\": \"Impossible\"}");
+        return gson.toJson("{\"type\":0, \"message\": \"Possible\"}");
+    }
+
+    @PostMapping("/api/RemoveCharacter")
+    public @ResponseBody String RemoveCharacter(Model model,
+                                                @RequestParam(value = "name") String name,
+                                                @RequestParam(value = "anime") String anime,
+                                                @RequestParam(value = "image") String image
+    ) {
+
+        Gson gson = new Gson();
+        boolean result = animeService.removeCharacter(name,anime,image);
+        if(!result)
+            return gson.toJson("{\"type\":1, \"message\": \"Impossible\"}");
+        return gson.toJson("{\"type\":0, \"message\": \"Possible\"}");
+    }
+
+    @PostMapping("/api/deleteUser")
+    public @ResponseBody String deleteUser(Model model,
+                                           @RequestParam(value = "username") String user
+    ) {
+
+        Gson gson = new Gson();
+        boolean result = userService.deleteUser(user);
+        if(!result)
+            return gson.toJson("{\"type\":1, \"message\": \"Impossible\"}");
+        return gson.toJson("{\"type\":0, \"message\": \"Possible\"}");
+    }
+
+
 }

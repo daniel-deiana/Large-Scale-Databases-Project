@@ -16,7 +16,6 @@ public class SVariables {
         return "SessionVariables{" +
                 "myself='" + myself + '\'' +
                 ", animeToDisplay='" + animeToDisplay + '\'' +
-                //", userToDisplay='" + userToDisplay + '\'' +
                 '}';
     }
 

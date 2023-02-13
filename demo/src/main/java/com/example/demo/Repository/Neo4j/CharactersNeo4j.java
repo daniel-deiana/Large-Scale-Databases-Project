@@ -9,9 +9,7 @@ import java.util.List;
 import static org.neo4j.driver.Values.parameters;
 
 public class CharactersNeo4j {
-    Logger logger = LoggerFactory.getLogger(CharactersNeo4j.class);
     private final Neo4jManager neo4j;
-
     public CharactersNeo4j(){
             this.neo4j = Neo4jManager.getIstance();
         }

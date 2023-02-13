@@ -20,10 +20,6 @@ public class SignUpController {
 
 	@Autowired
 	UserService userService;
-
-
-
-
 		@PostMapping("/api/signup")
 		public String signup(Model model,
 												 @RequestParam(value = "username") String username,
