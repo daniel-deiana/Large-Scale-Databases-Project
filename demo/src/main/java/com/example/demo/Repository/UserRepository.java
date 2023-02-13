@@ -76,7 +76,7 @@ public class UserRepository {
 			return false;
 		try {
 			userMongo.delete(toDelete.get());
-			neo4j.deleteUser(user);
+			userNeo4j.deleteUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
