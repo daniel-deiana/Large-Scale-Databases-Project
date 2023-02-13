@@ -15,9 +15,9 @@ public class ReviewDTO {
 
     private Integer score;
 
-    private Date date;
+    private String date;
 
-    public ReviewDTO(String id, String user, String anime_uid, String text, Date date, Integer score) {
+    public ReviewDTO(String id, String user, String anime_uid, String text, String date, Integer score) {
         this.id = id;
         this.profile = user;
         this.anime = anime_uid;
@@ -58,11 +58,11 @@ public class ReviewDTO {
     }
 
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return date;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.date = timestamp;
     }
 
