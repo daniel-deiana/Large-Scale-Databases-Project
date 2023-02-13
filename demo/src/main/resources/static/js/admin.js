@@ -222,7 +222,7 @@ function getMostLovedCharacter(){
 }
 
 function getMostRareCharacter(){
-    let title_button = document.getElementById("getMostLovedCharacter")
+    let title_button = document.getElementById("getMostRareCharacter")
     document.getElementById('title_query').textContent = title_button.textContent;
     not_view_filters();
     if(title_button.textContent === "Most Rare Character"){
@@ -235,6 +235,38 @@ function getMostRareCharacter(){
     }
     $.ajax({
         url : "/api/getMostRareCharacter",
+        data : {how_order: orderby},
+        method : "post",
+        success: function(data) {
+            result = JSON.parse(data)
+            console.log(result)
+            document.getElementById("result_query").replaceChildren()
+            for (fig in result){
+                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >Added to Top10: '+ result[fig].field2 +'</a>' +
+                    '</div>'
+                $('#result_query').append(html)
+            }
+        }
+    })
+}
+
+function getMostUnusedCharacter(){
+    let title_button = document.getElementById("getMostUnusedCharacter")
+    document.getElementById('title_query').textContent = title_button.textContent;
+    not_view_filters();
+    if(title_button.textContent === "Most Unused Character"){
+        orderby = "ASC";
+        title_button.textContent = "Least Unused Character"
+    }
+    else{
+        orderby = "DESC";
+        title_button.textContent = "Most Unused Character";
+    }
+    $.ajax({
+        url : "/api/getMostUnusedCharacter",
         data : {how_order: orderby},
         method : "post",
         success: function(data) {

@@ -108,4 +108,9 @@ public class AnimeService {
 	public List<ResultSetDTO> getMostRareCharacter(String how_order) {
 		return animeRepos.getMostRareCharacter(how_order);
 	}
+
+	public List<ResultSetDTO> getMostUnusedCharacter(String how_order) {
+		return animeRepos.getMostUnusedCharacter(how_order);
+	}
+
 }
