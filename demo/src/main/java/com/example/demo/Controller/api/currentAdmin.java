@@ -8,12 +8,17 @@ import com.example.demo.Service.AnimeService;
 import com.example.demo.Service.UserService;
 import com.example.demo.Utilities.SVariables;
 import com.google.gson.Gson;
+import lombok.SneakyThrows;
 import org.neo4j.driver.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -25,10 +30,20 @@ public class currentAdmin {
     @Autowired
     UserService userService;
 
+    @SneakyThrows
     @RequestMapping("/api/getMostReviewedAnime")
-    public @ResponseBody String getMostReviewedAnime(@RequestParam(value = "how_order") String how_order) {
+    public @ResponseBody String getMostReviewedAnime(
+                                                    @RequestParam(value = "how_order") String how_order,
+                                                    @RequestParam(value = "year")String first_date
+    ) {
         Gson gson = new Gson();
-        List<ResultSetDTO> AppreciatedAnime = animeService.getMostReviews(how_order, "anime");
+        List<ResultSetDTO> AppreciatedAnime;
+        if(!first_date.isEmpty()){
+            int year_ = Integer.parseInt(first_date);
+            AppreciatedAnime = animeService.getMostReviews(how_order, "anime", year_);
+
+        }else
+            AppreciatedAnime = animeService.getMostReviews(how_order, "anime");
         return gson.toJson(AppreciatedAnime.toArray());
     }
 
@@ -42,8 +57,9 @@ public class currentAdmin {
     @RequestMapping("/api/getTopReviewers")
     public @ResponseBody String getTopReviewers(@RequestParam(value = "how_order") String how_order) {
         Gson gson = new Gson();
-        List<ResultSetDTO> AppreciatedAnime = animeService.getMostReviews(how_order, "user");
-        return gson.toJson(AppreciatedAnime.toArray());
+        //List<ResultSetDTO> AppreciatedAnime = animeService.getMostReviews(how_order, "user","2016","5");
+        //return gson.toJson(AppreciatedAnime.toArray());
+        return null;
     }
 
     @RequestMapping("/api/getMostPopularUsers")
