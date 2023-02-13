@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -122,7 +123,10 @@ public class UserRepository {
 			if (user.isEmpty())
 				return false;
 			LocalDateTime prev = user.get().getToken();
-			if((now.getDayOfYear()>prev.getDayOfYear())||now.getYear()>prev.getYear()){
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/dd/MM HH:mm:ss");
+			dtf.format(prev);
+			dtf.format(now);
+			if(now.getYear()>prev.getYear()||(now.getDayOfYear())>(prev.getDayOfYear())){
 				user.get().setToken(now);
 				userMongo.save(user.get());
 				return true;
@@ -288,7 +292,6 @@ public class UserRepository {
 		}
 
 		return users;
-
     }
 
 	public List<String> GetSuggestedAnime(String username){
