@@ -27,7 +27,7 @@ public class Review {
     @Field("anime")
     private String anime;
     @Field("date")
-    private Date date;
+    private String date;
 
     public Review(String user, String anime, String text, Integer score) {
         this.user = user;
@@ -37,7 +37,7 @@ public class Review {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
         formatter.format(date);
-        this.date = date;
+        this.date = date.toString();
     }
 
     public String getId() { return id; }
@@ -67,10 +67,10 @@ public class Review {
     public void setText(String text) {
         this.text = text;
     }
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return date;
     }
-    public void setTimestamp(Date date) {
+    public void setTimestamp(String date) {
         this.date = date;
     }
 }
