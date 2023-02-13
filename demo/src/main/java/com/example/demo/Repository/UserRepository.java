@@ -209,7 +209,8 @@ public class UserRepository {
 	public int AddToTop10(String username, String name_character) {
 
 		// è già nella top10? errore 2
-		if (!charactersNeo4j.checkIntoTop10(name_character, username).isEmpty()) return 1;
+		if (!charactersNeo4j.checkIntoTop10(name_character, username).isEmpty())
+			return 1;
 
 		List<FigureDTO> top10 = getTop10(username);
 		//Top10 piena. Errore 10
