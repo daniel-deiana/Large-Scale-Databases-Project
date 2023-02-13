@@ -4,7 +4,6 @@ import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
-import com.example.demo.Model.User;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
 import com.example.demo.Repository.Neo4j.CharactersNeo4j;
 import com.example.demo.Repository.Neo4j.UserNeo4j;
@@ -16,8 +15,6 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -78,7 +75,6 @@ public class AnimeRepository {
 	}
 	public boolean updateAnime(Anime new_) {
 		Optional<Anime> old_;
-		boolean result;
 		try {
 			old_ = getAnimeByTitle(new_.getTitle());
 			if (old_.isEmpty())

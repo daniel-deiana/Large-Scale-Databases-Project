@@ -21,8 +21,6 @@ public class Neo4jManager implements AutoCloseable{
     private Driver driver = GraphDatabase.driver("neo4j+s://fc4c2952.databases.neo4j.io",
             AuthTokens.basic("neo4j","eIPWi6GQUfiWdorjA8-zM1fEh-RFdej-l2AplPIB8fA"));
 
-    private Session session;
-
     @Override
     public void close() {
         driver.close();

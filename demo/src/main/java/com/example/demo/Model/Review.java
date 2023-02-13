@@ -50,11 +50,7 @@ public class Review {
     public void setUser(Integer score) {
         this.score = score;
     }
-
     public Integer getScore() {return score;}
-    public void setScore(String user) {
-        this.user = user;
-    }
     public String getAnime() {
         return anime;
     }
@@ -69,8 +65,5 @@ public class Review {
     }
     public String getTimestamp() {
         return date;
-    }
-    public void setTimestamp(String date) {
-        this.date = date;
     }
 }

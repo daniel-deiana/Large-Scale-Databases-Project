@@ -59,7 +59,14 @@ public class ReviewRepository {
             rev = revMongo.findByUserAndAnime(username, anime);
             if (rev == null)
                 return null;
-            return new ReviewDTO(rev.getUser(),rev.getAnime(),rev.getText(),rev.getScore());
+            return new ReviewDTO(
+                    rev.getId(),
+                    rev.getUser(),
+                    rev.getAnime(),
+                    rev.getText(),
+                    rev.getDate(),
+                    rev.getScore()
+            );
         } catch (Exception e) {
             e.printStackTrace();
             return null;

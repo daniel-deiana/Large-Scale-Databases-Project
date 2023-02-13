@@ -9,12 +9,9 @@ import java.util.Date;
 public class ReviewDTO {
     private String id;
     private String profile;
-
     private String anime;
     private String text;
-
     private Integer score;
-
     private String date;
 
     public ReviewDTO(String id, String user, String anime_uid, String text, String date, Integer score) {
@@ -23,14 +20,6 @@ public class ReviewDTO {
         this.anime = anime_uid;
         this.text = text;
         this.date = date;
-        this.score = score;
-    }
-
-    //for anime
-    public ReviewDTO(String user, String anime, String text, Integer score) {
-        this.profile = user;
-        this.anime = anime;
-        this.text = text;
         this.score = score;
     }
 
@@ -55,11 +44,6 @@ public class ReviewDTO {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-
-    public String getTimestamp() {
-        return date;
     }
 
     public void setTimestamp(String timestamp) {

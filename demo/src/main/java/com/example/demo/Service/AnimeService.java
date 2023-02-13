@@ -30,17 +30,17 @@ public class AnimeService {
 	@Autowired
 	UserRepository userRepos;
 
-		public AnimeDTO getAnime(String title) {
-			Optional<Anime> result = animeRepos.getAnimeByTitle(title);
-			return result.map(anime -> new AnimeDTO(
-					anime.getTitle(),
-					anime.getSynopsis(),
-					anime.getEpisodes(),
-					anime.getImg_url(),
-					anime.getFigures(),
-					anime.getReviews()
-			)).orElse(null);
-		}
+	public AnimeDTO getAnime(String title) {
+		Optional<Anime> result = animeRepos.getAnimeByTitle(title);
+		return result.map(anime -> new AnimeDTO(
+				anime.getTitle(),
+				anime.getSynopsis(),
+				anime.getEpisodes(),
+				anime.getImg_url(),
+				anime.getFigures(),
+				anime.getReviews()
+		)).orElse(null);
+	}
 
 	public List<String> GetSuggestedAnime(String username) {
 		return userRepos.GetSuggestedAnime(username);
@@ -106,11 +106,7 @@ public class AnimeService {
 		return animeRepos.getMostLovedCharacter(how_order);
 	}
 	public List<ResultSetDTO> getMostRareCharacter(String how_order) {
-		return animeRepos.getMostRareCharacter(how_order);
-	}
-
-	public List<ResultSetDTO> getCountryView(String how_order) {
-		return userRepos.getCountryView(how_order);
+			return animeRepos.getMostRareCharacter(how_order);
 	}
 
 	public List<ResultSetDTO> getMostUnusedCharacter(String how_order) {

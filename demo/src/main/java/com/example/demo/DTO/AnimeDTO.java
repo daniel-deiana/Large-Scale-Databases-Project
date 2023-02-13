@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 @NoArgsConstructor
 public class AnimeDTO {
-    private String uid;
     private String title;
     private String synopsis;
-
     private Integer episodes;
     private String img_url;
-    //private String aired_bool;
     private List<ReviewDTO> reviews;
 
     private List<FigureDTO> figures;
@@ -61,16 +58,6 @@ public class AnimeDTO {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getUid(){return uid;}
-
-    public String getSynopsis() {
-        return synopsis;
-    }
-
-    public String getImg_url() {
-        return img_url;
     }
     public List<FigureDTO> getFigures() {
         return figures;

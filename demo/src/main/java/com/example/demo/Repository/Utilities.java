@@ -10,9 +10,7 @@ public class Utilities {
         for (Record r : records) {
             String field1 = r.values().get(0).toString();
             String field2 = r.values().get(1).toString();
-            ResultSetDTO aux = new ResultSetDTO();
-            aux.setField1(field1);
-            aux.setField2(field2);
+            ResultSetDTO aux = new ResultSetDTO(field1, field2, null);
             result.add(aux);
         }
         return result;
