@@ -46,6 +46,8 @@ $(document).ready(function () {
 function getMostReviewedAnime_btn(){
     let title_button = document.getElementById("getMostReviewedAnime_btn")
     document.getElementById('title_query').textContent = title_button.textContent;
+    document.getElementById("recalculate_review").setAttribute("onclick","getMostReviewedAnime()")
+    document.getElementById("recalculate_review").value = null;
     not_view_filters();
     view_filters("review");
     if(title_button.textContent === "Most Reviewed Anime"){
@@ -58,7 +60,6 @@ function getMostReviewedAnime_btn(){
     }
     getMostReviewedAnime()
 }
-
 
 function getMostReviewedAnime(){
     let year = document.getElementById("year").value;
@@ -82,11 +83,11 @@ function getMostReviewedAnime(){
     })
 }
 
-
-
-function getTopReviewedAnime(){
+function getTopReviewedAnime_btn(){
     let title_button = document.getElementById("getTopReviewedAnime")
     document.getElementById('title_query').textContent = title_button.textContent;
+    document.getElementById("recalculate_review").setAttribute("onclick","getTopReviewedAnime()")
+    document.getElementById("recalculate_review").value = null;
     not_view_filters();
     view_filters("review");
     if(title_button.textContent === "Best Reviewed Anime"){
@@ -97,10 +98,14 @@ function getTopReviewedAnime(){
         orderby = "ASC";
         title_button.textContent = "Best Reviewed Anime";
     }
+    getTopReviewedAnime()
+}
+
+function getTopReviewedAnime(){
+    let year = document.getElementById("year").value;
     $.ajax({
         url : "/api/getTopReviewedAnime",
-
-        data : {how_order: orderby},
+        data : {how_order: orderby, year: year},
         method : "post",
         success: function(data) {
             result = JSON.parse(data)

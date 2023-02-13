@@ -34,12 +34,12 @@ public class currentAdmin {
     @RequestMapping("/api/getMostReviewedAnime")
     public @ResponseBody String getMostReviewedAnime(
                                                     @RequestParam(value = "how_order") String how_order,
-                                                    @RequestParam(value = "year")String first_date
+                                                    @RequestParam(value = "year")String year
     ) {
         Gson gson = new Gson();
         List<ResultSetDTO> AppreciatedAnime;
-        if(!first_date.isEmpty()){
-            int year_ = Integer.parseInt(first_date);
+        if(!year.isEmpty()){
+            int year_ = Integer.parseInt(year);
             AppreciatedAnime = animeService.getMostReviews(how_order, "anime", year_);
 
         }else
@@ -48,9 +48,18 @@ public class currentAdmin {
     }
 
     @RequestMapping("/api/getTopReviewedAnime")
-    public @ResponseBody String getTopReviewedAnime(@RequestParam(value = "how_order") String how_order) {
+    public @ResponseBody String getTopReviewedAnime(
+                                @RequestParam(value = "how_order") String how_order,
+                                @RequestParam(value = "year")String year
+    ) {
         Gson gson = new Gson();
-        List<ResultSetDTO> AppreciatedAnime = animeService.getTopReviewedAnime(how_order, 10);
+        List<ResultSetDTO> AppreciatedAnime;
+        if(!year.isEmpty()){
+            int year_ = Integer.parseInt(year);
+            AppreciatedAnime = animeService.getTopReviewedAnime(how_order, 10, year_);
+
+        }else
+            AppreciatedAnime = animeService.getTopReviewedAnime(how_order, 10);
         return gson.toJson(AppreciatedAnime.toArray());
     }
 
