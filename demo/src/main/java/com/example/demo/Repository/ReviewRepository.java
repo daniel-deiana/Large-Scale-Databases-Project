@@ -15,8 +15,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import static org.springframework.data.mongodb.core.aggregation.DateOperators.Year.year;
 
 @Repository
 public class ReviewRepository {
@@ -78,7 +78,6 @@ public class ReviewRepository {
 
     public List<ResultSetDTO> getMostReviews(String how_order, String group_by) {
 
-        // grouping by age.
         GroupOperation groupOperation = Aggregation.group(group_by).count().as("NumberReviews");
 
         ProjectionOperation projectFields = project()
@@ -99,6 +98,61 @@ public class ReviewRepository {
         AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
 
         return result.getMappedResults();
+    }
+
+
+    public List<ResultSetDTO> getMostReviews(String how_order, String group_by, int year) {
+
+        ProjectionOperation findYear = project()
+                .andExpression("anime").as("anime")
+                .and(year(DateOperators.dateFromString("$date"))).as("year");
+
+        MatchOperation matchYear = match(new Criteria("year").is(year));
+
+        GroupOperation groupOperation = group(group_by, "year").count().as("NumberReviews");
+
+        ProjectionOperation projectFields = project()
+                .andExpression("anime").as("field1")
+                .andExpression("NumberReviews").as("field2");
+
+        SortOperation sortOperation;
+        if(how_order.equals("DESC")) {
+            sortOperation = sort(Sort.by(Sort.Direction.DESC,  "NumberReviews"));
+        } else {
+            sortOperation = sort(Sort.by(Sort.Direction.ASC, "NumberReviews"));
+        }
+
+        AggregationOperation limit = limit(10);
+
+        Aggregation aggregation = newAggregation(findYear, matchYear, groupOperation, sortOperation, limit, projectFields);
+
+        AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
+
+        return result.getMappedResults();
+/*
+
+
+        GroupOperation groupOperation = Aggregation.group(group_by).count().as("NumberReviews");
+
+        ProjectionOperation projectFields = project()
+                .andExpression("_id").as("field1")
+                .andExpression("NumberReviews").as("field2");
+
+
+        SortOperation sortOperation;
+        if(how_order.equals("DESC")) {
+            sortOperation = sort(Sort.by(Sort.Direction.DESC,  "NumberReviews"));
+        } else {
+            sortOperation = sort(Sort.by(Sort.Direction.ASC, "NumberReviews"));
+        }
+
+        AggregationOperation limit = Aggregation.limit(10);
+
+        Aggregation aggregation = Aggregation.newAggregation(/*findYear, matchYear, groupOperation,  sortOperation, projectFields, limit);
+
+        AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
+
+        return result.getMappedResults();*/
     }
 
     public List<ResultSetDTO> getTopReviewedAnime(String how_order, int limit_number) {
