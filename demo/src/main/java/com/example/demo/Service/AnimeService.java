@@ -81,4 +81,11 @@ public class AnimeService {
 	public List<ResultSetDTO> getTopReviewedAnime(String how_order, int number) {
 		return revRepos.getTopReviewedAnime(how_order, number);
 	}
+
+	public List<ResultSetDTO> getMostLovedCharacter(String how_order) {
+		return animeRepos.getMostLovedCharacter(how_order);
+	}
+	public List<ResultSetDTO> getMostRareCharacter(String how_order) {
+		return animeRepos.getMostRareCharacter(how_order);
+	}
 }
