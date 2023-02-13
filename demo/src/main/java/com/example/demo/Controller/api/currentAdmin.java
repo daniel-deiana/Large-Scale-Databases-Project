@@ -106,4 +106,11 @@ public class currentAdmin {
         List<ResultSetDTO> list_character = animeService.getMostRareCharacter(how_order);
         return gson.toJson(list_character.toArray());
     }
+
+    @RequestMapping("/api/getMostUnusedCharacter")
+    public @ResponseBody String getMostUnusedCharacter(@RequestParam(value = "how_order") String how_order) {
+        Gson gson = new Gson();
+        List<ResultSetDTO> list_character = animeService.getMostUnusedCharacter(how_order);
+        return gson.toJson(list_character.toArray());
+    }
 }
