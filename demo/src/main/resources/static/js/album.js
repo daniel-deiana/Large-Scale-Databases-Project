@@ -60,7 +60,6 @@ function search_character(){
 }
 
 function addToTop10(name){
-    console.log(name)
     $.ajax({
         url : "/api/AddToTop10",
         data : {name: name},
@@ -86,7 +85,7 @@ function removeFromTop10(name){
             console.log(result)
             console.log(typeof(result))
             if(result === 1) alert("This character is not in your Top10!")
-            if (result === 0) alert("Character correctly removed from your Top10")
+            if(result === 0) alert("Character correctly removed from your Top10")
         }
     })
 }

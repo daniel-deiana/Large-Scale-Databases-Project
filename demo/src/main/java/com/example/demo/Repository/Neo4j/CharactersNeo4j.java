@@ -19,7 +19,7 @@ public class CharactersNeo4j {
     public List<Record> checkIntoTop10(String name, String username){
         try{
             return neo4j.read(
-                    "MATCH p=(u:User{username: $username})-[r:HAS]->(c:Character{name: $name}) RETURN c ",
+                    "MATCH (u:User{username: $username})-[r:ADDTOTOP10]->(c:Character{name: $name}) RETURN c ",
                     parameters("name", name, "username", username)
             );
         } catch (Exception e){
