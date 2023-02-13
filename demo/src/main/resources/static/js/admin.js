@@ -50,14 +50,7 @@ function getMostReviewedAnime_btn(){
     document.getElementById("recalculate_review").value = null;
     not_view_filters();
     view_filters();
-    if(title_button.textContent === "Most Reviewed Anime"){
-        orderby = "DESC";
-        title_button.textContent = "Least Reviewed Anime"
-    }
-    else{
-        orderby = "ASC";
-        title_button.textContent = "Most Reviewed Anime";
-    }
+    orderby = change_button(title_button, "Reviewed Anime")
     getMostReviewedAnime()
 }
 
@@ -69,16 +62,7 @@ function getMostReviewedAnime(){
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
-            console.log(result)
-            document.getElementById("result_query").replaceChildren()
-            for (fig in result){
-                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >#Reviews: '+ result[fig].field2 +'</a>' +
-                    '</div>'
-                $('#result_query').append(html)
-            }
+            print_result_set(result, this.textContent, "Reviews")
         }
     })
 }
@@ -90,14 +74,7 @@ function getTopReviewedAnime_btn(){
     document.getElementById("recalculate_review").value = null;
     not_view_filters();
     view_filters();
-    if(title_button.textContent === "Best Reviewed Anime"){
-        orderby = "DESC";
-        title_button.textContent = "Worst Reviewed Anime"
-    }
-    else{
-        orderby = "ASC";
-        title_button.textContent = "Best Reviewed Anime";
-    }
+    change_button(title_button, "Best Rated Anime")
     getTopReviewedAnime()
 }
 
@@ -132,14 +109,7 @@ function getTopReviewers_btn(){
     document.getElementById("recalculate_review").value = null;
     not_view_filters();
     view_filters();
-    if(title_button.textContent === "Top Reviewers"){
-        orderby = "DESC";
-        title_button.textContent = "Worst Reviewers"
-    }
-    else{
-        orderby = "ASC";
-        title_button.textContent = "Top Reviewers";
-    }
+    change_button(title_button, "Active Users")
     getTopReviewers()
 }
 function getTopReviewers(){
@@ -150,16 +120,7 @@ function getTopReviewers(){
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
-            console.log(result)
-            document.getElementById("result_query").replaceChildren()
-            for (fig in result){
-                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >#Reviews: '+ result[fig].field2 +'</a>' +
-                    '</div>'
-                $('#result_query').append(html)
-            }
+            print_result_set(result, this.textContent, "Reviews")
         }
     })
 }
@@ -168,30 +129,14 @@ function getMostPopularUsers(){
     let title_button = document.getElementById("getMostPopularUsers")
     document.getElementById('title_query').textContent = title_button.textContent;
     not_view_filters();
-    if(title_button.textContent === "Most Popular Users"){
-        orderby = "DESC";
-        title_button.textContent = "Least Popular Users"
-    }
-    else{
-        orderby = "ASC";
-        title_button.textContent = "Most Popular Users";
-    }
+    orderby = change_button(title_button, "Popular Users")
     $.ajax({
         url : "/api/getMostPopularUsers",
         data : {how_order: orderby},
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
-            console.log(result)
-            document.getElementById("result_query").replaceChildren()
-            for (fig in result){
-                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >#Followers: '+ result[fig].field2 +'</a>' +
-                    '</div>'
-                $('#result_query').append(html)
-            }
+            print_result_set(result, this.textContent, "Followers")
         }
     })
 }
@@ -200,64 +145,31 @@ function getCountryView(){
     let title_button = document.getElementById("getCountryView")
     document.getElementById('title_query').textContent = title_button.textContent;
     not_view_filters();
-    if(title_button.textContent === "Most Frequent Countries"){
-        orderby = "DESC";
-        title_button.textContent = "Least Frequent Countries"
-    }
-    else{
-        orderby = "ASC";
-        title_button.textContent = "Most Frequent Countries";
-    }
+    orderby = change_button(title_button, "Frequent Countries")
     $.ajax({
         url : "/api/getCountryView",
         data : {how_order: orderby},
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
-            console.log(result)
-            document.getElementById("result_query").replaceChildren()
-            for (fig in result){
-                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >#Users: '+ result[fig].field2 +'</a>' +
-                    '</div>'
-                $('#result_query').append(html)
-            }
+            print_result_set(result, this.textContent, "Users")
         }
     })
 }
-
 
 
 function getMostLovedCharacter(){
     let title_button = document.getElementById("getMostLovedCharacter")
     document.getElementById('title_query').textContent = title_button.textContent;
     not_view_filters();
-    if(title_button.textContent === "Most Loved Character"){
-        orderby = "DESC";
-        title_button.textContent = "Least Loved Character"
-    }
-    else{
-        orderby = "ASC";
-        title_button.textContent = "Most Loved Character";
-    }
+    orderby = change_button(title_button, "Loved Character")
     $.ajax({
         url : "/api/getMostLovedCharacter",
         data : {how_order: orderby},
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
-            console.log(result)
-            document.getElementById("result_query").replaceChildren()
-            for (fig in result){
-                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >Added to Top10: '+ result[fig].field2 +'</a>' +
-                    '</div>'
-                $('#result_query').append(html)
-            }
+            print_result_set(result, this.textContent, "Added to Top10")
         }
     })
 }
@@ -280,16 +192,7 @@ function getMostRareCharacter(){
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
-            console.log(result)
-            document.getElementById("result_query").replaceChildren()
-            for (fig in result){
-                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >Added to Top10: '+ result[fig].field2 +'</a>' +
-                    '</div>'
-                $('#result_query').append(html)
-            }
+            print_result_set(result, this.textContent, "Added to Top10")
         }
     })
 }
@@ -301,30 +204,14 @@ function getMostUnusedCharacter(){
     let title_button = document.getElementById("getMostUnusedCharacter")
     document.getElementById('title_query').textContent = title_button.textContent;
     not_view_filters();
-    if(title_button.textContent === "Most Unused Character"){
-        orderby = "ASC";
-        title_button.textContent = "Least Unused Character"
-    }
-    else{
-        orderby = "DESC";
-        title_button.textContent = "Most Unused Character";
-    }
+    change_button(title_button,"Unused Character")
     $.ajax({
         url : "/api/getMostUnusedCharacter",
         data : {how_order: orderby},
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
-            console.log(result)
-            document.getElementById("result_query").replaceChildren()
-            for (fig in result){
-                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; " >Added to Top10: '+ result[fig].field2 +'</a>' +
-                    '</div>'
-                $('#result_query').append(html)
-            }
+            print_result_set(result, this.textContent, "Added to Top10")
         }
     })
 }
@@ -332,4 +219,28 @@ function getMostUnusedCharacter(){
 
 function not_view_filters(){
     document.getElementById("filtri_review").style.display = "none";
+}
+
+function change_button(title_button, what){
+    if(title_button.textContent === "Most "+ what +""){
+        orderby = "DESC";
+        title_button.textContent = "Least "+ what +""
+    }
+    else{
+        orderby = "ASC";
+        title_button.textContent = "Most "+ what +"";
+    }
+    return orderby;
+}
+
+function print_result_set(result, anime_name, name_of_count){
+    document.getElementById("result_query").replaceChildren()
+    for (fig in result){
+        let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
+            '<a class="btn-get-started scrollto" onclick="anime_page('+anime_name+')" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
+            '<a class="btn-get-started scrollto" onclick="anime_page('+anime_name+')" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
+            '<a class="btn-get-started scrollto" onclick="anime_page('+anime_name+')" style=" width:200px; text-align: center; " >#'+name_of_count+': '+ result[fig].field2 +'</a>' +
+            '</div>'
+        $('#result_query').append(html)
+    }
 }
