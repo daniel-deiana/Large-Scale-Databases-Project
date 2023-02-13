@@ -66,10 +66,14 @@ public class UserRepository {
 	}
 
 
-	public boolean deleteUser(User user) {
+	public boolean deleteUser(String user) {
 		boolean result = true;
+		Optional<User> toDelete = userMongo.findByUsername((user));
+		if(toDelete.isEmpty())
+			return false;
 		try {
-			userMongo.delete(user);
+			userMongo.delete(toDelete.get());
+			neo4j.deleteUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;

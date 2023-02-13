@@ -61,28 +61,19 @@
 </header><!-- End Header -->
 
 <!-- ======= Hero Section ======= -->
-
 <section id="hero" class="d-flex align-items-center">
 
   <div class="container-fluid" data-aos="fade-up">
     <div data-aos="zoom-in" data-aos-delay="100" style="display: flex; flex-direction: column; align-items: center;">
-      <div style="display: flex; justify-content: center;gap:10px;flex-direction: column; ">
-        <form style="gap: 5px;display: flex; flex-direction: column;; align-items: center;">
-          <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-            <h1>ADD ANIME</h1>
+      <div style="display: flex; justify-content: center;">
+        <form style=" gap: 5px;display: flex; flex-direction: column;; align-items: center;">
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <h1>DELETE USER</h1>
+            <h2>Username</h2>
+            <input id="user" class="form-control" type="text" placeholder="Giovanna1" style="text-align: center;">
+            <br>
+            <a id="deleteUser" class="btn-get-started scrollto" style=" cursor: pointer; text-align: center; margin: auto;" onclick="deleteUser();">Delete User</a>
           </div>
-          <h2>Title</h2>
-          <input id="title" class="form-control" type="text" placeholder="Naruto" style="text-align: center;">
-          <h2>Synopsis</h2>
-          <input id="synopsis" class="form-control" type="text" placeholder="This anime talks about..." style="height: 50px;">
-          <h2>Episodes</h2>
-          <input id="episodes" class="form-control" type="number" placeholder="10" style="text-align: center;">
-          <h2>Image</h2>
-          <input id="image" class="form-control" type="text" placeholder="10" style="text-align: center;">
-          <br>
-          <a id="addAnime" class="btn-get-started scrollto" style=" cursor: pointer;text-align: center; margin: auto;" onclick="addAnime();">Add Anime</a>
-          <br>
-          <a id="updateAnime" class="btn-get-started scrollto" style=" cursor: pointer; text-align: center; margin: auto;" onclick="updateAnime();">Update Anime</a>
         </form>
       </div>
     </div>

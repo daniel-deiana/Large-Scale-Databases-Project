@@ -1,5 +1,6 @@
 package com.example.demo.Controller.api;
 
+import com.example.demo.DTO.ReviewDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Service.AnimeService;
 import com.example.demo.Service.UserService;
@@ -20,6 +21,7 @@ public class currentAnime {
     @Autowired
     UserService userService;
 
+
     @RequestMapping("/api/currentAnime")
     public @ResponseBody String returnAnime(Model model) {
         Gson gson = new Gson();
@@ -31,6 +33,19 @@ public class currentAnime {
         if(anime==null)
             return gson.toJson("{\"type\":1, \"message\": \"Inexistent anime\"}");
         return gson.toJson(anime);
+    }
+
+    @RequestMapping("/api/yourReview")
+    public @ResponseBody String yourReview(Model model) {
+        Gson gson = new Gson();
+        SVariables sv = (SVariables) model.getAttribute("sessionVariables");
+        if (sv == null || sv.animeToDisplay == null) {
+            return gson.toJson(null);
+        }
+        ReviewDTO rev =  userService.yourReview(sv.myself,sv.animeToDisplay);
+        if(rev==null)
+            return gson.toJson(null);
+        return gson.toJson(rev);
     }
 
     @PostMapping("/api/MakeReview")

@@ -4,6 +4,7 @@ import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
+import com.example.demo.Model.User;
 import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
 import com.example.demo.Repository.Neo4j.UserNeo4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
@@ -56,20 +59,36 @@ public class AnimeRepository {
 	}
 
     public boolean addAnime(Anime anime) {
-			boolean result = true;
-			try {
-				if(animeMongo.findAnimeByTitle(anime.getTitle()).isEmpty()) {
-					animeMongo.save(anime);
-				}
-				else{
-					result = false;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		boolean result = true;
+		try {
+			if (animeMongo.findAnimeByTitle(anime.getTitle()).isEmpty()) {
+				animeMongo.save(anime);
+			} else {
 				result = false;
 			}
-			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
 		}
+		return result;
+	}
+	public boolean updateAnime(Anime new_) {
+		Optional<Anime> old_;
+		boolean result;
+		try {
+			old_ = getAnimeByTitle(new_.getTitle());
+			if (old_.isEmpty())
+				return false;
+			old_.get().setSynopsis(new_.getSynopsis());
+			old_.get().setEpisodes(new_.getEpisodes());
+			old_.get().setImage(new_.getImg_url());
+			animeMongo.save(old_.get());
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	public boolean addCharacter(FigureDTO figure0) {
 		boolean result = true;
@@ -84,6 +103,35 @@ public class AnimeRepository {
 			anime.get().setFigures(figures);
 			animeMongo.save(anime.get());
 			neo4j.addCharacter(figure);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+	}
+
+	public boolean removeCharacter(FigureDTO figure0) {
+		boolean result = true;
+		try {
+			Optional<Anime> anime = animeMongo.findAnimeByTitle(figure0.getAnime());
+			if (anime.isEmpty())
+				return false;
+
+			List<FigureDTO> figures = anime.get().getFigures();
+			boolean found = false;
+			for(FigureDTO fig: figures){
+				if (Objects.equals(fig.getName(), figure0.getName())) {
+					found = true;
+					figures.remove(fig);
+					break;
+				}
+			}
+			if(!found)
+				return false;
+			anime.get().setFigures(figures);
+			animeMongo.save(anime.get());
+			neo4j.deleteCharacter(figure0.getName());
 
 		} catch (Exception e) {
 			e.printStackTrace();
