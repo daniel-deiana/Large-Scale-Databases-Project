@@ -177,4 +177,7 @@ public class AnimeRepository {
 		return Utilities.RecordToResultSet(records);
 	}
 
+    public List<ResultSetDTO> getMostUnusedCharacter(String how_order) {List<Record> records = charactersNeo4j.getMostUnusedCharacter(how_order);
+		return Utilities.RecordToResultSet(records);
+    }
 }

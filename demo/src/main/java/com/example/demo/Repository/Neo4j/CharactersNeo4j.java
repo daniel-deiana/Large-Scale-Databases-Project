@@ -68,4 +68,25 @@ public class CharactersNeo4j {
         return null;
     }
 
+    public List<Record> getMostUnusedCharacter(String how_order) {
+        try{
+            if (how_order.equals("DESC")){
+                return neo4j.read("MATCH (u:User)-[r1:HAS]->(c:Character) \n" +
+                        "WHERE NOT (c)<-[:ADDTOTOP10]-(u)\n" +
+                        "RETURN DISTINCT (c.name) AS character, COUNT(r1) as Uselessness\n" +
+                        "ORDER BY Uselessness ASC LIMIT 10"
+                );
+            }
+            else{
+                return neo4j.read("MATCH (u:User)-[r1:HAS]->(c:Character) \n" +
+                        "WHERE NOT (c)<-[:ADDTOTOP10]-(u)\n" +
+                        "RETURN DISTINCT (c.name) AS character, COUNT(r1) as Uselessness\n" +
+                        "ORDER BY Uselessness DESC LIMIT 10"
+                );
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
