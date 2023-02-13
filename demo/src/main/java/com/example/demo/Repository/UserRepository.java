@@ -8,6 +8,7 @@ import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
 import com.example.demo.Repository.MongoDB.UserRepositoryMongo;
+import com.example.demo.Repository.Neo4j.CharactersNeo4j;
 import com.example.demo.Repository.Neo4j.UserNeo4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +33,16 @@ public class UserRepository {
 	@Autowired
 	private ReviewRepositoryMongo revMongo;
 
-	UserNeo4j neo4j = new UserNeo4j();
+	UserNeo4j userNeo4j = new UserNeo4j();
+
+	CharactersNeo4j charactersNeo4j = new CharactersNeo4j();
 
 
 	public boolean addUser(User user) {
 		boolean result = true;
 		try {
 			userMongo.save(user);
-			neo4j.addUser(user);
+			userNeo4j.addUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
@@ -130,7 +133,7 @@ public class UserRepository {
 
 	public List<FigureDTO> getTop10(String username) {
 		List<FigureDTO> figures = new ArrayList<>();
-		List<Record> records = neo4j.getTop10ByUsername(username);
+		List<Record> records = userNeo4j.getTop10ByUsername(username);
 		for (Record r : records) {
 			String name = r.values().get(0).get("name").asString();
 			String anime = r.values().get(0).get("anime").asString();
@@ -142,26 +145,26 @@ public class UserRepository {
 	}
 
 	public boolean followUserByUsername(String current, String toFollow){
-		return neo4j.followUserByUsername(current, toFollow);
+		return userNeo4j.followUserByUsername(current, toFollow);
 	}
 	public boolean unfollowUserByUsername(String current, String toUnfollow){
-		return neo4j.unfollowUserByUsername(current, toUnfollow);
+		return userNeo4j.unfollowUserByUsername(current, toUnfollow);
 	}
 	public boolean isFollowed(String myself, String username){
-		return neo4j.isFollowed(myself, username).get(0).get("isFollowed").asBoolean();
+		return userNeo4j.isFollowed(myself, username).get(0).get("isFollowed").asBoolean();
 	}
 
 	public int findFollowerNumberByUsername(String username){
-		return neo4j.findFollowerNumberByUsername(username).get(0).get("numFollowers").asInt();
+		return userNeo4j.findFollowerNumberByUsername(username).get(0).get("numFollowers").asInt();
 	}
 
 	public int findFollowedNumberByUsername(String username) {
-		return neo4j.findFollowedNumberByUsername(username).get(0).get("numFollowed").asInt();
+		return userNeo4j.findFollowedNumberByUsername(username).get(0).get("numFollowed").asInt();
 	}
 
 	public List<ResultSetDTO> getMostPopularUsers(String how_order) {
 		List<ResultSetDTO> result = new ArrayList<>();
-		List<Record> records = neo4j.getMostPopularUsers(how_order);
+		List<Record> records = userNeo4j.getMostPopularUsers(how_order);
 		for (Record r : records) {
 			String username = r.values().get(0).toString();
 			String numFollowers = r.values().get(1).toString();
@@ -174,11 +177,11 @@ public class UserRepository {
 	}
 
 	public int findCardNumberByUsername(String username) {
-		return neo4j.findCardNumberByUsername(username).get(0).get("numCard").asInt();
+		return userNeo4j.findCardNumberByUsername(username).get(0).get("numCard").asInt();
 	}
 	public List<FigureDTO> getCharacters(String username) {
 		List<FigureDTO> figures = new ArrayList<>();
-		List<Record> records = neo4j.getCharacters(username);
+		List<Record> records = userNeo4j.getCharacters(username);
 		for (Record r : records) {
 			String name = r.values().get(0).get("name").asString();
 			String anime = r.values().get(0).get("anime").asString();
@@ -190,7 +193,7 @@ public class UserRepository {
 	}
 
 	public FigureDTO findCharacter(String name, String username) {
-		List<Record> records = neo4j.getCharacter(name, username);
+		List<Record> records = userNeo4j.getCharacter(name, username);
 		if (records.isEmpty()) {
 			return null;
 		}
@@ -206,18 +209,14 @@ public class UserRepository {
 	public int AddToTop10(String username, String name_character) {
 
 		// è già nella top10? errore 2
-		List<FigureDTO> top10 = getTop10(username);
-		for (FigureDTO r : top10) {
-			String name = r.getName();
-			if(name.equals(name_character))
-				return 1;
-		}
+		if (!charactersNeo4j.checkIntoTop10(name_character, username).isEmpty()) return 1;
 
+		List<FigureDTO> top10 = getTop10(username);
 		//Top10 piena. Errore 10
 		if(top10.size() == 10)
 			return -1;
 
-		neo4j.AddToTop10(name_character, username);
+		userNeo4j.AddToTop10(name_character, username);
 		return 0;
 	}
 
@@ -227,7 +226,7 @@ public class UserRepository {
 		for (FigureDTO r : top10) {
 			String name = r.getName();
 			if(name.equals(name_character)){
-				neo4j.removeFromTop10(name_character, username);
+				userNeo4j.removeFromTop10(name_character, username);
 				return 0;
 			}
 		}
@@ -236,16 +235,16 @@ public class UserRepository {
 
 	public void addHasCharacter(String username, List<FigureDTO> list_characters) {
 		for (FigureDTO fig : list_characters) {
-			if (!neo4j.getCharacter(fig.getName(), username).isEmpty())
+			if (!userNeo4j.getCharacter(fig.getName(), username).isEmpty())
 				continue;
-			neo4j.addHasCharacter(username, fig.getName());
+			userNeo4j.addHasCharacter(username, fig.getName());
 		}
 	}
 
 
     public List<UserDTO> getSuggestedUsers(String myself) {
 		List<UserDTO> users = new ArrayList<>();
-		List<Record> records = neo4j.getSuggestedUsersByTop10(myself);
+		List<Record> records = userNeo4j.getSuggestedUsersByTop10(myself);
 		for (Record r : records) {
 			String username = r.get("suggestedUser").asString();
 			int CardOwned = r.get("CommonCharacters").asInt();
@@ -256,7 +255,7 @@ public class UserRepository {
 			users.add(user);
 		}
 		if(users.size()<5){
-			records = neo4j.getSuggestedUsersByHas(myself);
+			records = userNeo4j.getSuggestedUsersByHas(myself);
 			for (Record r : records) {
 				if(users.size()==5)
 					continue;
@@ -271,7 +270,7 @@ public class UserRepository {
 		}
 
 		if(users.size()<5){
-			records = neo4j.getSuggestedUsersByFollowed(myself);
+			records = userNeo4j.getSuggestedUsersByFollowed(myself);
 			for (Record r : records) {
 				if(users.size()==5)
 					continue;
@@ -288,10 +287,10 @@ public class UserRepository {
 
 	public List<String> GetSuggestedAnime(String username){
 		// TROVO LA LISTA DEGLI ANIME DEGLI AMICI
-		List<String> following_list  = neo4j.findFollowingByUsername(username);
+		List<String> following_list  = userNeo4j.findFollowingByUsername(username);
 
 		// Lista degli anime che ha recensito l'utente
-		List<Record> your_character_list = neo4j.getCharacters(username);
+		List<Record> your_character_list = userNeo4j.getCharacters(username);
 		List<String> anime_reviewedList = new ArrayList<>();
 		for (Record your_character : your_character_list) {
 			String anime = your_character.values().get(0).get("anime").asString();

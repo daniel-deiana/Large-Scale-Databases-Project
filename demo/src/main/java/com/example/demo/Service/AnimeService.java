@@ -7,7 +7,6 @@ import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.AnimeRepository;
-import com.example.demo.Repository.CharacterRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,6 @@ public class AnimeService {
 
 	@Autowired
 	ReviewRepository revRepos;
-
-	@Autowired
-	CharacterRepository characterRepository;
 
 	@Autowired
 	UserRepository userRepos;
@@ -96,6 +92,10 @@ public class AnimeService {
 		return revRepos.getTopReviewedAnime(how_order, number);
 	}
 
-
-
+	public List<ResultSetDTO> getMostLovedCharacter(String how_order) {
+		return animeRepos.getMostLovedCharacter(how_order);
+	}
+	public List<ResultSetDTO> getMostRareCharacter(String how_order) {
+		return animeRepos.getMostRareCharacter(how_order);
+	}
 }

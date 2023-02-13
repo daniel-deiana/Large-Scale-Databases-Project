@@ -71,7 +71,7 @@
           <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
             <h1>ADMINISTRATOR PAGE</h1>
             <div style="text-align: center;">
-              <h1 style="font-size:30px;">CRUD Operations</h1>
+              <h2 style="font-size:25px;">CRUD Operations</h2>
             </div>
             <div style="display: flex; gap: 5px;">
               <a id="addAnime" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" href="/addAnime">Add/Update Anime</a>
@@ -79,18 +79,25 @@
               <a id="deleteUser" class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" href="/deleteUser">Delete User</a>
             </div>
             <div style="text-align: center;">
-              <h1 style="font-size:30px;">View Analytics For Anime</h1>
+              <h2 style="font-size:25px;">View Anime Analytics</h2>
             </div>
             <div style="display: flex; gap: 5px;">
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="getMostReviewedAnime(this)">Most Reviewed Anime</a>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="getTopReviewedAnime(this)">Best Reviewed Anime</a>
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getMostReviewedAnime(this)">Most Reviewed Anime</a>
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getTopReviewedAnime(this)">Best Reviewed Anime</a>
             </div>
             <div style="text-align: center;">
-              <h1 style="font-size:30px;">View Analytics For Users</h1>
+              <h2 style="font-size:25px;">View User Analytics</h2>
             </div>
             <div style="display: flex; gap: 5px;">
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="getTopReviewers(this)">Top Reviewers</a>
-              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" onclick="getMostPopularUsers(this)">Most Popular Users</a>
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getTopReviewers(this)">Top Reviewers</a>
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getMostPopularUsers(this)">Most Popular Users</a>
+            </div>
+            <div style="text-align: center;">
+              <h2 style="font-size:25px;">View Character Analytics</h2>
+            </div>
+            <div style="display: flex; gap: 5px;">
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getMostLovedCharacter(this)">Most Loved Character</a>
+              <a class="btn-get-started scrollto" style=" text-align: center; margin: auto;" type="submit" onclick="getMostRareCharacter(this)">Most Rare Character</a>
             </div>
           </div>
         </form>
