@@ -104,7 +104,7 @@ public class ReviewRepository {
     public List<ResultSetDTO> getMostReviews(String how_order, String group_by, int year) {
 
         ProjectionOperation findYear = project()
-                .andExpression("anime").as("anime")
+                .andExpression(group_by).as(group_by)
                 .and(year(DateOperators.dateFromString("$date"))).as("year");
 
         MatchOperation matchYear = match(new Criteria("year").is(year));
@@ -112,7 +112,7 @@ public class ReviewRepository {
         GroupOperation groupOperation = group(group_by, "year").count().as("NumberReviews");
 
         ProjectionOperation projectFields = project()
-                .andExpression("anime").as("field1")
+                .andExpression(group_by).as("field1")
                 .andExpression("NumberReviews").as("field2");
 
         SortOperation sortOperation;
@@ -188,7 +188,6 @@ public class ReviewRepository {
 
         return result.getMappedResults();
     }
-
 
 
 }

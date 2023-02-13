@@ -109,6 +109,10 @@ public class AnimeService {
 		return animeRepos.getMostRareCharacter(how_order);
 	}
 
+	public List<ResultSetDTO> getCountryView(String how_order) {
+		return userRepos.getCountryView(how_order);
+	}
+
 	public List<ResultSetDTO> getMostUnusedCharacter(String how_order) {
 		return animeRepos.getMostUnusedCharacter(how_order);
 	}

@@ -64,11 +64,26 @@ public class currentAdmin {
     }
 
     @RequestMapping("/api/getTopReviewers")
-    public @ResponseBody String getTopReviewers(@RequestParam(value = "how_order") String how_order) {
+    public @ResponseBody String getTopReviewers(
+            @RequestParam(value = "how_order") String how_order,
+            @RequestParam(value = "year")String year
+    ){
         Gson gson = new Gson();
-        //List<ResultSetDTO> AppreciatedAnime = animeService.getMostReviews(how_order, "user","2016","5");
-        //return gson.toJson(AppreciatedAnime.toArray());
-        return null;
+        List<ResultSetDTO> AppreciatedAnime;
+            if(!year.isEmpty()){
+            int year_ = Integer.parseInt(year);
+            AppreciatedAnime = animeService.getMostReviews(how_order, "user", year_);
+
+        }else
+        AppreciatedAnime = animeService.getMostReviews(how_order, "user");
+            return gson.toJson(AppreciatedAnime.toArray());
+    }
+
+    @RequestMapping("/api/getCountryView")
+    public @ResponseBody String getCountryView(@RequestParam(value = "how_order") String how_order) {
+        Gson gson = new Gson();
+        List<ResultSetDTO> list_user = userService.getCountryView(how_order);
+        return gson.toJson(list_user.toArray());
     }
 
     @RequestMapping("/api/getMostPopularUsers")
