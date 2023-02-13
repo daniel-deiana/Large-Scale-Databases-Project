@@ -69,15 +69,23 @@ public class AnimeService {
 		Anime anime = new Anime(title,synopsis,episodes,image,figures,reviews);
 		return animeRepos.addAnime(anime);
     }
+	public boolean updateAnime(String title, String synopsis, int episodes, String image) {
+		List<FigureDTO> figures = new ArrayList<>();
+		List<Review> reviews = new ArrayList<>(5);
+		Anime anime = new Anime(title,synopsis,episodes,image,figures,reviews);
+		return animeRepos.updateAnime(anime);
+	}
 
 	public boolean addCharacter(String name, String anime, String image) {
 		FigureDTO figure = new FigureDTO(name,anime,image);
 		return animeRepos.addCharacter(figure);
 	}
-/*
-	public List<ResultSetDTO> getMostReviews(String how_order, String group_by, int year, int month) {
-		return revRepos.getMostReviews(how_order, group_by, year, month);
-	}*/
+
+
+	public boolean removeCharacter(String name, String anime, String image) {
+		FigureDTO figure = new FigureDTO(name,anime,image);
+		return animeRepos.removeCharacter(figure);	}
+
 	public List<ResultSetDTO> getMostReviews(String how_order, String group_by) {
 		return revRepos.getMostReviews(how_order, group_by);
 	}

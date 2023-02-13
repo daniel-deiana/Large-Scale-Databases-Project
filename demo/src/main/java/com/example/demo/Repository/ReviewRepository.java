@@ -1,6 +1,7 @@
 package com.example.demo.Repository;
 import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.ResultSetDTO;
+import com.example.demo.DTO.ReviewDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,20 @@ public class ReviewRepository {
     public boolean getReviewsByUsernameAndAnime(String username, String anime) {
         return revMongo.existsByUserAndAnime(username, anime);
     }
+
+    public ReviewDTO getReviewByUsernameAndAnime(String username, String anime) {
+        Review rev;
+        try {
+            rev = revMongo.findByUserAndAnime(username, anime);
+            if (rev == null)
+                return null;
+            return new ReviewDTO(rev.getUser(),rev.getAnime(),rev.getText(),rev.getScore());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     //This function check if a username has already made a review for that Anime
     public Page<Review> getReviews(String anime, int current_page) {
@@ -166,5 +181,7 @@ public class ReviewRepository {
 
         return result.getMappedResults();
     }
+
+
 
 }

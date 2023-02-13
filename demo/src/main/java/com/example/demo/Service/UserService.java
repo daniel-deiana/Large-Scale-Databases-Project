@@ -1,10 +1,7 @@
 package com.example.demo.Service;
 
 
-import com.example.demo.DTO.AnimeDTO;
-import com.example.demo.DTO.FigureDTO;
-import com.example.demo.DTO.ResultSetDTO;
-import com.example.demo.DTO.UserDTO;
+import com.example.demo.DTO.*;
 import com.example.demo.Model.Anime;
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
@@ -154,4 +151,11 @@ public class UserService {
 	public List<ResultSetDTO> getMostPopularUsers(String how_order) {
 		return userRepos.getMostPopularUsers(how_order);
 	}
+
+    public boolean deleteUser(String user) { return userRepos.deleteUser(user);
+    }
+
+    public ReviewDTO yourReview(String myself, String animeToDisplay) {
+		return revRepos.getReviewByUsernameAndAnime(myself,animeToDisplay);
+    }
 }

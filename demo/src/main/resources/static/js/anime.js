@@ -2,6 +2,7 @@ $(document).ready(function () {
         let obj = document.getElementById("title_anime")
         let desc = document.getElementById("desc_anime")
         let img = document.getElementById("pic_anime")
+
         $.ajax({
                     url : "/api/currentAnime",
                     method : "get",
@@ -38,6 +39,40 @@ $(document).ready(function () {
                         }
                     }
         })
+
+        let your = document.getElementById("your_rev")
+        let rev = document.getElementById("rev0")
+        $.ajax({
+                url : "/api/yourReview",
+                method : "get",
+                success: function(data) {
+                    result = JSON.parse(data)
+                    console.log(result)
+                    if(result != null){
+                        let html = '<div class="swiper-slide">' +
+                                    '<div style="width: fit-content; height: fit-content;" class="testimonial-item"><p id="rev1">' +
+                                    '<i class="bx bxs-quote-alt-left quote-icon-left"></i>' + result.text + '<i class="bx bxs-quote-alt-right quote-icon-right"></i></p><img src="../img/unkown_c.png" class="testimonial-img" alt=""><h3>' + result.profile +' - '+ result.score+'</h3></div></div>'
+                        $('#your_rev').append(html)
+                    } else
+                    {
+                        let html = '<a class="btn-get-started scrollto" style="text-align: center; margin: auto;" type="submit" onclick="make_review()">Make a review &#9997</a>'+
+                                    '<textarea class="form-control" id = "text_review" style="width: 500px; height: 150px;" type="text"></textarea>'+
+                                    '<select id = "score_review" class="form-control" name="option" style=" width:150px;  text-align: center; color: grey;">'+
+                                      '<option style="text-align: center; color: grey;" value="0">0</option>'+
+                                      '<option style="text-align: center;color: grey;" value="1">1</option>'+
+                                      '<option style="text-align: center;color: grey;" value="2">2</option>'+
+                                      '<option style="text-align: center;color: grey;" value="3">3</option>'+
+                                      '<option style="text-align: center;color: grey;" value="4">4</option>'+
+                                      '<option style="text-align: center;color: grey;" value="5">5</option>'+
+                                      '<option style="text-align: center;color: grey;" value="6">6</option>'+
+                                      '<option style="text-align: center;color: grey;" value="7">7</option>'+
+                                      '<option style="text-align: center;color: grey;" value="8">8</option>'+
+                                      '<option style="text-align: center;color: grey;" value="9">9</option>'+
+                                      '<option style="text-align: center;color: grey;" value="10">10</option>'+
+                                    '/select>'
+                        $('#your_rev').append(html)
+                    }
+                }})
 });
 
 
