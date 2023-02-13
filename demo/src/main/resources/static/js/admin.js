@@ -43,9 +43,11 @@ $(document).ready(function () {
         }
 });
 
-
-function getMostReviewedAnime(title_button){
+function getMostReviewedAnime_btn(){
+    let title_button = document.getElementById("getMostReviewedAnime_btn")
     document.getElementById('title_query').textContent = title_button.textContent;
+    not_view_filters();
+    view_filters("review");
     if(title_button.textContent === "Most Reviewed Anime"){
         orderby = "DESC";
         title_button.textContent = "Least Reviewed Anime"
@@ -54,10 +56,15 @@ function getMostReviewedAnime(title_button){
         orderby = "ASC";
         title_button.textContent = "Most Reviewed Anime";
     }
+    getMostReviewedAnime()
+}
+
+
+function getMostReviewedAnime(){
+    let year = document.getElementById("year").value;
     $.ajax({
         url : "/api/getMostReviewedAnime",
-
-        data : {how_order: orderby},
+        data : {how_order: orderby, year: year},
         method : "post",
         success: function(data) {
             result = JSON.parse(data)
@@ -74,8 +81,14 @@ function getMostReviewedAnime(title_button){
         }
     })
 }
-function getTopReviewedAnime(title_button){
+
+
+
+function getTopReviewedAnime(){
+    let title_button = document.getElementById("getTopReviewedAnime")
     document.getElementById('title_query').textContent = title_button.textContent;
+    not_view_filters();
+    view_filters("review");
     if(title_button.textContent === "Best Reviewed Anime"){
         orderby = "DESC";
         title_button.textContent = "Worst Reviewed Anime"
@@ -105,8 +118,11 @@ function getTopReviewedAnime(title_button){
         }
     })
 }
-function getTopReviewers(title_button){
+function getTopReviewers(){
+    let title_button = document.getElementById("getTopReviewers")
     document.getElementById('title_query').textContent = title_button.textContent;
+    not_view_filters();
+    view_filters("user");
     if(title_button.textContent === "Top Reviewers"){
         orderby = "DESC";
         title_button.textContent = "Worst Reviewers"
@@ -136,8 +152,10 @@ function getTopReviewers(title_button){
     })
 }
 
-function getMostPopularUsers(title_button){
+function getMostPopularUsers(){
+    let title_button = document.getElementById("getMostPopularUsers")
     document.getElementById('title_query').textContent = title_button.textContent;
+    not_view_filters();
     if(title_button.textContent === "Most Popular Users"){
         orderby = "DESC";
         title_button.textContent = "Least Popular Users"
@@ -166,8 +184,10 @@ function getMostPopularUsers(title_button){
     })
 }
 
-function getMostLovedCharacter(title_button){
+function getMostLovedCharacter(){
+    let title_button = document.getElementById("getMostLovedCharacter")
     document.getElementById('title_query').textContent = title_button.textContent;
+    not_view_filters();
     if(title_button.textContent === "Most Loved Character"){
         orderby = "DESC";
         title_button.textContent = "Least Loved Character"
@@ -196,8 +216,10 @@ function getMostLovedCharacter(title_button){
     })
 }
 
-function getMostRareCharacter(title_button){
+function getMostRareCharacter(){
+    let title_button = document.getElementById("getMostLovedCharacter")
     document.getElementById('title_query').textContent = title_button.textContent;
+    not_view_filters();
     if(title_button.textContent === "Most Rare Character"){
         orderby = "ASC";
         title_button.textContent = "Least Rare Character"
@@ -224,4 +246,14 @@ function getMostRareCharacter(title_button){
             }
         }
     })
+}
+
+function view_filters(ofWhat){
+    let name = "filtri_" + ofWhat;
+    document.getElementById(name).style.display = "flex";
+}
+
+function not_view_filters(){
+    document.getElementById("filtri_user").style.display = "none";
+    document.getElementById("filtri_review").style.display = "none";
 }

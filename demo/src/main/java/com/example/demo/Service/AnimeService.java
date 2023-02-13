@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,9 +74,16 @@ public class AnimeService {
 		FigureDTO figure = new FigureDTO(name,anime,image);
 		return animeRepos.addCharacter(figure);
 	}
-
+/*
+	public List<ResultSetDTO> getMostReviews(String how_order, String group_by, int year, int month) {
+		return revRepos.getMostReviews(how_order, group_by, year, month);
+	}*/
 	public List<ResultSetDTO> getMostReviews(String how_order, String group_by) {
 		return revRepos.getMostReviews(how_order, group_by);
+	}
+
+	public List<ResultSetDTO> getMostReviews(String how_order, String group_by, int year) {
+		return revRepos.getMostReviews(how_order, group_by, year);
 	}
 
 	public List<ResultSetDTO> getTopReviewedAnime(String how_order, int number) {
