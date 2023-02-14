@@ -63,8 +63,9 @@ function search_user(){
                 return
             }
             else{
-                let html = '<img src="../img/unkown_c.png" alt=""> ' +
-                                '<div><h1 id="name_user" style="font-size: 30px;">'+ result.username +'</h1> ' + '';
+                let html = '<img style="height: 200px; width: 200px;" src="../img/unkown_c.png" alt=""> ' +
+                                '<div style="display: flex; flex-direction: column; align-items: center;">' +
+                                '<h1 id="name_user" style="font-size: 30px;">'+ result.username +'</h1> ';
                 if(result.isfollowed){
                     top10.style.display = "flex"
                     user_top.textContent= user.value + " TOP 10"
