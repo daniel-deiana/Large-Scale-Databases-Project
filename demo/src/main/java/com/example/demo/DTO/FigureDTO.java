@@ -14,6 +14,13 @@ public class FigureDTO {
         this.image_url = url;
     }
 
+// For adding character embedding
+    public FigureDTO(String name, String url) {
+        this.name = name;
+        this.anime = anime;
+        this.image_url = url;
+    }
+
     public String getName() {
         return name;
     }
