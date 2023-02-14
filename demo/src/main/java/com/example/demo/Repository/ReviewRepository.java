@@ -31,13 +31,11 @@ public class ReviewRepository {
     @Autowired
     private AnimeRepositoryMongo animeMongo;
 
-    public void addReview(Review review){
-        try{
-            revMongo.save(review);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+
+
+    ////////////////////////////////////  REVIEWS UTILITY  /////////////////////////////////////////////
+
+
 
     public List<Review> getReviewsByUsername(String username) {
         List<Review> revList;
@@ -78,7 +76,6 @@ public class ReviewRepository {
         }
     }
 
-
     //This function check if a username has already made a review for that Anime
     public Page<Review> getReviews(String anime, int current_page) {
         return revMongo.findByAnime(anime, PageRequest.of(current_page, 10));
@@ -88,6 +85,27 @@ public class ReviewRepository {
         return revMongo.countByAnime(anime);
     }
 
+
+
+    //////////////////////////////////// CRUD OPERATIONS  /////////////////////////////////////////////
+
+
+
+    public void addReview(Review review){
+        try{
+            revMongo.save(review);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    //////////////////////////////////// REVIEWS ANALYTICS /////////////////////////////////////////////
+
+
+
+    //This function returns the anime/user with the highest/lowest number of reviews
     public List<ResultSetDTO> getMostReviews(String how_order, String group_by) {
 
         GroupOperation groupOperation = Aggregation.group(group_by).count().as("NumberReviews");
@@ -112,7 +130,7 @@ public class ReviewRepository {
         return result.getMappedResults();
     }
 
-
+    //This function returns the anime/user with the highest/lowest number of reviews in a specific year
     public List<ResultSetDTO> getMostReviews(String how_order, String group_by, int year) {
 
         ProjectionOperation findYear = project()
@@ -143,6 +161,7 @@ public class ReviewRepository {
         return result.getMappedResults();
     }
 
+    //This function returns the anime with the highest/lowest average score in their reviews
     public List<ResultSetDTO> getTopReviewedAnime(String how_order, int limit_number) {
 
         GroupOperation groupOperation = Aggregation.group("anime").count().as("NumberReviews").avg("score").as("AvgScore");
@@ -167,6 +186,7 @@ public class ReviewRepository {
         return result.getMappedResults();
     }
 
+    //This function returns the anime with the highest/lowest average score in their reviews in a specific year
     public List<ResultSetDTO> getTopReviewedAnime(String how_order, int limit_number, int year) {
 
         ProjectionOperation findYear = project()
@@ -198,7 +218,7 @@ public class ReviewRepository {
         return result.getMappedResults();
     }
 
-
+    //This function returns the anime with the highest/lowest weighted average score in their reviews
     public List<ResultSetDTO> getTopReviewedAnimeWeighted(String how_order) {
 
         int num_tot_anime = (int) animeMongo.count();

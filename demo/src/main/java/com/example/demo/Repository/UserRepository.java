@@ -6,12 +6,9 @@ import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Model.Review;
 import com.example.demo.Model.User;
-import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
 import com.example.demo.Repository.MongoDB.UserRepositoryMongo;
 import com.example.demo.Repository.Neo4j.CharactersNeo4j;
 import com.example.demo.Repository.Neo4j.UserNeo4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -30,7 +27,6 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort
 
 @Repository
 public class UserRepository {
-	Logger logger = LoggerFactory.getLogger(UserRepository.class);
 	@Autowired
 	private UserRepositoryMongo userMongo;
 
@@ -42,65 +38,10 @@ public class UserRepository {
 	CharactersNeo4j charactersNeo4j = new CharactersNeo4j();
 
 
-	public boolean addUser(User user) {
-		boolean result = true;
-		try {
-			userMongo.save(user);
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = false;
-		}
-		// Consistency between databases
-		try {
-			userNeo4j.addUser(user);
-		} catch (Exception e) {
-			userMongo.delete(user);
-			e.printStackTrace();
-			result = false;
-		}
-		return result;
-	}
 
-	//This function update the list of the most recent reviews of a user when a new review is added
-	public void updateMostReviewed(Review review) {
-		try {
-			Optional<User> user = userMongo.findByUsername(review.getUser());
-			List<Review> reviewList = user.get().getMostRecentReviews();
-			if (reviewList.size() >= 5) {
-				reviewList.remove(4);
-				reviewList.add(0, review);
-			} else {
-				reviewList.add(0, review);
-			}
-			user.get().setMostRecentReviews(reviewList);
-			userMongo.save(user.get());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	//////////////////////////////////// USER UTILITY /////////////////////////////////////////////
 
 
-	public boolean deleteUser(String user) {
-		boolean result = true;
-		Optional<User> toDelete = userMongo.findByUsername((user));
-		if(toDelete.isEmpty())
-			return false;
-		try {
-			userMongo.delete(toDelete.get());
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = false;
-		}
-		// Consistency between databases
-		try {
-			userNeo4j.deleteUser(user);
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = false;
-			userMongo.save(toDelete.get());
-		}
-		return result;
-	}
 
 	public Optional<User> getUserByUsername(String username) {
 		Optional<User> user = Optional.empty();
@@ -150,8 +91,6 @@ public class UserRepository {
 		}
 	}
 
-	//////////////////////////////// NEO4J /////////////////////////////////
-
 	public List<FigureDTO> getTop10(String username) {
 		List<FigureDTO> figures = new ArrayList<>();
 		List<Record> records = userNeo4j.getTop10ByUsername(username);
@@ -168,9 +107,11 @@ public class UserRepository {
 	public boolean followUserByUsername(String current, String toFollow){
 		return userNeo4j.followUserByUsername(current, toFollow);
 	}
+
 	public boolean unfollowUserByUsername(String current, String toUnfollow){
 		return userNeo4j.unfollowUserByUsername(current, toUnfollow);
 	}
+
 	public boolean isFollowed(String myself, String username){
 		return userNeo4j.isFollowed(myself, username).get(0).get("isFollowed").asBoolean();
 	}
@@ -183,23 +124,10 @@ public class UserRepository {
 		return userNeo4j.findFollowedNumberByUsername(username).get(0).get("numFollowed").asInt();
 	}
 
-	public List<ResultSetDTO> getMostPopularUsers(String how_order) {
-		List<ResultSetDTO> result = new ArrayList<>();
-		List<Record> records = userNeo4j.getMostPopularUsers(how_order);
-		for (Record r : records) {
-			String username = r.values().get(0).toString();
-			String numFollowers = r.values().get(1).toString();
-			ResultSetDTO aux = new ResultSetDTO();
-			aux.setField1(username);
-			aux.setField2(numFollowers);
-			result.add(aux);
-		}
-		return result;
-	}
-
 	public int findCardNumberByUsername(String username) {
 		return userNeo4j.findCardNumberByUsername(username).get(0).get("numCard").asInt();
 	}
+
 	public List<FigureDTO> getCharacters(String username) {
 		List<FigureDTO> figures = new ArrayList<>();
 		List<Record> records = userNeo4j.getCharacters(username);
@@ -225,16 +153,12 @@ public class UserRepository {
 		);
 	}
 
-
-
 	public int AddToTop10(String username, String name_character) {
 
-		// è già nella top10? errore 2
 		if (!charactersNeo4j.checkIntoTop10(name_character, username).isEmpty())
 			return 1;
 
 		List<FigureDTO> top10 = getTop10(username);
-		//Top10 piena. Errore 10
 		if(top10.size() == 10)
 			return -1;
 
@@ -264,7 +188,77 @@ public class UserRepository {
 	}
 
 
-    public List<UserDTO> getSuggestedUsers(String myself) {
+
+	//////////////////////////////////// CRUD OPERATIONS /////////////////////////////////////////////
+
+
+
+	public boolean addUser(User user) {
+		boolean result = true;
+		try {
+			userMongo.save(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		// Consistency between databases
+		try {
+			userNeo4j.addUser(user);
+		} catch (Exception e) {
+			userMongo.delete(user);
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+	}
+
+	//This function update the list of the most recent reviews of a user when a new review is added
+	public void updateMostReviewed(Review review) {
+		try {
+			Optional<User> user = userMongo.findByUsername(review.getUser());
+			List<Review> reviewList = user.get().getMostRecentReviews();
+			if (reviewList.size() >= 5) {
+				reviewList.remove(4);
+				reviewList.add(0, review);
+			} else {
+				reviewList.add(0, review);
+			}
+			user.get().setMostRecentReviews(reviewList);
+			userMongo.save(user.get());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean deleteUser(String user) {
+		boolean result = true;
+		Optional<User> toDelete = userMongo.findByUsername((user));
+		if(toDelete.isEmpty())
+			return false;
+		try {
+			userMongo.delete(toDelete.get());
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		// Consistency between databases
+		try {
+			userNeo4j.deleteUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+			userMongo.save(toDelete.get());
+		}
+		return result;
+	}
+
+
+
+	//////////////////////////////////// SUGGESTIONS  /////////////////////////////////////////////
+
+
+
+	public List<UserDTO> getSuggestedUsers(String myself) {
 		List<UserDTO> users = new ArrayList<>();
 		List<Record> records = userNeo4j.getSuggestedUsersByTop10(myself);
 		for (Record r : records) {
@@ -304,7 +298,7 @@ public class UserRepository {
 		}
 
 		return users;
-    }
+	}
 
 	public List<String> GetSuggestedAnime(String username){
 		// TROVO LA LISTA DEGLI ANIME DEGLI AMICI
@@ -348,6 +342,28 @@ public class UserRepository {
 		return anime_from_top10FollowingList;
 	}
 
+
+
+	//////////////////////////////////// USERS ANALYTICS  /////////////////////////////////////////////
+
+
+
+	//This function returns the user with the highest number of followers
+	public List<ResultSetDTO> getMostPopularUsers(String how_order) {
+		List<ResultSetDTO> result = new ArrayList<>();
+		List<Record> records = userNeo4j.getMostPopularUsers(how_order);
+		for (Record r : records) {
+			String username = r.values().get(0).toString();
+			String numFollowers = r.values().get(1).toString();
+			ResultSetDTO aux = new ResultSetDTO();
+			aux.setField1(username);
+			aux.setField2(numFollowers);
+			result.add(aux);
+		}
+		return result;
+	}
+
+	//This function returns the top 10 countries with the highest/lowest number of registered users
 	public List<ResultSetDTO> getCountryView(String how_order) {
 
 		GroupOperation groupOperation = Aggregation.group("country").count().as("NumberUsers");

@@ -8,8 +8,6 @@ import com.example.demo.Model.User;
 import com.example.demo.Repository.AnimeRepository;
 import com.example.demo.Repository.ReviewRepository;
 import com.example.demo.Repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,6 @@ import java.util.Optional;
 
 @Service("mainUserService")
 public class UserService {
-	Logger logger = LoggerFactory.getLogger(UserRepository.class);
 	@Autowired
 	UserRepository userRepos;
 	@Autowired
@@ -31,8 +28,8 @@ public class UserService {
 	AnimeRepository animeRepos;
 
 
-	public boolean addUser(User user) {
-		return userRepos.addUser(user);
+	public void addUser(User user) {
+		userRepos.addUser(user);
 	}
 
 	public boolean addReview(Review review) {
@@ -44,19 +41,12 @@ public class UserService {
 		return true;
 	}
 
-
 	public UserDTO getUser(String username) {
 		Optional<User> result = userRepos.getUserByUsername(username);
-		if (result.isEmpty())
-			return null;
-		return new UserDTO(result.get().getUsername(), result.get().getPassword(), result.get().getAdmin());
+		return result.map(user -> new UserDTO(user.getUsername(), user.getPassword(), user.getAdmin())).orElse(null);
 	}
 
-	public boolean isAdmin(String username) {
-		return userRepos.checkAdmin(username);
-	}
 
-// if type is 3, is used to open pack, if type is 10, is used for visualizing the other cards
 	public List<FigureDTO> getReviewedFigures(String username, int k) {
 		List<Review> reviews;
 		reviews = revRepos.getReviewsByUsername(username);
@@ -151,13 +141,9 @@ public class UserService {
 		return userRepos.getMostPopularUsers(how_order);
 	}
 
-    public boolean deleteUser(String user) { return userRepos.deleteUser(user);
-    }
+    public boolean deleteUser(String user) { return userRepos.deleteUser(user);}
 
-    public ReviewDTO yourReview(String myself, String animeToDisplay) {
-		return revRepos.getReviewByUsernameAndAnime(myself,animeToDisplay);
-    }
-
+    public ReviewDTO yourReview(String myself, String animeToDisplay) {return revRepos.getReviewByUsernameAndAnime(myself,animeToDisplay);}
 
 	public List<ResultSetDTO> getCountryView(String how_order) {
 		return userRepos.getCountryView(how_order);
