@@ -92,33 +92,48 @@ public class AnimeRepository {
 
 	public boolean addCharacter(FigureDTO figure0) {
 		boolean result = true;
+		List<FigureDTO> figures;
+		FigureDTO init_figure = null;
+		Optional<Anime> init_anime = null;
 		try {
 			Optional<Anime> anime = animeMongo.findAnimeByTitle(figure0.getAnime());
 			if (anime.isEmpty())
 				return false;
-
-			List<FigureDTO> figures = anime.get().getFigures();
-			FigureDTO figure = new FigureDTO(figure0.getName(),figure0.getAnime(), figure0.getImage_url());
-			figures.add(figure);
+			init_anime = anime;
+			figures = anime.get().getFigures();
+			FigureDTO tmp = new FigureDTO(figure0.getName(), figure0.getImage_url());
+			init_figure = new FigureDTO(figure0.getName(),figure0.getAnime(), figure0.getImage_url());
+			figures.add(tmp);
 			anime.get().setFigures(figures);
 			animeMongo.save(anime.get());
-			userNeo4j.addCharacter(figure);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
 		}
+		// Consistency between databases
+		try {
+			userNeo4j.addCharacter(init_figure);
+		} catch (Exception e) {
+			init_anime.get().getFigures().remove(init_figure);
+			animeMongo.save(init_anime.get());
+			e.printStackTrace();
+			result = false;
+		}
+
 		return result;
 	}
 
 	public boolean removeCharacter(FigureDTO figure0) {
 		boolean result = true;
+		List<FigureDTO> figures;
+		Optional<Anime> init_anime = null;
+
 		try {
 			Optional<Anime> anime = animeMongo.findAnimeByTitle(figure0.getAnime());
 			if (anime.isEmpty())
 				return false;
-
-			List<FigureDTO> figures = anime.get().getFigures();
+			init_anime = anime;
+			figures = anime.get().getFigures();
 			boolean found = false;
 			for(FigureDTO fig: figures){
 				if (Objects.equals(fig.getName(), figure0.getName())) {
@@ -131,9 +146,18 @@ public class AnimeRepository {
 				return false;
 			anime.get().setFigures(figures);
 			animeMongo.save(anime.get());
-			userNeo4j.deleteCharacter(figure0.getName());
 
 		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		// Consistency between databases
+		try {
+			userNeo4j.deleteCharacter(figure0.getName());
+		}
+		catch (Exception e){
+			init_anime.get().getFigures().add(figure0);
+			animeMongo.save(init_anime.get());
 			e.printStackTrace();
 			result = false;
 		}

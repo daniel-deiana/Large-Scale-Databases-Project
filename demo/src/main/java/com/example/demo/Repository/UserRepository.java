@@ -46,8 +46,15 @@ public class UserRepository {
 		boolean result = true;
 		try {
 			userMongo.save(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		// Consistency between databases
+		try {
 			userNeo4j.addUser(user);
 		} catch (Exception e) {
+			userMongo.delete(user);
 			e.printStackTrace();
 			result = false;
 		}
@@ -80,10 +87,17 @@ public class UserRepository {
 			return false;
 		try {
 			userMongo.delete(toDelete.get());
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		// Consistency between databases
+		try {
 			userNeo4j.deleteUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+			userMongo.save(toDelete.get());
 		}
 		return result;
 	}
