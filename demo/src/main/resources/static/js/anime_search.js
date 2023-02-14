@@ -13,7 +13,7 @@ $(document).ready(function () {
                     success: function(data) {
                         result = jQuery.parseJSON(data)
                         console.log(result)
-                        if(result["type"] == 1) {
+                        if(result["type"] === 1) {
                             alert("The anime does not exist")
                             $("#title").val("")
                         }

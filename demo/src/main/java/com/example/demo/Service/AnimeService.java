@@ -98,6 +98,10 @@ public class AnimeService {
 		return revRepos.getTopReviewedAnime(how_order, number);
 	}
 
+	public List<ResultSetDTO> getTopReviewedAnimeWeighted(String how_order) {
+		return revRepos.getTopReviewedAnimeWeighted(how_order);
+	}
+
 	public List<ResultSetDTO> getTopReviewedAnime(String how_order, int number, int year) {
 		return revRepos.getTopReviewedAnime(how_order, number, year);
 	}
