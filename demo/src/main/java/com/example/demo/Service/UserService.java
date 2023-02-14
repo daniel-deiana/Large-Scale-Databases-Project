@@ -46,7 +46,6 @@ public class UserService {
 		return result.map(user -> new UserDTO(user.getUsername(), user.getPassword(), user.getAdmin())).orElse(null);
 	}
 
-
 	public List<FigureDTO> getReviewedFigures(String username, int k) {
 		List<Review> reviews;
 		reviews = revRepos.getReviewsByUsername(username);

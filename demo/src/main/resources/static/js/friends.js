@@ -77,8 +77,7 @@ function search_user(){
                 }
                 html +=         '<h2>Gender - '+ result.gender +'</h2>' +
                                 '<h2>Country - '+ result.country +'</h2>' +
-                                '<h2>Birthday - '+ result.birthday +'</h2>' +
-                                '<h2>Gender - '+ result.gender +'</h2>'+'';
+                                '<h2>Birthday - '+ result.birthday +'</h2>';
 
                 $('#user_info').append(html)
                 reviews = result['mostRecentReviews']
