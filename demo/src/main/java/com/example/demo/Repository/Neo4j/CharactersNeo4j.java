@@ -30,6 +30,40 @@ public class CharactersNeo4j {
         return null;
     }
 
+
+
+    //////////////////////////////////// CRUD OPERATIONS  /////////////////////////////////////////////
+
+
+
+    //This function adds a character into character collection
+    public void addCharacter(FigureDTO figure) {
+        try{
+            neo4j.write(" CREATE (n:Character {name: $name,anime: $anime, url: $image})",
+                    parameters("name", figure.getName(), "anime", figure.getAnime(), "image", figure.getImage_url())
+            );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //This function removes a character from character collection
+    public void deleteCharacter(String name) {
+        try{
+            neo4j.write(" MATCH (c:Character {name: $name}) DELETE c",
+                    parameters("name", name)
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    //////////////////////////////////// CHARACTERS ANALYTICS  /////////////////////////////////////////////
+
+
+
     //This function returns the character with the highest number of 'AddToTop10' relationships
     public List<Record> getMostLovedCharacter(String how_order){
         try{
@@ -71,40 +105,6 @@ public class CharactersNeo4j {
         }
         return null;
     }
-
-
-
-    //////////////////////////////////// CRUD OPERATIONS  /////////////////////////////////////////////
-
-
-
-    //This function adds a character into character collection
-    public void addCharacter(FigureDTO figure) {
-        try{
-            neo4j.write(" CREATE (n:Character {name: $name,anime: $anime, url: $image})",
-                    parameters("name", figure.getName(), "anime", figure.getAnime(), "image", figure.getImage_url())
-            );
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    //This function removes a character from character collection
-    public void deleteCharacter(String name) {
-        try{
-            neo4j.write(" MATCH (c:Character {name: $name}) DELETE c",
-                    parameters("name", name)
-            );
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    //////////////////////////////////// CHARACTERS ANALYTICS  /////////////////////////////////////////////
-
-
 
     //This function returns the character with the highest number of 'Has' relationships
     // and the lowest number of 'AddToTop10' relationships at the same time

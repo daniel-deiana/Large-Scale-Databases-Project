@@ -12,9 +12,7 @@ public class AnimeDTO {
     private Integer episodes;
     private String img_url;
     private List<ReviewDTO> reviews;
-
     private List<FigureDTO> figures;
-
 
     public AnimeDTO(String title,String synopsis, int episodes, String img_url, List<FigureDTO> figures_list,  List<Review> reviews) {
         this.title = title;
