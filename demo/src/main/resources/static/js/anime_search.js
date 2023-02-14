@@ -82,7 +82,7 @@ function appreciated(){
             for (fig in result){
                 let html = '<div style="display: flex; gap: 5px">' +
                     '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:500px; text-align: center; margin: auto;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; margin: auto;" >Score: '+ (parseFloat(result[fig].field3).toFixed(2)) +' </a>' +
+                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; margin: auto;" >Score: '+ (parseFloat(result[fig].field2).toFixed(2)) +' </a>' +
                     '</div>'
                 $('#result_query').append(html)
             }

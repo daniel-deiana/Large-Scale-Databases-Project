@@ -8,8 +8,6 @@ import org.slf4j.*;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.neo4j.driver.Values.parameters;
 
@@ -31,7 +29,6 @@ public class Neo4jManager implements AutoCloseable{
         }
         return neo4j;
     }
-
     public void write(final String query, final Value parameters) {
 
         try (Session session = driver.session()) {
@@ -63,16 +60,4 @@ public class Neo4jManager implements AutoCloseable{
     public List<Record> read(String query) {
         return read(query, parameters());
     }
-
-
-    public Boolean connect (){
-
-        try (Session session = driver.session()) {
-            // è una prova
-            session.run("CREATE (n:Person {name: 'Danilo', title: 'Developer'})");
-        }
-        return true;
-    }
-
-
 }

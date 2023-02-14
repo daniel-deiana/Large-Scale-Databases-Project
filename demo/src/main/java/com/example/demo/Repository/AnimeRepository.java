@@ -1,5 +1,4 @@
 package com.example.demo.Repository;
-import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.FigureDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.Model.Anime;
@@ -27,8 +26,13 @@ public class AnimeRepository {
 	private AnimeRepositoryMongo animeMongo;
 	@Autowired
 	private MongoOperations mongoOperations;
-	UserNeo4j userNeo4j = new UserNeo4j();
 	CharactersNeo4j charactersNeo4j = new CharactersNeo4j();
+
+
+
+	////////////////////////////////////  ANIME UTILITY  /////////////////////////////////////////////
+
+
 
 	public Optional<Anime> getAnimeByTitle(String title){
 		Optional<Anime> anime = Optional.empty();
@@ -40,6 +44,68 @@ public class AnimeRepository {
 		return anime;
 	}
 
+	//This function returns the 5 anime with the highest/lowest number of episodes
+	public List<ResultSetDTO> getLongAnime(String how_order) {
+
+		ProjectionOperation projectFields = project()
+				.andExpression("title").as("field1")
+				.andExpression("episodes").as("field2");
+
+		SortOperation sortOperation;
+		if(how_order.equals("DESC")) {
+			sortOperation = sort(Sort.by(Sort.Direction.DESC, "episodes"));
+		} else {
+			sortOperation = sort(Sort.by(Sort.Direction.ASC,  "episodes"));
+		}
+
+		AggregationOperation limit = Aggregation.limit(5);
+
+		AggregationOperation matchOperation = Aggregation.match(Criteria.where("episodes").ne(0));
+
+		Aggregation aggregation = Aggregation.newAggregation(sortOperation, matchOperation, projectFields, limit);
+
+		AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "anime", ResultSetDTO.class);
+
+		return result.getMappedResults();
+	}
+
+
+
+	//////////////////////////////////// CRUD OPERATIONS /////////////////////////////////////////////
+
+
+
+	public boolean addAnime(Anime anime) {
+		boolean result = true;
+		try {
+			if (animeMongo.findAnimeByTitle(anime.getTitle()).isEmpty()) {
+				animeMongo.save(anime);
+			} else {
+				result = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+	}
+
+	public boolean updateAnime(Anime new_) {
+		Optional<Anime> old_;
+		try {
+			old_ = getAnimeByTitle(new_.getTitle());
+			if (old_.isEmpty())
+				return false;
+			old_.get().setSynopsis(new_.getSynopsis());
+			old_.get().setEpisodes(new_.getEpisodes());
+			old_.get().setImage(new_.getImg_url());
+			animeMongo.save(old_.get());
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	//This function update the list of the most recent reviews of a user when a new review is added
 	public void updateMostReviewed(Review review) {
@@ -59,37 +125,7 @@ public class AnimeRepository {
 		}
 	}
 
-    public boolean addAnime(Anime anime) {
-		boolean result = true;
-		try {
-			if (animeMongo.findAnimeByTitle(anime.getTitle()).isEmpty()) {
-				animeMongo.save(anime);
-			} else {
-				result = false;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = false;
-		}
-		return result;
-	}
-	public boolean updateAnime(Anime new_) {
-		Optional<Anime> old_;
-		try {
-			old_ = getAnimeByTitle(new_.getTitle());
-			if (old_.isEmpty())
-				return false;
-			old_.get().setSynopsis(new_.getSynopsis());
-			old_.get().setEpisodes(new_.getEpisodes());
-			old_.get().setImage(new_.getImg_url());
-			animeMongo.save(old_.get());
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
+	//This function add a character to the list of anime charaters
 	public boolean addCharacter(FigureDTO figure0) {
 		boolean result = true;
 		List<FigureDTO> figures;
@@ -112,7 +148,7 @@ public class AnimeRepository {
 		}
 		// Consistency between databases
 		try {
-			userNeo4j.addCharacter(init_figure);
+			charactersNeo4j.addCharacter(init_figure);
 		} catch (Exception e) {
 			init_anime.get().getFigures().remove(init_figure);
 			animeMongo.save(init_anime.get());
@@ -123,6 +159,7 @@ public class AnimeRepository {
 		return result;
 	}
 
+	//This function removes a character from the list of anime charaters
 	public boolean removeCharacter(FigureDTO figure0) {
 		boolean result = true;
 		List<FigureDTO> figures;
@@ -153,7 +190,7 @@ public class AnimeRepository {
 		}
 		// Consistency between databases
 		try {
-			userNeo4j.deleteCharacter(figure0.getName());
+			charactersNeo4j.deleteCharacter(figure0.getName());
 		}
 		catch (Exception e){
 			init_anime.get().getFigures().add(figure0);
@@ -163,29 +200,12 @@ public class AnimeRepository {
 		}
 		return result;
 	}
-	public List<ResultSetDTO> getLongAnime(String how_order) {
 
-		ProjectionOperation projectFields = project()
-				.andExpression("title").as("field1")
-				.andExpression("episodes").as("field2");
 
-		SortOperation sortOperation;
-		if(how_order.equals("DESC")) {
-			sortOperation = sort(Sort.by(Sort.Direction.DESC, "episodes"));
-		} else {
-			sortOperation = sort(Sort.by(Sort.Direction.ASC,  "episodes"));
-		}
 
-		AggregationOperation limit = Aggregation.limit(5);
+	//////////////////////////////////// ANIME'S CHARACTER ANALYTICS/////////////////////////////////////////////
 
-		AggregationOperation matchOperation = Aggregation.match(Criteria.where("episodes").ne(null));
 
-		Aggregation aggregation = Aggregation.newAggregation(sortOperation, matchOperation, projectFields, limit);
-
-		AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "anime", ResultSetDTO.class);
-
-		return result.getMappedResults();
-	}
 
 	public List<ResultSetDTO> getMostLovedCharacter(String how_order) {
 		List<Record> records = charactersNeo4j.getMostLovedCharacter(how_order);
@@ -197,7 +217,8 @@ public class AnimeRepository {
 		return Utilities.RecordToResultSet(records);
 	}
 
-    public List<ResultSetDTO> getMostUnusedCharacter(String how_order) {List<Record> records = charactersNeo4j.getMostUnusedCharacter(how_order);
+    public List<ResultSetDTO> getMostUnusedCharacter(String how_order) {
+		List<Record> records = charactersNeo4j.getMostUnusedCharacter(how_order);
 		return Utilities.RecordToResultSet(records);
     }
 }
