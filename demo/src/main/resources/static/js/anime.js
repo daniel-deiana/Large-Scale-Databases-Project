@@ -12,8 +12,10 @@ $(document).ready(function () {
                         obj.textContent = result['title']
                         desc.textContent = result['synopsis']
                         img.setAttribute('src', result['img_url'])
+                        let num_episodes = document.getElementById("episodes")
+                        num_episodes.textContent = "Number of episodes: " + result['episodes']
                         let characters = result['figures']
-
+                        document.getElementById("characters").textContent = "Number of characters: " + characters.length
                         for (fig in characters){
                             let html = '' +
                                 '<div">\n' +
@@ -21,9 +23,6 @@ $(document).ready(function () {
                                 '              <img style="height: 200px; width: 160px;" referrerpolicy="no-referrer" src='+ characters[fig].image_url +' class="img-fluid" alt="">\n' +
                                 '              <div>\n' +
                                 '                <h4>'+ characters[fig].name + '</h4>\n' +
-                                '              </div>\n' +
-                                '              <div>\n' +
-                                '                <a title="More Details"><i class="bx bx-link"></i></a>\n' +
                                 '              </div>\n' +
                                 '            </div>\n' +
                                 '          </div>'

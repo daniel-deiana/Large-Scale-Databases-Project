@@ -50,6 +50,17 @@ public class currentAdmin {
         return gson.toJson(AppreciatedAnime.toArray());
     }
 
+
+    @RequestMapping("/api/getTopReviewedAnimeWeighted")
+    public @ResponseBody String getTopReviewedAnimeWeighted(
+            @RequestParam(value = "how_order") String how_order
+    ) {
+        Gson gson = new Gson();
+        List<ResultSetDTO> AppreciatedAnime = animeService.getTopReviewedAnimeWeighted(how_order);
+        return gson.toJson(AppreciatedAnime.toArray());
+    }
+
+
     @RequestMapping("/api/getTopReviewers")
     public @ResponseBody String getTopReviewers(
             @RequestParam(value = "how_order") String how_order,

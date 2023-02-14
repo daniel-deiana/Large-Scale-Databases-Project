@@ -14,18 +14,18 @@ $(document).ready(function () {
                     success: function(data) {
                         result = jQuery.parseJSON(data)
                         console.log(result)
-                        if(result["type"] == 1) {
+                        if(result["type"] === 1) {
                             alert("Wrong Username")
                             $("#username").val("")
                             $("#password").val("")
-                        } else if(result["type"] == 2) {
+                        } else if(result["type"] === 2) {
                             alert("Wrong Password")
                             $("#username").val("")
                             $("#password").val("")
                         }
-                        else if(result["admin"]=='false')
+                        else if(result["admin"]==='false')
                             window.location.href= "http://localhost:8080/home"
-                        else if(result["admin"]=='true')
+                        else if(result["admin"]==='true')
                             window.location.href= "http://localhost:8080/admin"
                         }
                 })

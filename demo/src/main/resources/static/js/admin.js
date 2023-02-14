@@ -74,7 +74,7 @@ function getTopReviewedAnime_btn(){
     document.getElementById("recalculate_review").value = null;
     not_view_filters();
     view_filters();
-    change_button(title_button, "Best Rated Anime")
+    change_button(title_button, "Positive Rated Anime")
     getTopReviewedAnime()
 }
 
@@ -90,10 +90,41 @@ function getTopReviewedAnime(){
             document.getElementById("result_query").replaceChildren()
             for (fig in result){
                 let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; margin:auto; " >#Reviews: '+ result[fig].field2 +'</a>' +
-                    '<a class="btn-get-started scrollto" onclick="anime_page(this.textContent)" style=" width:200px; text-align: center; margin:auto;" >Score: '+ (parseFloat(result[fig].field3).toFixed(2))  +'</a>' +
+                    '<a class="btn-get-started scrollto"  style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
+                    '<a class="btn-get-started scrollto"  style=" width:500px;" >'+ result[fig].field1 +'</a>' +
+                    '<a class="btn-get-started scrollto"  style=" width:200px; text-align: center; margin:auto;" >Score: '+ (parseFloat(result[fig].field2).toFixed(2))  +'</a>' +
+                    '</div>'
+                $('#result_query').append(html)
+            }
+        }
+    })
+}
+
+function getTopReviewedAnimeWeighted_btn(){
+    let title_button = document.getElementById("getTopReviewedAnimeWeighted")
+    document.getElementById('title_query').textContent = title_button.textContent;
+    document.getElementById("recalculate_review").setAttribute("onclick","getTopReviewedAnimeWeighted()")
+    document.getElementById("recalculate_review").value = null;
+    not_view_filters();
+    change_button(title_button, "Positive Weighted Rated Anime")
+    getTopReviewedAnimeWeighted()
+}
+
+
+function getTopReviewedAnimeWeighted(){
+    $.ajax({
+        url : "/api/getTopReviewedAnimeWeighted",
+        data : {how_order: orderby},
+        method : "post",
+        success: function(data) {
+            result = JSON.parse(data)
+            console.log(result)
+            document.getElementById("result_query").replaceChildren()
+            for (fig in result){
+                let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
+                    '<a class="btn-get-started scrollto"  style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
+                    '<a class="btn-get-started scrollto"  style=" width:500px;" >'+ result[fig].field1 +'</a>' +
+                    '<a class="btn-get-started scrollto"  style=" width:200px; text-align: center; margin:auto;" >Score: '+ (parseFloat(result[fig].field2).toFixed(2))  +'</a>' +
                     '</div>'
                 $('#result_query').append(html)
             }
@@ -237,9 +268,9 @@ function print_result_set(result, anime_name, name_of_count){
     document.getElementById("result_query").replaceChildren()
     for (fig in result){
         let html = '<div style="display: flex;  justify-content: center; font-size: 20px">' +
-            '<a class="btn-get-started scrollto" onclick="anime_page('+anime_name+')" style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
-            '<a class="btn-get-started scrollto" onclick="anime_page('+anime_name+')" style=" width:500px;" >'+ result[fig].field1 +'</a>' +
-            '<a class="btn-get-started scrollto" onclick="anime_page('+anime_name+')" style=" width:200px; text-align: center; " >#'+name_of_count+': '+ result[fig].field2 +'</a>' +
+            '<a class="btn-get-started scrollto"  style=" cursor: pointer; width:fit-content; text-align: center;" >'+ (parseInt(fig)+1) +') </a>' +
+            '<a class="btn-get-started scrollto"  style=" width:500px;" >'+ result[fig].field1 +'</a>' +
+            '<a class="btn-get-started scrollto"  style=" width:200px; text-align: center; " >#'+name_of_count+': '+ result[fig].field2 +'</a>' +
             '</div>'
         $('#result_query').append(html)
     }

@@ -3,6 +3,7 @@ import com.example.demo.DTO.AnimeDTO;
 import com.example.demo.DTO.ResultSetDTO;
 import com.example.demo.DTO.ReviewDTO;
 import com.example.demo.Model.Review;
+import com.example.demo.Repository.MongoDB.AnimeRepositoryMongo;
 import com.example.demo.Repository.MongoDB.ReviewRepositoryMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import static org.springframework.data.mongodb.core.aggregation.ArithmeticOperators.Multiply.valueOf;
 import static org.springframework.data.mongodb.core.aggregation.DateOperators.Year.year;
 
 @Repository
@@ -25,6 +27,9 @@ public class ReviewRepository {
     private MongoOperations mongoOperations;
     @Autowired
     private ReviewRepositoryMongo revMongo;
+
+    @Autowired
+    private AnimeRepositoryMongo animeMongo;
 
     public void addReview(Review review){
         try{
@@ -100,7 +105,7 @@ public class ReviewRepository {
 
         AggregationOperation limit = Aggregation.limit(10);
 
-        Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, limit, projectFields);
+        Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, projectFields, limit);
 
         AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
 
@@ -131,7 +136,7 @@ public class ReviewRepository {
 
         AggregationOperation limit = limit(10);
 
-        Aggregation aggregation = newAggregation(findYear, matchYear, groupOperation, sortOperation, limit, projectFields);
+        Aggregation aggregation = newAggregation(findYear, matchYear, groupOperation, sortOperation, projectFields, limit);
 
         AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
 
@@ -142,11 +147,9 @@ public class ReviewRepository {
 
         GroupOperation groupOperation = Aggregation.group("anime").count().as("NumberReviews").avg("score").as("AvgScore");
 
-        // filtering same age count > 1
         ProjectionOperation projectFields = project()
                 .andExpression("_id").as("field1")
-                .andExpression("NumberReviews").as("field2")
-                .andExpression("AvgScore").as("field3");
+                .andExpression("AvgScore").as("field2");
 
         SortOperation sortOperation;
         if(how_order.equals("DESC")) {
@@ -157,7 +160,7 @@ public class ReviewRepository {
 
         AggregationOperation limit = Aggregation.limit(limit_number);
 
-        Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, limit, projectFields);
+        Aggregation aggregation = Aggregation.newAggregation(groupOperation, sortOperation, projectFields, limit);
 
         AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
 
@@ -177,8 +180,7 @@ public class ReviewRepository {
 
         ProjectionOperation projectFields = project()
                 .andExpression("anime").as("field1")
-                .andExpression("NumberReviews").as("field2")
-                .andExpression("AvgScore").as("field3");
+                .andExpression("AvgScore").as("field2");
 
         SortOperation sortOperation;
         if(how_order.equals("DESC")) {
@@ -189,12 +191,40 @@ public class ReviewRepository {
 
         AggregationOperation limit = Aggregation.limit(limit_number);
 
-        Aggregation aggregation = Aggregation.newAggregation(findYear, matchYear, groupOperation, sortOperation, limit, projectFields);
+        Aggregation aggregation = Aggregation.newAggregation(findYear, matchYear, groupOperation, sortOperation, projectFields,  limit);
 
         AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
 
         return result.getMappedResults();
     }
 
+
+    public List<ResultSetDTO> getTopReviewedAnimeWeighted(String how_order) {
+
+        int num_tot_anime = (int) animeMongo.count();
+        int num_tot_rew = (int) revMongo.count();
+        double avg_rew = num_tot_rew/num_tot_anime;
+
+        GroupOperation groupOperation = Aggregation.group("anime").count().as("NumberReviews").avg("score").as("AvgScore");
+
+        ProjectionOperation projectFields = project()
+                .andExpression("_id").as("field1")
+                .and((valueOf("NumberReviews").multiplyBy(valueOf("AvgScore")).multiplyBy(valueOf(1/avg_rew)))).as("field2");
+
+        SortOperation sortOperation;
+        if(how_order.equals("DESC")) {
+            sortOperation = sort(Sort.by(Sort.Direction.DESC, "field2"));
+        } else {
+            sortOperation = sort(Sort.by(Sort.Direction.ASC, "field2"));
+        }
+
+        AggregationOperation limit = Aggregation.limit(10);
+
+        Aggregation aggregation = Aggregation.newAggregation(groupOperation, projectFields,  sortOperation, limit);
+
+        AggregationResults<ResultSetDTO> result = mongoOperations.aggregate(aggregation, "reviews", ResultSetDTO.class);
+
+        return result.getMappedResults();
+    }
 
 }
