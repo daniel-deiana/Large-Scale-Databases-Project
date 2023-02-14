@@ -223,7 +223,7 @@ public class ReviewRepository {
 
         int num_tot_anime = (int) animeMongo.count();
         int num_tot_rew = (int) revMongo.count();
-        double avg_rew = num_tot_rew/num_tot_anime;
+        double avg_rew = (double) num_tot_rew/num_tot_anime;
 
         GroupOperation groupOperation = Aggregation.group("anime").count().as("NumberReviews").avg("score").as("AvgScore");
 
